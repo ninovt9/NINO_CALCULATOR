@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NINO_CALCULATOR", "NINO_CALCULATOR\NINO_CALCULATOR.vcxproj", "{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NINO_TEST_CALCULATOR", "NINO_TEST_CALCULATOR\NINO_TEST_CALCULATOR.vcxproj", "{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Debug|x64.ActiveCfg = Debug|x64
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Debug|x64.Build.0 = Debug|x64
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Debug|x86.ActiveCfg = Debug|Win32
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Debug|x86.Build.0 = Debug|Win32
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Release|x64.ActiveCfg = Release|x64
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Release|x64.Build.0 = Release|x64
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Release|x86.ActiveCfg = Release|Win32
+		{DE10966D-4C4F-4A3B-9CB3-74BC8F78FE91}.Release|x86.Build.0 = Release|Win32
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Debug|x64.ActiveCfg = Debug|x64
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Debug|x64.Build.0 = Debug|x64
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Debug|x86.ActiveCfg = Debug|Win32
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Debug|x86.Build.0 = Debug|Win32
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Release|x64.ActiveCfg = Release|x64
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Release|x64.Build.0 = Release|x64
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Release|x86.ActiveCfg = Release|Win32
+		{70AE89CD-5E4D-4C26-92FA-A78C40431DF5}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
