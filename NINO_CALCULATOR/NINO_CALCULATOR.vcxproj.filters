@@ -24,7 +24,10 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="NLexicalAnalyzer.h">
+    <ClInclude Include="NScanner.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NParser.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +38,10 @@
     <ClCompile Include="NINO_CALCULATOR.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="NLexicalAnalyzer.cpp">
+    <ClCompile Include="NScanner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NParser.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

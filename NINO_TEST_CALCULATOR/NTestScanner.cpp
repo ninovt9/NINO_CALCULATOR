@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "NLexicalAnalyzer.h"
+#include "NScanner.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -14,7 +14,7 @@ using std::vector;
 
 namespace NINO_TEST_CALCULATOR
 {
-	TEST_CLASS(NTestLexicalAnalyzer)
+	TEST_CLASS(NTestScanner)
 	{
 	public:
 
@@ -234,56 +234,56 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(isTrue, false);
 		}
 
-		TEST_METHOD(Test_NLexicalAnalyzer)
+		TEST_METHOD(Test_NGetTokenList)
 		{
 			//带空格
 			string base = "1-2/3";
 			vector<string> correct = { "1", "-", "2", "/", "3" };
-			auto result = NLexicalAnalyzer(base);
+			auto result = NGetTokenList(base);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NLexicalAnalyzer_space_1)
+		TEST_METHOD(Test_NGetTokenList_space_1)
 		{
 			//带空格
 			string base = "1 + 2 + 3";
 			vector<string> correct = { "1", "+", "2", "+", "3" };
-			auto result = NLexicalAnalyzer(base);
+			auto result = NGetTokenList(base);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NLexicalAnalyzer_space_2)
+		TEST_METHOD(Test_NGetTokenList_space_2)
 		{
 			//带空格
 			string base = "1 -2 + 3";
 			vector<string> correct = { "1", "-", "2", "+", "3" };
-			auto result = NLexicalAnalyzer(base);
+			auto result = NGetTokenList(base);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NLexicalAnalyzer_space_zero)
+		TEST_METHOD(Test_NGetTokenList_space_zero)
 		{
 			//带空格
 			string base = "1 -0 + 3";
 			vector<string> correct = { "1", "-", "0", "+", "3" };
-			auto result = NLexicalAnalyzer(base);
+			auto result = NGetTokenList(base);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NLexicalAnalyzer_space_decimal)
+		TEST_METHOD(Test_NGetTokenList_space_decimal)
 		{
 			//带空格
 			string base = "1.7 -0.5 + 3";
 			vector<string> correct = { "1.7", "-", "0.5", "+", "3" };
-			auto result = NLexicalAnalyzer(base);
+			auto result = NGetTokenList(base);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);

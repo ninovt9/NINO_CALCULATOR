@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "NLexicalAnalyzer.h"
+#include "NScanner.h"
 
 using std::vector;
 using std::string;
 using std::regex_match;
 using std::smatch;
 
-vector<string> NLexicalAnalyzer(string line)
+vector<string> NGetTokenList(string line)
 {
 
 	vector<string> resultVector;

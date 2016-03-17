@@ -8,12 +8,7 @@
 #include <regex>
 
 //主函数
-std::vector<std::string> NLexicalAnalyzer(std::string line);
-//
-//enum N_STATE
-//{
-//	N_NUMBER, N_ADD, N_SUB
-//};
+extern std::vector<std::string> NGetTokenList(std::string line);
 
 //正则表达式规则
 const std::regex MULT_NUMBER_REGEX("[1-9][0-9]*|0|[0-9]+\\.[0-9]+"); //用于判断多位数字(整数、0、小数）
