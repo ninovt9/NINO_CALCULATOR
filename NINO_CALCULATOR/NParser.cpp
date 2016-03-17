@@ -6,6 +6,13 @@ using std::string;
 using std::find;
 using std::stringstream;
 
+//主函数
+//计算表达式的运算结果
+float NEvaluateExpression(vector<string> expression)
+{
+	return NEvaluateExpressionForE(expression);
+}
+
 //检测该范围是否在括号内（开闭括号完整匹配）
 bool NIsInBracket(vector<string>::iterator begin,
 	vector<string>::iterator end)
@@ -26,7 +33,7 @@ bool NIsInBracket(vector<string>::iterator begin,
 }
 
 //表达式是否可以通过该运算符分割、并得出运算符迭代器（引用）
-bool NIsSplitBySymbol(vector<string> expression,
+bool NIsSplitBySymbol(vector<string> &expression,
 	string n_operator,
 	vector<string>::iterator &iterSplit)
 {
@@ -46,12 +53,14 @@ float NEvaluateExpressionForE(vector<string> expression)
 	//T+E
 	if (NIsSplitBySymbol(expression, "+", iterSplit))
 	{
-		return NEvaluateExpressionForT(expression) + NEvaluateExpressionForE(expression);
+		return NEvaluateExpressionForT(vector<string>(expression.begin(), iterSplit))
+			+ NEvaluateExpressionForE(vector<string>(iterSplit+ 1, expression.end()));
 	}
 	//T-E
 	else if (NIsSplitBySymbol(expression, "-", iterSplit))
 	{
-		return NEvaluateExpressionForT(expression) - NEvaluateExpressionForE(expression);
+		return NEvaluateExpressionForT(vector<string>(expression.begin(), iterSplit))
+			- NEvaluateExpressionForE(vector<string>(iterSplit + 1, expression.end()));
 	}
 	//降级->T
 	else
@@ -66,12 +75,14 @@ float NEvaluateExpressionForT(vector<string> expression)
 	//F*T
 	if (NIsSplitBySymbol(expression, "*", iterSplit))
 	{
-		return NEvaluateExpressionForF(expression) + NEvaluateExpressionForT(expression);
+		return NEvaluateExpressionForF(vector<string>(expression.begin(), iterSplit))
+			* NEvaluateExpressionForE(vector<string>(iterSplit + 1, expression.end()));
 	}
 	//F/T
 	else if (NIsSplitBySymbol(expression, "/", iterSplit))
 	{
-		return NEvaluateExpressionForF(expression) - NEvaluateExpressionForT(expression);
+		return NEvaluateExpressionForF(vector<string>(expression.begin(), iterSplit))
+			/ NEvaluateExpressionForE(vector<string>(iterSplit + 1, expression.end()));
 	}
 	//降级->F
 	else
@@ -81,7 +92,7 @@ float NEvaluateExpressionForT(vector<string> expression)
 }
 
 //F:括号
-float NEvaluateExpressionForT(vector<string> expression)
+float NEvaluateExpressionForF(vector<string> expression)
 {
 	auto begin = expression.begin();
 	auto end = expression.end() - 1;
@@ -89,7 +100,7 @@ float NEvaluateExpressionForT(vector<string> expression)
 	if (*begin == "(" && *end == ")")
 	{
 		//提取括号中间部分
-		return NEvaluateExpressionForE(vector<string>(begin + 1, end - 1));
+		return NEvaluateExpressionForE(vector<string>(begin + 1, end));
 	}
 	else
 	{

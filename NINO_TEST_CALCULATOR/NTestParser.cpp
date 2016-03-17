@@ -86,5 +86,119 @@ namespace NINO_TEST_CALCULATOR
 
 			Assert::AreEqual(result, correct);
 		}
+
+		//得出iter与原容器iter对比
+		TEST_METHOD(Test_NIsSplitBySymbol_MakeComparisonOfIter)
+		{
+			vector<string> base = { "1", "*", "5" };
+
+			auto correct = base.begin() + 1;
+			string n_operator = "*";
+			auto resultIter = base.begin();
+			NIsSplitBySymbol(base, n_operator, resultIter);
+
+			bool isTrue = (resultIter == correct);
+			Assert::AreEqual(isTrue, true);
+		}
+
+		//Level-T:单运算符
+		TEST_METHOD(Test_NEvaluateExpressionForT_SingleOperator)
+		{
+			vector<string> base = { "5", "*", "2" };
+
+			float correct = 10.0f; 
+			float result = NEvaluateExpressionForT(base);
+
+			Assert::AreEqual(result, correct);
+		}
+
+		//Level-F:降级测试
+		TEST_METHOD(Test_NEvaluateExpressionForF_LevelDescent)
+		{
+			vector<string> base = { "6" };
+
+			float correct = 6.0f;
+			float result = NEvaluateExpressionForF(base);
+
+			Assert::AreEqual(result, correct);
+		}
+
+		//Level-F:括号处理
+		TEST_METHOD(Test_NEvaluateExpressionForF_Bracket)
+		{
+			vector<string> base = { "(", "6", "+", "1",")" };
+
+			float correct = 7.0f;
+			float result = NEvaluateExpressionForF(base);
+
+			Assert::AreEqual(result, correct);
+		}
+
+
+		//Level-id:终结符
+		TEST_METHOD(Test_NEvaluateExpressionForId)
+		{
+			string base = "5";
+
+			float correct = 5.0f;
+			float result = NEvaluateExpressionForId(base);
+
+			Assert::AreEqual(result, correct);
+		}
+
+		//加法
+		TEST_METHOD(Test_NEvaluateExpression_Add)
+		{
+			vector<string> base = { "2", "+", "5" };
+
+			float result = NEvaluateExpression(base);
+			float correct = 7.0f;
+
+			Assert::AreEqual(result, correct);
+		}
+
+		//加减法
+		TEST_METHOD(Test_NEvaluateExpression_MixedAddAndSub)
+		{
+			vector<string> base = { "2", "+", "5", "-", "1" };
+
+			float result = NEvaluateExpression(base);
+			float correct = 6.0f;
+
+			Assert::AreEqual(result, correct);
+		}
+
+		//四则运算
+		TEST_METHOD(Test_NEvaluateExpression_Arithmetic)
+		{
+			vector<string> base = { "2", "+", "5", "-", "1" };
+
+			float result = NEvaluateExpression(base);
+			float correct = 6.0f;
+
+			Assert::AreEqual(result, correct);
+		}
+
+		//单括号
+		TEST_METHOD(Test_NEvaluateExpression_SingleBracket)
+		{
+			vector<string> base = { "(", "2", "+", "5", ")", "*", "7", "/", "7" };
+
+			float result = NEvaluateExpression(base);
+			float correct = 7.0f;
+
+			Assert::AreEqual(result, correct);
+		}
+
+		//多括号
+		TEST_METHOD(Test_NEvaluateExpression_MultipleBracket)
+		{
+			vector<string> base = { "(", "(", "2", "+", "5", ")", "*", "7", ")", "+", "5" };
+
+			float result = NEvaluateExpression(base);
+			float correct = 54.0f;
+
+			Assert::AreEqual(result, correct);
+		}
 	};
 }

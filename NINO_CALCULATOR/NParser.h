@@ -17,7 +17,7 @@ extern bool NIsInBracket(std::vector<std::string>::iterator begin,
 						 std::vector<std::string>::iterator end);
 
 //是否可以通过该符号分割
-extern bool NIsSplitBySymbol(std::vector<std::string> expression,
+extern bool NIsSplitBySymbol(std::vector<std::string> &expression,
 					         std::string n_operator,
 					         std::vector<std::string>::iterator &iterSplit);
 
