@@ -65,6 +65,16 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(isTrue, true);
 		}
 
+		TEST_METHOD(Test_REGEX_MULT_NUMBER_RightInputOfDecimal_NoNumberAfterRadixPoint)
+		{
+			//小数点后没有数字，为了最长匹配用。。。
+			string input = "1.";
+			smatch result;
+			auto isTrue = regex_match(input, result, MULT_NUMBER_REGEX);
+
+			Assert::AreEqual(isTrue, true);
+		}
+
 		TEST_METHOD(Test_REGEX_SINGLE_NUMBER_RightInputOfInteger)
 		{
 			string input = "5";
@@ -164,6 +174,85 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(isTrue, false);
 		}
 
+		TEST_METHOD(Test_BRAKET_REGEX_RightInputOfLeftBraket)
+		{
+			string input = "(";
+			smatch result;
+			auto isTrue = regex_match(input, result, BRAKET_REGEX);
+
+			Assert::AreEqual(isTrue, true);
+		}
+
+
+		TEST_METHOD(Test_BRAKET_REGEX_RightInputOfRightBraket)
+		{
+			string input = ")";
+			smatch result;
+			auto isTrue = regex_match(input, result, BRAKET_REGEX);
+
+			Assert::AreEqual(isTrue, true);
+		}
+
+
+		TEST_METHOD(Test_BRAKET_REGEX_WrongInputOfNumber)
+		{
+			string input = "5";
+			smatch result;
+			auto isTrue = regex_match(input, result, BRAKET_REGEX);
+
+			Assert::AreEqual(isTrue, false);
+		}
+
+		TEST_METHOD(Test_NIsTokenMatchRegex_RightInputOfNumber)
+		{
+			string token = "1";
+			
+			bool funcResult = NIsTokenMatchRegex(token);
+			bool correctResult = true;
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
+		TEST_METHOD(Test_NIsTokenMatchRegex_RightInputOfDecimal)
+		{
+			string token = "2.5";
+
+			bool funcResult = NIsTokenMatchRegex(token);
+			bool correctResult = true;
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
+		TEST_METHOD(Test_NIsTokenMatchRegex_RightInputOfOperator)
+		{
+			string token = "+";
+
+			bool funcResult = NIsTokenMatchRegex(token);
+			bool correctResult = true;
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
+		TEST_METHOD(Test_NIsTokenMatchRegex_RightInputOfBracket)
+		{
+			string token = "(";
+
+			bool funcResult = NIsTokenMatchRegex(token);
+			bool correctResult = true;
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
+		TEST_METHOD(Test_NIsTokenMatchRegex_WrongInput)
+		{
+			string token = "(1+2)";
+
+			bool funcResult = NIsTokenMatchRegex(token);
+			bool correctResult = false;
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
 		TEST_METHOD(Test_NGetTokenList_RightInputOfTwoOperator)
 		{
 			//带空格
@@ -213,6 +302,17 @@ namespace NINO_TEST_CALCULATOR
 			//带空格
 			string input = "1.7 -0.5 + 3";
 			vector<string> correct = { "1.7", "-", "0.5", "+", "3" };
+			auto result = NGetTokenList(input);
+
+			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
+			Assert::AreEqual(isTrue, true);
+		}
+
+		TEST_METHOD(Test_NGetTokenList_RightInputOfNestedBracket)
+		{
+			//带空格
+			string input = "(1 + (5*3))";
+			vector<string> correct = { "(", "1", "+", "(", "5", "*", "3", ")", ")"};
 			auto result = NGetTokenList(input);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
