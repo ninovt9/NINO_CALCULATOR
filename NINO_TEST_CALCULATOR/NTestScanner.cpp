@@ -18,272 +18,202 @@ namespace NINO_TEST_CALCULATOR
 	{
 	public:
 
-		TEST_METHOD(Test_REGEX_MULT_NUMBER_integer)
+		TEST_METHOD(Test_MULT_NUMBER_REGEX_RightInputOfInteger)
 		{
-			string base = "123";
+			string input = "123";
 			smatch result;
-			auto isTrue = regex_match(base, result, MULT_NUMBER_REGEX);
 
-			Assert::AreEqual(isTrue, true);
+			bool funcResult = regex_match(input, result, MULT_NUMBER_REGEX);
+			bool correctResult = true;
+
+			Assert::AreEqual(funcResult, correctResult);
 		}
 
-		TEST_METHOD(Test_REGEX_MULT_NUMBER_integer_false)
+		TEST_METHOD(Test_REGEX_MULT_NUMBER_WrongInputOfInteger)
 		{
-			string base = "023";
+			string input = "023";
 			smatch result;
-			auto isTrue = regex_match(base, result, MULT_NUMBER_REGEX);
+			auto isTrue = regex_match(input, result, MULT_NUMBER_REGEX);
 
 			Assert::AreEqual(isTrue, false);
 		}
 
-		TEST_METHOD(Test_REGEX_MULT_NUMBER_zero)
+		TEST_METHOD(Test_REGEX_MULT_NUMBER_RightInputOfZero)
 		{
-			string base = "0";
+			string input = "0";
 			smatch result;
-			auto isTrue = regex_match(base, result, MULT_NUMBER_REGEX);
+			auto isTrue = regex_match(input, result, MULT_NUMBER_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_MULT_NUMBER_zero_false)
+		TEST_METHOD(Test_REGEX_MULT_NUMBER_WrongInputOfZero)
 		{
-			string base = "000";
+			string input = "000";
 			smatch result;
-			auto isTrue = regex_match(base, result, MULT_NUMBER_REGEX);
+			auto isTrue = regex_match(input, result, MULT_NUMBER_REGEX);
 
 			Assert::AreEqual(isTrue, false);
 		}
 
-		TEST_METHOD(Test_REGEX_MULT_NUMBER_decimal)
+		TEST_METHOD(Test_REGEX_MULT_NUMBER_RightInputOfDecimal)
 		{
-			string base = "0.5";
+			string input = "0.5";
 			smatch result;
-			auto isTrue = regex_match(base, result, MULT_NUMBER_REGEX);
+			auto isTrue = regex_match(input, result, MULT_NUMBER_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_SINGLE_NUMBER)
+		TEST_METHOD(Test_REGEX_SINGLE_NUMBER_RightInputOfInteger)
 		{
-			string base = "5";
+			string input = "5";
 			smatch result;
-			auto isTrue = regex_match(base, result, SINGLE_NUMBER_REGEX);
+			auto isTrue = regex_match(input, result, SINGLE_NUMBER_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_SINGLE_NUMBER_zero)
+		TEST_METHOD(Test_REGEX_SINGLE_NUMBER_RightInputOfZero)
 		{
-			string base = "0";
+			string input = "0";
 			smatch result;
-			auto isTrue = regex_match(base, result, SINGLE_NUMBER_REGEX);
+			auto isTrue = regex_match(input, result, SINGLE_NUMBER_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_SINGLE_NUMBER_point)
+		TEST_METHOD(Test_REGEX_SINGLE_NUMBER_RightInputOfRadixPoint)
 		{
-			string base = ".";
+			string input = ".";
 			smatch result;
-			auto isTrue = regex_match(base, result, SINGLE_NUMBER_REGEX);
+			auto isTrue = regex_match(input, result, SINGLE_NUMBER_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_SPACE_1)
+		TEST_METHOD(Test_REGEX_SPACE_RightInputOfSingleSpace)
 		{
-			string base = " ";
+			string input = " ";
 			smatch result;
-			auto isTrue = regex_match(base, result, SPACE_REGEX);
+			auto isTrue = regex_match(input, result, SPACE_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_SPACE_more)
+		TEST_METHOD(Test_REGEX_SPACE_RightInputOfMoreSpace)
 		{ 
-			string base = "        ";
+			string input = "        ";
 			smatch result;
-			auto isTrue = regex_match(base, result, SPACE_REGEX);
+			auto isTrue = regex_match(input, result, SPACE_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_SPACE_false)
+		TEST_METHOD(Test_REGEX_SPACE_WrongInput)
 		{
-			string base = "   +";
+			string input = "   +";
 			smatch result;
-			auto isTrue = regex_match(base, result, SPACE_REGEX);
+			auto isTrue = regex_match(input, result, SPACE_REGEX);
 
 			Assert::AreEqual(isTrue, false);
 		}
 
-		TEST_METHOD(Test_REGEX_ADD)
+		TEST_METHOD(Test_REGEX_OPERATOR_RightInputOfAdd)
 		{
-			string base = "+";
+			string input = "+";
 			smatch result;
-			auto isTrue = regex_match(base, result, ADD_REGEX);
+			auto isTrue = regex_match(input, result, OPERATOR_REGEX);
 
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_REGEX_ADD_false)
+		TEST_METHOD(Test_REGEX_OPERATOR_RightInputOfSub)
 		{
-			string base = "-";
+			string input = "-";
 			smatch result;
-			auto isTrue = regex_match(base, result, ADD_REGEX);
+			auto isTrue = regex_match(input, result, OPERATOR_REGEX);
+
+			Assert::AreEqual(isTrue, true);
+		}
+
+		TEST_METHOD(Test_REGEX_OPERATOR_RightInputOfMult)
+		{
+			string input = "*";
+			smatch result;
+			auto isTrue = regex_match(input, result, OPERATOR_REGEX);
+
+			Assert::AreEqual(isTrue, true);
+		}
+
+		TEST_METHOD(Test_REGEX_OPERATOR_RightInputOfDiv)
+		{
+			string input = "/";
+			smatch result;
+			auto isTrue = regex_match(input, result, OPERATOR_REGEX);
+
+			Assert::AreEqual(isTrue, true);
+		}
+
+		TEST_METHOD(Test_REGEX_OPERATOR_WrongInput)
+		{
+			string input = "=";
+			smatch result;
+			auto isTrue = regex_match(input, result, OPERATOR_REGEX);
 
 			Assert::AreEqual(isTrue, false);
 		}
 
-		TEST_METHOD(Test_REGEX_SUB)
-		{
-			string base = "-";
-			smatch result;
-			auto isTrue = regex_match(base, result, SUB_REGEX);
-
-			Assert::AreEqual(isTrue, true);
-		}
-
-		TEST_METHOD(Test_REGEX_SUB_false)
-		{
-			string base = "*";
-			smatch result;
-			auto isTrue = regex_match(base, result, SUB_REGEX);
-
-			Assert::AreEqual(isTrue, false);
-		}
-
-		TEST_METHOD(Test_REGEX_MUL)
-		{
-			string base = "*";
-			smatch result;
-			auto isTrue = regex_match(base, result, MUL_REGEX);
-
-			Assert::AreEqual(isTrue, true);
-		}
-
-		TEST_METHOD(Test_REGEX_MUL_false)
-		{
-			string base = "-";
-			smatch result;
-			auto isTrue = regex_match(base, result, MUL_REGEX);
-
-			Assert::AreEqual(isTrue, false);
-		}
-
-		TEST_METHOD(Test_REGEX_DIV)
-		{
-			string base = "/";
-			smatch result;
-			auto isTrue = regex_match(base, result, DIV_REGEX);
-
-			Assert::AreEqual(isTrue, true);
-		}
-
-		TEST_METHOD(Test_REGEX_DIV_false)
-		{
-			string base = "+";
-			smatch result;
-			auto isTrue = regex_match(base, result, DIV_REGEX);
-
-			Assert::AreEqual(isTrue, false);
-		}
-
-		TEST_METHOD(Test_REGEX_OPERATOR_ADD)
-		{
-			string base = "+";
-			smatch result;
-			auto isTrue = regex_match(base, result, OPERATOR_REGEX);
-
-			Assert::AreEqual(isTrue, true);
-		}
-
-		TEST_METHOD(Test_REGEX_OPERATOR_SUB)
-		{
-			string base = "-";
-			smatch result;
-			auto isTrue = regex_match(base, result, OPERATOR_REGEX);
-
-			Assert::AreEqual(isTrue, true);
-		}
-
-		TEST_METHOD(Test_REGEX_OPERATOR_MUL)
-		{
-			string base = "*";
-			smatch result;
-			auto isTrue = regex_match(base, result, OPERATOR_REGEX);
-
-			Assert::AreEqual(isTrue, true);
-		}
-
-		TEST_METHOD(Test_REGEX_OPERATOR_DIV)
-		{
-			string base = "/";
-			smatch result;
-			auto isTrue = regex_match(base, result, OPERATOR_REGEX);
-
-			Assert::AreEqual(isTrue, true);
-		}
-
-		TEST_METHOD(Test_REGEX_OPERATOR_false)
-		{
-			string base = "=";
-			smatch result;
-			auto isTrue = regex_match(base, result, OPERATOR_REGEX);
-
-			Assert::AreEqual(isTrue, false);
-		}
-
-		TEST_METHOD(Test_NGetTokenList)
+		TEST_METHOD(Test_NGetTokenList_RightInputOfTwoOperator)
 		{
 			//带空格
-			string base = "1-2/3";
+			string input = "1-2/3";
 			vector<string> correct = { "1", "-", "2", "/", "3" };
-			auto result = NGetTokenList(base);
+			auto result = NGetTokenList(input);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NGetTokenList_space_1)
+		TEST_METHOD(Test_NGetTokenList_RightInputOfContainSpace)
 		{
 			//带空格
-			string base = "1 + 2 + 3";
+			string input = "1 + 2 + 3";
 			vector<string> correct = { "1", "+", "2", "+", "3" };
-			auto result = NGetTokenList(base);
+			auto result = NGetTokenList(input);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NGetTokenList_space_2)
+		TEST_METHOD(Test_NGetTokenList_RightInputOfContainSpaceAndDifferentOperator)
 		{
 			//带空格
-			string base = "1 -2 + 3";
+			string input = "1 -2 + 3";
 			vector<string> correct = { "1", "-", "2", "+", "3" };
-			auto result = NGetTokenList(base);
+			auto result = NGetTokenList(input);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NGetTokenList_space_zero)
+		TEST_METHOD(Test_NGetTokenList_RightInputOfContainSpaceAndZero)
 		{
 			//带空格
-			string base = "1 -0 + 3";
+			string input = "1 -0 + 3";
 			vector<string> correct = { "1", "-", "0", "+", "3" };
-			auto result = NGetTokenList(base);
+			auto result = NGetTokenList(input);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
 
-		TEST_METHOD(Test_NGetTokenList_space_decimal)
+		TEST_METHOD(Test_NGetTokenList_RightInputOfContainSpaceAndDecimal)
 		{
 			//带空格
-			string base = "1.7 -0.5 + 3";
+			string input = "1.7 -0.5 + 3";
 			vector<string> correct = { "1.7", "-", "0.5", "+", "3" };
-			auto result = NGetTokenList(base);
+			auto result = NGetTokenList(input);
 
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);

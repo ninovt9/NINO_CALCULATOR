@@ -12,7 +12,7 @@ using std::vector;
 
 namespace NINO_TEST_CALCULATOR
 {
-	TEST_CLASS(NTestNParser)
+	TEST_CLASS(NTestParser)
 	{
 	public:
 		TEST_METHOD(Test_NIsInBracket_NotInBracket)
