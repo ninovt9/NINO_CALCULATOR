@@ -17,7 +17,7 @@ namespace NINO_TEST_CALCULATOR
 	public:
 		TEST_METHOD(Test_NIsInBracket_NotInBracket)
 		{
-			vector<string> base = {"(", "1", "*", "2", ")", "+", "10"};
+			vector<string> base = NGetTokenList("(1*2)+10");
 
 			bool correct = false;
 			bool result = NIsInBracket(base.begin(), base.begin() + 5);
@@ -27,7 +27,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_NIsInBracket_InBracket)
 		{
-			vector<string> base = { "(", "1", "+", "5", ")", "*", "10" };
+			vector<string> base = NGetTokenList("(1+5)*10");
 
 			bool correct = true;
 			bool result = NIsInBracket(base.begin(), base.begin() + 2);
@@ -38,7 +38,7 @@ namespace NINO_TEST_CALCULATOR
 		//可以进行分割_加法
 		TEST_METHOD(Test_NIsSplitBySymbol_CanSplit_Add)
 		{
-			vector<string> base = { "(", "1", "*", "2", ")", "+", "10" };
+			vector<string> base = NGetTokenList("(1*2)+10");
 
 			bool correct = true;
 			string n_operator = "+";
@@ -51,7 +51,7 @@ namespace NINO_TEST_CALCULATOR
 		//不可进行分割_减法
 		TEST_METHOD(Test_NIsSplitBySymbol_CanNotSplit_Sub)
 		{
-			vector<string> base = { "(", "1", "-", "5", ")", "*", "10" };
+			vector<string> base = NGetTokenList("(1-5)*10");
 
 			bool correct = false;
 			string n_operator = "-";
@@ -64,7 +64,7 @@ namespace NINO_TEST_CALCULATOR
 		//没有括号的情况下_乘法
 		TEST_METHOD(Test_NIsSplitBySymbol_HaveNotBracket_Mult)
 		{
-			vector<string> base = { "1", "+", "5", "+", "6" };
+			vector<string> base = NGetTokenList("1+5+6");
 
 			bool correct = false;
 			string n_operator = "*";
@@ -77,7 +77,7 @@ namespace NINO_TEST_CALCULATOR
 		//有重复符号的情况下_除法
 		TEST_METHOD(Test_NIsSplitBySymbol_RepeatOperator_Div)
 		{
-			vector<string> base = { "(", "1", "/", "5", ")", "/", "6" };
+			vector<string> base = NGetTokenList("(1/5)/6");
 
 			bool correct = true;
 			string n_operator = "/";
@@ -90,7 +90,7 @@ namespace NINO_TEST_CALCULATOR
 		//得出iter与原容器iter对比
 		TEST_METHOD(Test_NIsSplitBySymbol_MakeComparisonOfIter)
 		{
-			vector<string> base = { "1", "*", "5" };
+			vector<string> base = NGetTokenList("1*5");
 
 			auto correct = base.begin() + 1;
 			string n_operator = "*";
@@ -104,7 +104,7 @@ namespace NINO_TEST_CALCULATOR
 		//Level-T:单运算符
 		TEST_METHOD(Test_NEvaluateExpressionForT_SingleOperator)
 		{
-			vector<string> base = { "5", "*", "2" };
+			vector<string> base = NGetTokenList("5*2");
 
 			float correct = 10.0f; 
 			float result = NEvaluateExpressionForT(base);
@@ -126,7 +126,7 @@ namespace NINO_TEST_CALCULATOR
 		//Level-F:括号处理
 		TEST_METHOD(Test_NEvaluateExpressionForF_Bracket)
 		{
-			vector<string> base = { "(", "6", "+", "1",")" };
+			vector<string> base = NGetTokenList("(6+1)");
 
 			float correct = 7.0f;
 			float result = NEvaluateExpressionForF(base);
@@ -149,7 +149,7 @@ namespace NINO_TEST_CALCULATOR
 		//加法
 		TEST_METHOD(Test_NEvaluateExpression_Add)
 		{
-			vector<string> base = { "2", "+", "5" };
+			vector<string> base = NGetTokenList("2+5");
 
 			float result = NEvaluateExpression(base);
 			float correct = 7.0f;
@@ -160,7 +160,7 @@ namespace NINO_TEST_CALCULATOR
 		//加减法
 		TEST_METHOD(Test_NEvaluateExpression_MixedAddAndSub)
 		{
-			vector<string> base = { "2", "+", "5", "-", "1" };
+			vector<string> base = NGetTokenList("2+5-1");
 
 			float result = NEvaluateExpression(base);
 			float correct = 6.0f;
@@ -171,7 +171,7 @@ namespace NINO_TEST_CALCULATOR
 		//四则运算
 		TEST_METHOD(Test_NEvaluateExpression_Arithmetic)
 		{
-			vector<string> base = { "2", "+", "5", "-", "1" };
+			vector<string> base = NGetTokenList("2+5-1");
 
 			float result = NEvaluateExpression(base);
 			float correct = 6.0f;
@@ -182,7 +182,7 @@ namespace NINO_TEST_CALCULATOR
 		//单括号
 		TEST_METHOD(Test_NEvaluateExpression_SingleBracket)
 		{
-			vector<string> base = { "(", "2", "+", "5", ")", "*", "7", "/", "7" };
+			vector<string> base = NGetTokenList("(2+5)*7/7");
 
 			float result = NEvaluateExpression(base);
 			float correct = 7.0f;
@@ -191,9 +191,9 @@ namespace NINO_TEST_CALCULATOR
 		}
 
 		//多括号
-		TEST_METHOD(Test_NEvaluateExpression_MultipleBracket)
+		TEST_METHOD(Test_NEvaluateExpression_MultipleBrackets)
 		{
-			vector<string> base = { "(", "(", "2", "+", "5", ")", "*", "7", ")", "+", "5" };
+			vector<string> base = NGetTokenList("((2+5)*7)+5");
 
 			float result = NEvaluateExpression(base);
 			float correct = 54.0f;

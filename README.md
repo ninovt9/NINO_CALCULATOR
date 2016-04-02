@@ -18,6 +18,7 @@ Visual Studio 2015
 代码结构:      
 NScanner：分析表达式，生成单词流     
 NParser：分析单词流，计算表达式结果
+NExpression：表达式类
 
 更新情况:     
 2016.04.02:控制台简易版

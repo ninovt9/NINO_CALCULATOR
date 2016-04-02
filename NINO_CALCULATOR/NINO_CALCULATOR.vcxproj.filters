@@ -30,6 +30,9 @@
     <ClInclude Include="NParser.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="NExpression.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,6 +45,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="NParser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NExpression.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

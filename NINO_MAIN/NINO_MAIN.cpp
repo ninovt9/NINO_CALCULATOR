@@ -2,8 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "NParser.h"
-#include "NScanner.h"
+#include "NExpression.h"
 #include <iostream>
 #include <Windows.h>
 
@@ -21,10 +20,7 @@ void NCalculator()
 	cout << "\n请输入表达式: " << endl;
 	cin >> line;
 
-	//分解
-	vector<string> tokenList = NGetTokenList(line);
-	//计算结果
-	auto result = NEvaluateExpression(tokenList);
+	auto result = NExpression::Calculate(line);
 
 	cout << "结果为：" << result << endl;
 }
