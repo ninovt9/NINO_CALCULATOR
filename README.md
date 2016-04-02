@@ -11,9 +11,9 @@ Visual Studio 2015
 
 使用方法:     
 在控制台中输入正确表达式（目前不支持错误输入）      
-![](\Source\console_calculator_1.png)     
+![alt text](https://github.com/ninovt9/NINO_CALCULATOR/blob/master/Source/console_calculator_1.png)     
 得出结果      
-![](\Source\console_calculator_2.png) 
+![alt text](https://github.com/ninovt9/NINO_CALCULATOR/blob/master/Source/console_calculator_2.png) 
 
 代码结构:      
 NScanner：分析表达式，生成单词流     
