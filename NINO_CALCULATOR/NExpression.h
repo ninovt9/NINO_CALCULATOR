@@ -2,6 +2,7 @@
 
 #include "NScanner.h"
 #include "NParser.h"
+#include "NChecker.h"
 
 #include <string>
 #include <vector>

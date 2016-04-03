@@ -11,6 +11,7 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::vector;
+using std::invalid_argument;
 
 
 //µ÷ÓÃ¼ÆËãÆ÷
@@ -29,7 +30,12 @@ int main()
 {
 	for (;;)
 	{
-		NCalculator();
+		try {
+			NCalculator();
+		}
+		catch (invalid_argument err){
+			cout << "´íÎó£º" << err.what() << endl;
+		}
 	}
 
 	system("pause");

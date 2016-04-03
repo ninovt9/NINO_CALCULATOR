@@ -66,5 +66,77 @@ namespace NINO_TEST_CALCULATOR
 
 			Assert::AreEqual(funcResult, correctResult);
 		}
+
+		TEST_METHOD(Test_NCheckMatchError_NotMatch)
+		{
+			bool funcResult = false;
+			bool correctResult = true;
+
+			string expression = "(1+5";
+			try
+			{
+				NCheckMatchError(expression);
+			}
+			catch (invalid_argument err)
+			{
+				funcResult = true;
+			}
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
+		TEST_METHOD(Test_NCheckMatchError_NotMatchAndSameBracketNumber)
+		{
+			bool funcResult = false;
+			bool correctResult = true;
+
+			string expression = ")(1+5))";
+			try
+			{
+				NCheckMatchError(expression);
+			}
+			catch (invalid_argument err)
+			{
+				funcResult = true;
+			}
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
+		TEST_METHOD(Test_NCheckMatchError_Match)
+		{
+			bool funcResult = false;
+			bool correctResult = false;
+
+			string expression = "(1+5)";
+			try
+			{
+				NCheckMatchError(expression);
+			}
+			catch (invalid_argument err)
+			{
+				funcResult = true;
+			}
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
+		TEST_METHOD(Test_NCheckOperatorAdjacent)
+		{
+			bool funcResult = false;
+			bool correctResult = true;
+
+			string expression = "(1++5)";
+			try
+			{
+				NCheckOperatorAdjacent(expression);
+			}
+			catch (invalid_argument err)
+			{
+				funcResult = true;
+			}
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
 	};
 }
