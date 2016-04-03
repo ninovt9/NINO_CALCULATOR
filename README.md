@@ -13,7 +13,10 @@ Visual Studio 2015
 在控制台中输入正确表达式（目前不支持错误输入）      
 ![](https://github.com/ninovt9/NINO_CALCULATOR/blob/master/Source/console_calculator_1.png)     
 得出结果      
-![](https://github.com/ninovt9/NINO_CALCULATOR/blob/master/Source/console_calculator_2.png) 
+![](https://github.com/ninovt9/NINO_CALCULATOR/blob/master/Source/console_calculator_2.png)    
+错误输入    
+![](https://github.com/ninovt9/NINO_CALCULATOR/blob/master/Source/2016.04.03.png)
+
 
 代码结构:      
 NScanner：分析表达式，生成单词流     
