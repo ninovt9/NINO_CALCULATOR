@@ -33,6 +33,9 @@
     <ClInclude Include="NExpression.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="NChecker.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +51,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="NExpression.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NChecker.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

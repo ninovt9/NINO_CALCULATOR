@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NChecker.h" />
     <ClInclude Include="NExpression.h" />
     <ClInclude Include="NParser.h" />
     <ClInclude Include="NScanner.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NChecker.cpp" />
     <ClCompile Include="NExpression.cpp" />
     <ClCompile Include="NINO_CALCULATOR.cpp" />
     <ClCompile Include="NParser.cpp" />

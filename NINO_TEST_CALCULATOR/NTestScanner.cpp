@@ -318,5 +318,6 @@ namespace NINO_TEST_CALCULATOR
 			bool isTrue = equal(result.begin(), result.end(), correct.begin(), correct.end());
 			Assert::AreEqual(isTrue, true);
 		}
+
 	};
 }
