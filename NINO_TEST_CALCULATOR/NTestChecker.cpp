@@ -67,6 +67,24 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(funcResult, correctResult);
 		}
 
+		TEST_METHOD(Test_NCheckTokenError_SingleOperator)
+		{
+			bool funcResult = false;
+			bool correctResult = true;
+
+			string expression = "+";
+			try
+			{
+				NCheckTokenError(expression);
+			}
+			catch (invalid_argument err)
+			{
+				funcResult = true;
+			}
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
 		TEST_METHOD(Test_NCheckMatchError_NotMatch)
 		{
 			bool funcResult = false;
@@ -138,5 +156,7 @@ namespace NINO_TEST_CALCULATOR
 
 			Assert::AreEqual(funcResult, correctResult);
 		}
+
+		
 	};
 }

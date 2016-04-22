@@ -76,6 +76,24 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(funcResult, correctResult);
 		}
 
+		TEST_METHOD(Test_Calculate_WrongInputOfSingleOperator)
+		{
+			string expression = "+";
+
+			bool funcResult = false;
+			bool correctResult = true;
+
+			try {
+				NExpression::Calculate(expression);
+			}
+			catch (invalid_argument err) {
+				funcResult = true;
+			}
+
+
+			Assert::AreEqual(funcResult, correctResult);
+		}
+
 		
 	};
 }
