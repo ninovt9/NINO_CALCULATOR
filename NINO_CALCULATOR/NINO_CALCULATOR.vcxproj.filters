@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="New">
+      <UniqueIdentifier>{dad2b855-72a4-4402-b6f1-f5823de34207}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -36,6 +39,15 @@
     <ClInclude Include="NChecker.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>New</Filter>
+    </ClInclude>
+    <ClInclude Include="Scanner.h">
+      <Filter>New</Filter>
+    </ClInclude>
+    <ClInclude Include="Dictionary.h">
+      <Filter>New</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -55,6 +67,15 @@
     </ClCompile>
     <ClCompile Include="NChecker.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Token.cpp">
+      <Filter>New</Filter>
+    </ClCompile>
+    <ClCompile Include="Scanner.cpp">
+      <Filter>New</Filter>
+    </ClCompile>
+    <ClCompile Include="Dictionary.cpp">
+      <Filter>New</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
