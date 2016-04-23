@@ -16,11 +16,14 @@ namespace calculator
 	{
 	public:
 		Dictionary();
+
 	public:
 		static void AddToken(SyntaxDict &dict, const std::string &name, Token token);
+
 	public:
 		bool HasToken(const std::string &name) const;
 		Token FindToken(const std::string &name) const;
+
 	private:
 		SyntaxDict dict_;
 		

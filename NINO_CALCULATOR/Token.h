@@ -23,9 +23,10 @@ namespace calculator
 	public:
 		Token();
 		Token(TokenType type);
+
 	public:
 		TokenType GetType();
-		
+
 	private:
 		TokenType type_;
 	};

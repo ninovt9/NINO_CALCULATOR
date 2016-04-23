@@ -18,8 +18,6 @@ namespace calculator
 
 	class Scanner
 	{
-		//构建class
-		//从文件流中提取token(GetNextToken)
 	public:
 		Scanner(const std::string &expression);
 
@@ -32,8 +30,8 @@ namespace calculator
 		void HandleOperatorState();
 		
 	private:
-		char currectChar_;
-		Dictionary dict_;
+		char currectChar_;					//当前字符
+		Dictionary dict_;					//语法字典
 		State state_;						//当前状态，用于状态机
 		std::stringstream expression_;		//表达式(流）
 		std::string buffer_;				//临时缓存(相当于tempStr)
