@@ -5,55 +5,92 @@ using std::string;
 
 namespace calculator
 {
-	Scanner::Scanner(const string &expression):state_(State::START), buffer_("")
+	Scanner::Scanner(const string &expression) :state_(State::START), buffer_("")
 	{
 		expression_ = std::stringstream(expression);
+		currectChar_ = GetNextChar();
+		dict_ = Dictionary();
 	}
 
 	char Scanner::GetNextChar()
 	{
 		char ch;
 		expression_ >> ch;
+		currectChar_ = ch;
 		return ch;
 	}
 
-	State Scanner::HandleStartState()
+	void Scanner::HandleNumberState()
 	{
-		auto ch = GetNextChar();	//获取当前字符
-		Dictionary dict = Dictionary();
-		
-		//整数:0-9					
-		if (isdigit(ch))	
+		//首个字符
+		buffer_.push_back(currectChar_);
+
+		while (isdigit(GetNextChar()))
 		{
-			return State::NUMBER;
+			buffer_ += currectChar_;
 		}
-		//字符
-		//elif(dict.FindToken())
+
+		//token of int
+		token_ = Token(TokenType::INT);
+
+		//重置
+		state_ = State::START;
+		buffer_ = "";
+	}
+
+	void Scanner::HandleOperatorState()
+	{
+		buffer_.push_back(currectChar_);
+		token_ = dict_.FindToken(buffer_);
+
+		//重置
+		state_ = State::START;
+		buffer_ = "";
+		GetNextChar();
 	}
 
 	Token Scanner::GetNextToken()
 	{
 		//状态判断
-		switch (state_)
+		while (!expression_.eof())
 		{
-		case State::START:
-			//首字母判断state
-			break;
-		case State::NUMBER:
-			//数字处理
-			break;
-		case State::OPERATOR:
-			//符号处理
-			break;
-		case State::END:
-			//
-			break;
-		default:
-			//
-			break;
+			switch (state_)
+			{
+			case State::START:
+				break;
+
+			case State::NUMBER:
+				HandleNumberState();
+				return token_;
+				break;
+
+			case State::OPERATOR:
+				HandleOperatorState();
+				return token_;
+				break;
+
+			default:
+				break;
+			}
+
+			string currectStr;
+			currectStr.push_back(currectChar_);
+
+			//state迁移
+			if (isdigit(currectChar_))
+			{
+				state_ = State::NUMBER;
+			}
+			else if (dict_.HasToken(currectStr))
+			{
+				state_ = State::OPERATOR;
+			}
 		}
+		return Token(TokenType::INVALID);
 	}
 }
+
+
 
 
 
