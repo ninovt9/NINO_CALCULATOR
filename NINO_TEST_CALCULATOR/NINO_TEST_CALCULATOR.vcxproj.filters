@@ -47,5 +47,8 @@
     <ClCompile Include="TestScanner.cpp">
       <Filter>NewTest</Filter>
     </ClCompile>
+    <ClCompile Include="TestParser.cpp">
+      <Filter>NewTest</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

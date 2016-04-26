@@ -170,6 +170,7 @@
     <ClCompile Include="NTestScanner.cpp" />
     <ClCompile Include="NTestParser.cpp" />
     <ClCompile Include="TestDictionary.cpp" />
+    <ClCompile Include="TestParser.cpp" />
     <ClCompile Include="TestScanner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

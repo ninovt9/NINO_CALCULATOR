@@ -23,17 +23,25 @@ namespace calculator
 	public:
 		Token();
 		Token(TokenType type);
+		Token(TokenType type, int intValue);
 
 	public:
 		TokenType GetType();
+		int GetIntValue();
 
 	private:
 		TokenType type_;
+		int intValue_;
 	};
 
 	inline TokenType Token::GetType()
 	{
 		return type_;
+	}
+
+	inline int Token::GetIntValue()
+	{
+		return intValue_;
 	}
 }
 

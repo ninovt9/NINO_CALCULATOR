@@ -25,7 +25,7 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(scanner.GetNextChar(), '5');
 		}
 
-		TEST_METHOD(Test_GetNextToken)
+		TEST_METHOD(Test_GetNextToken_tokenType)
 		{
 			Scanner scanner("(1+2)*5");
 			bool result = false;
@@ -46,6 +46,22 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(result, true);
 			result = (scanner.GetNextToken().GetType() == TokenType::INVALID);
 			Assert::AreEqual(result, true);
+
+
+
+			
+
+			//¿Õ¸ñ~ÔÝÊ±²»Ð´
+		}
+
+		TEST_METHOD(Test_GetNextToken_intValue)
+		{
+			//int value
+			Scanner scanner("1+5");
+
+			Assert::AreEqual(scanner.GetNextToken().GetIntValue(), 1);
+			scanner.GetNextToken();
+			Assert::AreEqual(scanner.GetNextToken().GetIntValue(), 5);
 		}
 		
 	};

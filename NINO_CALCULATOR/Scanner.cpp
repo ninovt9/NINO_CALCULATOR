@@ -23,6 +23,7 @@ namespace calculator
 	void Scanner::HandleNumberState()
 	{
 		//首个字符
+		
 		buffer_.push_back(currectChar_);
 
 		while (isdigit(GetNextChar()))
@@ -31,7 +32,13 @@ namespace calculator
 		}
 
 		//token of int
-		token_ = Token(TokenType::INT);
+
+		//token_ = Token(TokenType::INT);
+		int value;
+		std::stringstream stream(buffer_);
+		stream >> value;
+
+		token_ = Token(TokenType::INT, value);
 
 		//重置
 		state_ = State::START;
@@ -41,6 +48,7 @@ namespace calculator
 	void Scanner::HandleOperatorState()
 	{
 		buffer_.push_back(currectChar_);
+
 		token_ = dict_.FindToken(buffer_);
 
 		//重置

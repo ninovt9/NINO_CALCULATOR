@@ -12,4 +12,9 @@ namespace calculator
 	{
 
 	}
+
+	Token::Token(TokenType type, int intValue) : type_(type), intValue_(intValue)
+	{
+
+	}
 }
