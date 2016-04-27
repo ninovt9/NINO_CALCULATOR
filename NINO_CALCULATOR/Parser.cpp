@@ -32,126 +32,134 @@ namespace calculator
 	Parser::Parser(const std::string &expression)
 	{
 		scanner_ = Scanner(expression);
-		ast_ = CreateAST();
+		tokenList_ = scanner_.GetTokenList();
+		ast_ = GetAST();
 	}
 
-	AST Parser::CreateAST()
+	AST Parser::GetAST()
 	{
-		return RuleExp(scanner_.GetNextToken());
+		return GetNodeExp(tokenList_.begin());
 	}
 
-	AST Parser::RuleExp(Token token)
+	AST Parser::GetNodeExp(vector<Token>::iterator iter)
 	{
 		// expression : term { ("+" | "-") term };	
 		AST ast = AST();
 
 		// only term
-		ast = RuleTerm(token);
+		ast = GetNodeTerm(iter);
 		
-		// term +- term
 		for (;;)
 		{
-			auto operaToken = scanner_.GetNextToken();
-
-			if (operaToken.GetType() == TokenType::ADD 
-				|| operaToken.GetType() ==  TokenType::SUB)
+			// peek到加/减号的情况下->进位
+			if ((iter + 1)->GetType() == TokenType::ADD
+				|| (iter + 1)->GetType() == TokenType::SUB)
 			{
-				ast = AST(ast, operaToken, RuleTerm(scanner_.GetNextToken()));
+				// 获得operatorのtoken并进位
+				auto operaToken = iter++;
+				// term +- term
+				ast = AST(ast, *operaToken, GetNodeTerm(iter++));
 			}
 			else
 			{
 				break;
-				// error， 暂时不写
-			} 
+			}
 		}
-
+		
 		return ast;
 
+		//	iter++;
+		//	auto operaToken = *iter;
 
-		//auto operaToken = scanner_.GetNextToken();
-
-		//if (operaToken.GetType() == TokenType::ADD 
-		//	|| operaToken.GetType() ==  TokenType::SUB)
-		//{
-		//	ast = AST(ast, operaToken, RuleTerm(scanner_.GetNextToken()));
+		//	if (operaToken.GetType() == TokenType::ADD 
+		//		|| operaToken.GetType() ==  TokenType::SUB)
+		//	{
+		//		// term +- term
+		//		ast = AST(ast, operaToken, GetNodeTerm(iter++));
+		//	}
+		//	else
+		//	{
+		//		break;
+		//		// error， 暂时不写
+		//	} 
 		//}
-		//else
-		//{
-		//	// error， 暂时不写
-		//} 
 
-		//return ast;
+		// return ast;
 	}
 
-	AST Parser::RuleTerm(Token token)
+	AST Parser::GetNodeTerm(vector<Token>::iterator iter)
 	{
 		// term : factor { ("*" | "/") factor }
 		AST ast = AST();
 
 		// only factor
-		ast = RuleFactor(token);
-
-		// factor */ factor
+		ast = GetNodeFactor(iter);
 
 		for (;;)
 		{
-			auto operaToken = scanner_.GetNextToken();
-
-			if (operaToken.GetType() == TokenType::MUL
-				|| operaToken.GetType() == TokenType::DIV)
+			// peek到加/减号的情况下->进位
+			if ((iter + 1)->GetType() == TokenType::MUL
+				|| (iter + 1)->GetType() == TokenType::DIV)
 			{
-				ast = AST(ast, operaToken, RuleFactor(scanner_.GetNextToken()));
+				// 获得operatorのtoken并进位
+				auto operaToken = iter++;
+				// factor */ factor
+				ast = AST(ast, *operaToken, GetNodeFactor(iter++));
 			}
 			else
 			{
 				break;
-				//error， 暂时不写
 			}
-
-			
 		}
 
 		return ast;
 
-		//// factor */ factor
-		//auto operaToken = scanner_.GetNextToken();
+		//for (;;)
+		//{
+		//	iter++;
+		//	auto operaToken = *iter;
 
-		//if (operaToken.GetType() == TokenType::MUL
-		//	|| operaToken.GetType() == TokenType::DIV)
-		//{
-		//	ast = AST(ast, operaToken, RuleFactor(scanner_.GetNextToken()));
-		//}
-		//else
-		//{
-		//	//error， 暂时不写
+		//	if (operaToken.GetType() == TokenType::MUL
+		//		|| operaToken.GetType() == TokenType::DIV)
+		//	{
+		//		// factor */ factor
+		//		ast = AST(ast, operaToken, GetNodeFactor(iter++)));
+		//	}
+		//	else
+		//	{
+		//		break;
+		//		//error， 暂时不写
+		//	}
+
+		//	
 		//}
 
 		//return ast;
 	}
 
-	AST Parser::RuleFactor(Token token)
+	AST Parser::GetNodeFactor(vector<Token>::iterator iter)
 	{
 		// factor: number | "(" expression ")"
-
 		AST ast = AST();
 	
 		//情况1：数字
-		if (token.GetType() == TokenType::INT)
+		if (iter->GetType() == TokenType::INT)
 		{
-			ast = AST(token);
+			ast = AST(*iter);
 		}
 		//情况2：括号
-		else if (token.GetType() == TokenType::LEFT_PAR)
+		else if (iter->GetType() == TokenType::LEFT_PAR)
 		{
-			token = scanner_.GetNextToken();
-			if (token.GetType() == TokenType::INT 
-				&& scanner_.GetNextToken().GetType() == TokenType::RIGHT_PAR)
+			iter++;	//get expression
+			if (iter->GetType() == TokenType::INT)
 			{
-				ast = RuleExp(token);
-			}
-			else
-			{
-				//error， 暂时不写
+				ast = GetNodeExp(iter);
+
+				//判断右括号
+				if (iter->GetType() != TokenType::RIGHT_PAR)
+				{
+					//error, 懒得写
+				}
 			}
 		}
 		else

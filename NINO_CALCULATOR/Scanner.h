@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include <string>
+#include <vector>
 
 namespace calculator
 {
@@ -23,8 +24,10 @@ namespace calculator
 		Scanner(const std::string &expression);
 
 	public:
-		char GetNextChar();
+		//char GetNextChar();
+		char GetNextChar(std::stringstream &expression);
 		Token GetNextToken();	
+		std::vector<Token> GetTokenList();
 
 	public:
 		void HandleNumberState();
@@ -35,9 +38,7 @@ namespace calculator
 		Dictionary dict_;					//语法字典
 		State state_;						//当前状态，用于状态机
 		std::stringstream expression_;		//表达式(流）
-
 		std::string buffer_;				//临时缓存(相当于tempStr)
-
 		Token token_;						//临时token
 	};
 
