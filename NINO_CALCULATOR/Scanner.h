@@ -20,18 +20,17 @@ namespace calculator
 	class Scanner
 	{
 	public:
-		Scanner() = default;
+		Scanner();
 		Scanner(const std::string &expression);
 
 	public:
-		//char GetNextChar();
-		char GetNextChar(std::stringstream &expression);
-		Token GetNextToken();	
-		std::vector<Token> GetTokenList();
+		char GetNextChar(std::stringstream &expression);	
+		Token GetNextToken();								
+		std::vector<Token> GetTokenList();					
 
 	public:
-		void HandleNumberState();
-		void HandleOperatorState();
+		Token HandleNumberState(std::stringstream &expression, char currectChar);
+		Token HandleOperatorState(std::stringstream &expression, char currectChar);
 		
 	private:
 		char currectChar_;					//µ±Ç°×Ö·û

@@ -16,7 +16,6 @@ namespace NINO_TEST_CALCULATOR
 		TEST_METHOD(Test_GetNextChar)
 		{
 			Scanner scanner = Scanner();
-			
 			stringstream stream("1+5");
 
 			Assert::AreEqual(scanner.GetNextChar(stream), '1');
@@ -29,7 +28,51 @@ namespace NINO_TEST_CALCULATOR
 
 		}
 
+		TEST_METHOD(Test_HandleOperatorState)
+		{
+			Scanner scanner = Scanner();
+			stringstream stream;
+			char currectChar;
+			Token token;
 
+			// add
+			stream = stringstream("+5");
+			currectChar = stream.get();
+			token = scanner.HandleOperatorState(stream, currectChar);
+
+			Assert::AreEqual((token.GetType() == TokenType::ADD), true);
+
+			// par
+			stream = stringstream("(");
+			currectChar = stream.get();
+			token = scanner.HandleOperatorState(stream, currectChar);
+
+			Assert::AreEqual((token.GetType() == TokenType::LEFT_PAR), true);
+		}
+
+		TEST_METHOD(Test_HandleNumberState)
+		{
+			Scanner scanner = Scanner();
+
+			stringstream stream;
+			char currectChar;
+			Token token;
+
+			// int
+			stream = stringstream("6+1");
+			currectChar = stream.get();
+			token = scanner.HandleNumberState(stream, currectChar);
+
+			Assert::AreEqual((token.GetType() == TokenType::INT), true);
+			Assert::AreEqual(token.GetIntValue(), 6);
+
+			stream = stringstream("659");
+			currectChar = stream.get();
+			token = scanner.HandleNumberState(stream, currectChar);
+
+			Assert::AreEqual((token.GetType() == TokenType::INT), true);
+			Assert::AreEqual(token.GetIntValue(), 659);
+		}
 
 
 		//TEST_METHOD(Test_InitExpression)

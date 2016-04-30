@@ -7,20 +7,18 @@ using std::stringstream;
 
 namespace calculator
 {
+	Scanner::Scanner() : state_(State::START), buffer_("")
+	{
+		expression_ = std::stringstream("");
+		dict_ = Dictionary();
+	}
+
 	Scanner::Scanner(const string &expression) :state_(State::START), buffer_("")
 	{
 		expression_ = std::stringstream(expression);
 		//currectChar_ = GetNextChar(expression);
 		dict_ = Dictionary();
 	}
-
-	//char Scanner::GetNextChar()
-	//{
-	//	char ch;
-	//	expression_ >> ch;
-	//	currectChar_ = ch;
-	//	return ch;
-	//}
 
 	char Scanner::GetNextChar(stringstream &expression)
 	{
@@ -38,46 +36,6 @@ namespace calculator
 		return result;
 
 		//此处应有error
-	}
-
-
-
-	void Scanner::HandleNumberState()
-	{
-		////首个字符
-		//
-		//buffer_.push_back(currectChar_);
-
-		//GetNextChar();
-		//while (!expression_.eof() && isdigit(currectChar_))
-		//{
-		//	buffer_ += currectChar_;
-		//}
-
-		////token of int
-
-		////token_ = Token(TokenType::INT);
-		//int value;
-		//std::stringstream stream(buffer_);
-		//stream >> value;
-
-		//token_ = Token(TokenType::INT, value);
-
-		////重置
-		//state_ = State::START;
-		//buffer_ = "";
-	}
-
-	void Scanner::HandleOperatorState()
-	{
-		//buffer_.push_back(currectChar_);
-
-		//token_ = dict_.FindToken(buffer_);
-
-		////重置
-		//state_ = State::START;
-		//buffer_ = "";
-		//GetNextChar();
 	}
 
 	Token Scanner::GetNextToken()
@@ -119,6 +77,50 @@ namespace calculator
 		//}
 		return Token(TokenType::INVALID);
 	}
+
+
+
+	Token Scanner::HandleNumberState(stringstream &expression, char currectChar)
+	{
+		// first char
+		string buffer;
+		buffer.push_back(currectChar);
+
+		// the rest of char
+		currectChar = GetNextChar(expression);
+		// 未达文件尾 and 元素为数字
+		while (!expression.eof() && isdigit(currectChar))	
+		{
+			buffer += currectChar;
+			currectChar = GetNextChar(expression);
+		}
+
+		// reset state
+		state_ = State::START;
+
+		// string to int
+		int value;
+		std::stringstream stream(buffer);
+		stream >> value;
+
+		return Token(TokenType::INT, value);
+	}
+
+	Token Scanner::HandleOperatorState(stringstream &expression, char currectChar)
+	{
+		// first char
+		string buffer;
+		buffer.push_back(currectChar);
+		auto token = dict_.FindToken(buffer);
+
+		//reset state
+		state_ = State::START;
+		GetNextChar(expression);
+
+		return token;
+	}
+
+
 }
 
 
