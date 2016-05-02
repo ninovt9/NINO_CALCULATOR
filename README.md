@@ -12,7 +12,7 @@ version:2.0 (还没写完)
 	1.scanner：状态机重写
 	2.parser：改为生成语法树     
 
-语法：
+语法： 
 	1.词法分析: 
 		START		: NUMBER 
 					| OPERATOR 
