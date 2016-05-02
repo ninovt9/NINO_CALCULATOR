@@ -142,9 +142,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="NChecker.h" />
     <ClInclude Include="NExpression.h" />
@@ -172,6 +169,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Token.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
