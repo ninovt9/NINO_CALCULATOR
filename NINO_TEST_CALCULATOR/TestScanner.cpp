@@ -7,6 +7,7 @@ using namespace calculator;
 
 using std::string;
 using std::stringstream;
+using std::vector;
 
 namespace NINO_TEST_CALCULATOR
 {
@@ -25,6 +26,12 @@ namespace NINO_TEST_CALCULATOR
 			//out of stream
 			char err = scanner.GetNextChar(stream);
 			Assert::AreEqual(isdigit(err), 0);				//not a digit
+
+			// contain space
+			stream = stringstream("1 +5");
+			Assert::AreEqual(scanner.GetNextChar(stream), '1');
+			Assert::AreEqual(scanner.GetNextChar(stream), '+');
+			Assert::AreEqual(scanner.GetNextChar(stream), '5');
 
 		}
 
@@ -60,81 +67,132 @@ namespace NINO_TEST_CALCULATOR
 
 			// int
 			stream = stringstream("6+1");
+
 			currectChar = stream.get();
 			token = scanner.HandleNumberState(stream, currectChar);
-
 			Assert::AreEqual((token.GetType() == TokenType::INT), true);
 			Assert::AreEqual(token.GetIntValue(), 6);
 
+			// more
 			stream = stringstream("659");
 			currectChar = stream.get();
 			token = scanner.HandleNumberState(stream, currectChar);
 
 			Assert::AreEqual((token.GetType() == TokenType::INT), true);
 			Assert::AreEqual(token.GetIntValue(), 659);
+
+			//空格
 		}
 
-
-		//TEST_METHOD(Test_InitExpression)
-		//{
-		//	Scanner scanner("(1+2)*5");
-
-		//	//因为在构造函数里掉用一次GetNextChar
-		//	//Assert::AreEqual(scanner.GetNextChar(), '(');
-		//	Assert::AreEqual(scanner.GetNextChar(), '1');
-		//	Assert::AreEqual(scanner.GetNextChar(), '+');
-		//	Assert::AreEqual(scanner.GetNextChar(), '2');
-		//	Assert::AreEqual(scanner.GetNextChar(), ')');
-		//	Assert::AreEqual(scanner.GetNextChar(), '*');
-		//	Assert::AreEqual(scanner.GetNextChar(), '5');
-		//}
-
-		TEST_METHOD(Test_GetNextToken_tokenType)
+		TEST_METHOD(Test_GetNextToken)
 		{
-			Scanner scanner("(1+2)*5");
-			bool result = false;
+			Scanner scanner = Scanner();
 
-			result = (scanner.GetNextToken().GetType() == TokenType::LEFT_PAR);
-			Assert::AreEqual(result, true);
-			result = (scanner.GetNextToken().GetType() == TokenType::INT);
-			Assert::AreEqual(result, true);
-			result = (scanner.GetNextToken().GetType() == TokenType::ADD);
-			Assert::AreEqual(result, true);
-			result = (scanner.GetNextToken().GetType() == TokenType::INT);
-			Assert::AreEqual(result, true);
-			result = (scanner.GetNextToken().GetType() == TokenType::RIGHT_PAR);
-			Assert::AreEqual(result, true);
-			result = (scanner.GetNextToken().GetType() == TokenType::MUL);
-			Assert::AreEqual(result, true);
-			result = (scanner.GetNextToken().GetType() == TokenType::INT);
-			Assert::AreEqual(result, true);
-			result = (scanner.GetNextToken().GetType() == TokenType::INVALID);
-			Assert::AreEqual(result, true);
-
-
+			stringstream stream;
+			Token token;
 
 			
+			// add
+			stream = stringstream("75+9");
 
-			//空格~暂时不写
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::INT), true);
+			Assert::AreEqual(token.GetIntValue(), 75);
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::ADD), true);
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::INT), true);
+			Assert::AreEqual(token.GetIntValue(), 9);
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::INVALID), true);
+
+			// space
+			stream = stringstream(" 75 + 9 ");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::INT), true);
+			Assert::AreEqual(token.GetIntValue(), 75);
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::ADD), true);
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::INT), true);
+			Assert::AreEqual(token.GetIntValue(), 9);
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token.GetType() == TokenType::INVALID), true);
 		}
 
-		TEST_METHOD(Test_GetNextToken_intValue)
-		{
-			//int value
-			Scanner scanner("1+5");
-
-			Assert::AreEqual(scanner.GetNextToken().GetIntValue(), 1);
-			scanner.GetNextToken();
-			Assert::AreEqual(scanner.GetNextToken().GetIntValue(), 5);
-		}
-		
 		TEST_METHOD(Test_GetTokenList)
 		{
-			Scanner scanner("1+6");
-			auto tokenList = scanner.GetTokenList();
+			Scanner scanner = Scanner();
 
+			stringstream stream;
+			vector<Token> tokenList;
+
+
+
+			stream = stringstream("1/5*6");
+			tokenList = scanner.GetTokenList(stream);
+
+			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 1);
-			Assert::AreEqual(tokenList[2].GetIntValue(), 6);
+
+			Assert::AreEqual((tokenList[1].GetType() == TokenType::DIV), true);
+
+			Assert::AreEqual((tokenList[2].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[2].GetIntValue(), 5);
+
+			Assert::AreEqual((tokenList[3].GetType() == TokenType::MUL), true);
+
+			Assert::AreEqual((tokenList[4].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[4].GetIntValue(), 6);
+
+
+
+			// contain space
+			stream = stringstream(" 1 / 5 * 6 ");
+			tokenList = scanner.GetTokenList(stream);
+
+			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[0].GetIntValue(), 1);
+
+			Assert::AreEqual((tokenList[1].GetType() == TokenType::DIV), true);
+
+			Assert::AreEqual((tokenList[2].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[2].GetIntValue(), 5);
+
+			Assert::AreEqual((tokenList[3].GetType() == TokenType::MUL), true);
+
+			Assert::AreEqual((tokenList[4].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[4].GetIntValue(), 6);
+
+
+
+			// mult line
+			stream = stringstream("1+5\n3");
+				//first line
+			tokenList = scanner.GetTokenList(stream);
+
+			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[0].GetIntValue(), 1);
+
+			Assert::AreEqual((tokenList[1].GetType() == TokenType::ADD), true);
+
+			Assert::AreEqual((tokenList[2].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[2].GetIntValue(), 5);
+
+				//second line
+			tokenList = scanner.GetTokenList(stream);
+
+			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
+			Assert::AreEqual(tokenList[0].GetIntValue(), 3);
+
 		}
+
 	};
 }

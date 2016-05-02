@@ -25,8 +25,12 @@ namespace calculator
 
 	public:
 		char GetNextChar(std::stringstream &expression);	
-		Token GetNextToken();								
-		std::vector<Token> GetTokenList();					
+		Token GetNextToken(std::stringstream &expression);								
+		std::vector<Token> GetTokenList(std::stringstream &expression);		
+		std::vector<Token> GetTokenList()
+		{
+			return std::vector<Token>();
+		}
 
 	public:
 		Token HandleNumberState(std::stringstream &expression, char currectChar);

@@ -16,68 +16,85 @@ namespace calculator
 	Scanner::Scanner(const string &expression) :state_(State::START), buffer_("")
 	{
 		expression_ = std::stringstream(expression);
-		//currectChar_ = GetNextChar(expression);
 		dict_ = Dictionary();
 	}
 
 	char Scanner::GetNextChar(stringstream &expression)
 	{
-		return expression.get();
+		char result;
+		// strip space
+		do {
+			result = expression.get();
+		} while (result == ' ');
+
+		return result;
 	}
 
-	vector<Token> Scanner::GetTokenList()
+	vector<Token> Scanner::GetTokenList(stringstream &expression)
 	{
 		vector<Token> result;
+
+		while (!expression.eof())
+		{
+			// if the next char is a line break
+			if (expression.peek() == '\n')
+			{
+				expression.get();	// delete line break
+				return result;
+			}
+			else
+			{
+				result.push_back(GetNextToken(expression));
+			}
+		}
+
+		return result;
+	}
+
+	Token Scanner::GetNextToken(stringstream &expression)
+	{
+		// first char
+		auto currectChar = GetNextChar(expression);
+
+		// state judge
 		while (!expression_.eof())
 		{
-			auto test = GetNextToken();
-			result.push_back(test);
+			switch (state_)
+			{
+			case State::START:
+				break;
+
+			case State::NUMBER:
+				return HandleNumberState(expression, currectChar);
+				break;
+
+			case State::OPERATOR:
+				return HandleOperatorState(expression, currectChar);
+				break;
+
+			default:
+				break;
+			}
+
+			string currectStr;
+			currectStr.push_back(currectChar);
+
+			//state迁移
+			if (isdigit(currectChar))
+			{
+				state_ = State::NUMBER;
+			}
+			else if (dict_.HasToken(currectStr))
+			{
+				state_ = State::OPERATOR;
+			}
+			else
+			{
+				return Token(TokenType::INVALID);
+			}
 		}
-		return result;
-
-		//此处应有error
-	}
-
-	Token Scanner::GetNextToken()
-	{
-		////状态判断
-		//while (!expression_.eof())
-		//{
-		//	switch (state_)
-		//	{
-		//	case State::START:
-		//		break;
-
-		//	case State::NUMBER:
-		//		HandleNumberState();
-		//		return token_;
-		//		break;
-
-		//	case State::OPERATOR:
-		//		HandleOperatorState();
-		//		return token_;
-		//		break;
-
-		//	default:
-		//		break;
-		//	}
-
-		//	string currectStr;
-		//	currectStr.push_back(currectChar_);
-
-		//	//state迁移
-		//	if (isdigit(currectChar_))
-		//	{
-		//		state_ = State::NUMBER;
-		//	}
-		//	else if (dict_.HasToken(currectStr))
-		//	{
-		//		state_ = State::OPERATOR;
-		//	}
-		//}
 		return Token(TokenType::INVALID);
 	}
-
 
 
 	Token Scanner::HandleNumberState(stringstream &expression, char currectChar)
@@ -86,13 +103,9 @@ namespace calculator
 		string buffer;
 		buffer.push_back(currectChar);
 
-		// the rest of char
-		currectChar = GetNextChar(expression);
-		// 未达文件尾 and 元素为数字
-		while (!expression.eof() && isdigit(currectChar))	
-		{
-			buffer += currectChar;
-			currectChar = GetNextChar(expression);
+		while (!expression.eof() && isdigit(expression.peek()))
+		{ 
+			buffer += GetNextChar(expression);
 		}
 
 		// reset state
@@ -115,7 +128,6 @@ namespace calculator
 
 		//reset state
 		state_ = State::START;
-		GetNextChar(expression);
 
 		return token;
 	}
