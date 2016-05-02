@@ -13,14 +13,14 @@ version:2.0 (还没写完)
 	2.parser：改为生成语法树     
 
 语法：
-	1.词法分析:
-		START		: NUMBER
-					| OPERATOR
-					| 
-					;
-		NUMBER		: '0'..'9'+ ;
-		OPERATOR	: '+'|'-'|'*'|'/' ;
-		
+	1.词法分析: 
+		START		: NUMBER 
+					| OPERATOR 
+					|  
+					; 
+		NUMBER		: '0'..'9'+ ; 
+		OPERATOR	: '+'|'-'|'*'|'/' ;  
+
 	2.语法分析:
 		expression : term { ("+" | "-") term }
 		term : factor { ("*" | "/") factor }
