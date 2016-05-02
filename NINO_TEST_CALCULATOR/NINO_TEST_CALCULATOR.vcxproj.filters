@@ -50,5 +50,8 @@
     <ClCompile Include="TestParser.cpp">
       <Filter>NewTest</Filter>
     </ClCompile>
+    <ClCompile Include="TestToken.cpp">
+      <Filter>NewTest</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

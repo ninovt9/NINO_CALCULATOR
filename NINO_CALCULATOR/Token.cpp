@@ -8,7 +8,7 @@ namespace calculator
 
 	}
 
-	Token::Token(TokenType type) : type_(type)
+	Token::Token(TokenType type) : type_(type), intValue_(0)
 	{
 
 	}

@@ -26,6 +26,15 @@ namespace calculator
 		Token(TokenType type, int intValue);
 
 	public:
+		bool operator==(Token other)
+		{
+			return (
+				(type_ == other.GetType())
+				&& (intValue_ == other.GetIntValue())
+				);
+		}
+
+	public:
 		TokenType GetType();
 		int GetIntValue();
 

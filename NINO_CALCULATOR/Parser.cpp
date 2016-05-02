@@ -28,6 +28,11 @@ namespace calculator
 
 namespace calculator
 {
+	Parser::Parser()
+	{
+		scanner_ = Scanner("");
+		ast_ = AST();
+	}
 
 	Parser::Parser(const std::string &expression)
 	{
@@ -38,73 +43,71 @@ namespace calculator
 
 	AST Parser::GetAST()
 	{
-		return GetNodeExp(tokenList_.begin());
+		return GetNodeExp(tokenList_.begin(), tokenList_.end());
 	}
 
-	AST Parser::GetNodeExp(vector<Token>::iterator iter)
+	AST Parser::GetNodeExp(vector<Token>::iterator &iter, vector<Token>::iterator &end)
 	{
 		// expression : term { ("+" | "-") term };	
+
 		AST ast = AST();
 
 		// only term
-		ast = GetNodeTerm(iter);
+		// descent
+		ast = GetNodeTerm(iter, end);
 		
 		for (;;)
 		{
-			// peek到加/减号的情况下->进位
+			// out of range check
+			if (iter + 1 == end)
+			{
+				break;
+			}
+
+			// pee
 			if ((iter + 1)->GetType() == TokenType::ADD
 				|| (iter + 1)->GetType() == TokenType::SUB)
 			{
-				// 获得operatorのtoken并进位
-				auto operaToken = iter++;
+				// operatorのtoken
+				auto operaToken = ++iter;
 				// term +- term
-				ast = AST(ast, *operaToken, GetNodeTerm(iter++));
+				ast = AST(ast, *operaToken, GetNodeTerm(++iter, end));
 			}
 			else
 			{
-				break;
+				// descent
+				// ast = GetNodeFactor(iter, end);
 			}
 		}
 		
 		return ast;
-
-		//	iter++;
-		//	auto operaToken = *iter;
-
-		//	if (operaToken.GetType() == TokenType::ADD 
-		//		|| operaToken.GetType() ==  TokenType::SUB)
-		//	{
-		//		// term +- term
-		//		ast = AST(ast, operaToken, GetNodeTerm(iter++));
-		//	}
-		//	else
-		//	{
-		//		break;
-		//		// error， 暂时不写
-		//	} 
-		//}
-
-		// return ast;
 	}
 
-	AST Parser::GetNodeTerm(vector<Token>::iterator iter)
+	AST Parser::GetNodeTerm(vector<Token>::iterator &iter, vector<Token>::iterator &end)
 	{
 		// term : factor { ("*" | "/") factor }
+
 		AST ast = AST();
 
 		// only factor
-		ast = GetNodeFactor(iter);
+		ast = GetNodeFactor(iter, end);
 
 		for (;;)
 		{
-			// peek到加/减号的情况下->进位
+			// out of range check
+			if (iter + 1 == end)
+			{
+				break;
+			}
+
+			// peek
 			if ((iter + 1)->GetType() == TokenType::MUL
 				|| (iter + 1)->GetType() == TokenType::DIV)
 			{
-				// 获得operatorのtoken并进位
-				auto operaToken = iter++;
+				// operatorのtoken
+				auto operaToken = ++iter;
 				// factor */ factor
-				ast = AST(ast, *operaToken, GetNodeFactor(iter++));
+				ast = AST(ast, *operaToken, GetNodeFactor(++iter, end));
 			}
 			else
 			{
@@ -113,49 +116,28 @@ namespace calculator
 		}
 
 		return ast;
-
-		//for (;;)
-		//{
-		//	iter++;
-		//	auto operaToken = *iter;
-
-		//	if (operaToken.GetType() == TokenType::MUL
-		//		|| operaToken.GetType() == TokenType::DIV)
-		//	{
-		//		// factor */ factor
-		//		ast = AST(ast, operaToken, GetNodeFactor(iter++)));
-		//	}
-		//	else
-		//	{
-		//		break;
-		//		//error， 暂时不写
-		//	}
-
-		//	
-		//}
-
-		//return ast;
 	}
 
-	AST Parser::GetNodeFactor(vector<Token>::iterator iter)
+	AST Parser::GetNodeFactor(vector<Token>::iterator &iter, vector<Token>::iterator &end)
 	{
 		// factor: number | "(" expression ")"
+
 		AST ast = AST();
 	
-		//情况1：数字
+		// number
 		if (iter->GetType() == TokenType::INT)
 		{
 			ast = AST(*iter);
 		}
-		//情况2：括号
+		// parentheses
 		else if (iter->GetType() == TokenType::LEFT_PAR)
 		{
 			iter++;	//get expression
 			if (iter->GetType() == TokenType::INT)
 			{
-				ast = GetNodeExp(iter);
+				ast = GetNodeExp(iter, end);
 
-				//判断右括号
+				// check right parentheses
 				if (iter->GetType() != TokenType::RIGHT_PAR)
 				{
 					//error, 懒得写
