@@ -7,15 +7,13 @@ using std::stringstream;
 
 namespace calculator
 {
-	Scanner::Scanner() : state_(State::START), buffer_("")
+	Scanner::Scanner() : state_(State::START)
 	{
-		expression_ = std::stringstream("");
 		dict_ = Dictionary();
 	}
 
-	Scanner::Scanner(const string &expression) :state_(State::START), buffer_("")
+	Scanner::Scanner(const string &expression) :state_(State::START)
 	{
-		expression_ = std::stringstream(expression);
 		dict_ = Dictionary();
 	}
 
@@ -57,7 +55,7 @@ namespace calculator
 		auto currectChar = GetNextChar(expression);
 
 		// state judge
-		while (!expression_.eof())
+		while (!expression.eof())
 		{
 			switch (state_)
 			{

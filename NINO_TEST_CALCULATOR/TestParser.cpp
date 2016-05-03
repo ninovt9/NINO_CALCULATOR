@@ -62,57 +62,40 @@ namespace NINO_TEST_CALCULATOR
 
 				// for GetNodeExp
 			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((ast.left_->left_->token_ == tokenList[0]), true);
+			Assert::AreEqual((ast.left_->token_ == tokenList[1]), true);
+			Assert::AreEqual((ast.left_->right_->token_ == tokenList[2]), true);
 			Assert::AreEqual((ast.token_ == tokenList[3]), true);
-			////Assert::AreEqual((ast.left_->left_->token_ == tokenList[0]), true);
+			Assert::AreEqual((ast.right_->token_ == tokenList[4]), true);
 
+			// contain par
+			// (7 - 1)
+			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 7), Token(TokenType::SUB), Token(TokenType::INT, 1), Token(TokenType::RIGHT_PAR)};											
+			
+			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((ast.left_->token_ == tokenList[1]), true);
+			Assert::AreEqual((ast.token_ == tokenList[2]), true);
+			Assert::AreEqual((ast.right_->token_ == tokenList[3]), true);
+
+			// (7 / 2)
+			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 7), Token(TokenType::DIV), Token(TokenType::INT, 2), Token(TokenType::RIGHT_PAR) };
+
+			ast = parser.GetNodeTerm(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((ast.left_->token_ == tokenList[1]), true);
+			Assert::AreEqual((ast.token_ == tokenList[2]), true);
+			Assert::AreEqual((ast.right_->token_ == tokenList[3]), true);
+
+			// (7 + 2) / 5
+			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 7), Token(TokenType::ADD), Token(TokenType::INT, 2), Token(TokenType::RIGHT_PAR),
+			Token(TokenType::DIV), Token(TokenType::INT, 5)};
+
+			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((ast.left_->left_->token_ == tokenList[1]), true);
+			Assert::AreEqual((ast.left_->token_ == tokenList[2]), true);
+			Assert::AreEqual((ast.left_->right_->token_ == tokenList[3]), true);
+			Assert::AreEqual((ast.token_ == tokenList[5]), true);
+			Assert::AreEqual((ast.right_->token_ == tokenList[6]), true);
 
 		}
-
-
-
-		//// for GetNodeTerm
-		//tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1) };
-		//ast = parser.GetNodeTerm(tokenList.begin(), tokenList.end());
-
-		//Assert::AreEqual((ast.left_->token_ == tokenList[0]), true);
-		//Assert::AreEqual((ast.token_ == tokenList[1]), true);
-		//Assert::AreEqual((ast.right_->token_ == tokenList[2]), true);
-
-
-
-
-
-
-
-		//TEST_METHOD(Test_CreateAst)
-		//{
-		//	Parser("1+5");
-		//	int i = 0;
-		//}
-
-
-
-		//TEST_METHOD(Test_CreateAstNode_Number)
-		//{
-		//	Parser parser("5");
-		//	auto iter = 
-		//	AST ast;
-
-		//	ast = parser.GetNodeFactor(make_shared< Token(TokenType::INT, 5));
-		//	Assert::AreEqual(ast.token_.GetIntValue(), 5);
-		//	ast = parser.GetNodeTerm(&Token(TokenType::INT, 5));
-		//	Assert::AreEqual(ast.token_.GetIntValue(), 5);
-		//	ast = parser.GetNodeExp(Token(TokenType::INT, 5));
-		//	Assert::AreEqual(ast.token_.GetIntValue(), 5);
-		//}
-
-		//TEST_METHOD(Test_CreateAstNode_Add)
-		//{
-		//	Parser parser("5+1");
-		//	AST ast;
-
-		//	ast = parser.GetNodeFactor(Token(TokenType::INT, 5));
-		//	Assert::AreEqual(ast.token_.GetIntValue(), 5)
-		//}
 	};
 }

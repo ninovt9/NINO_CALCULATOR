@@ -75,8 +75,7 @@ namespace calculator
 			}
 			else
 			{
-				// descent
-				// ast = GetNodeFactor(iter, end);
+				break;
 			}
 		}
 		
@@ -138,9 +137,14 @@ namespace calculator
 				ast = GetNodeExp(iter, end);
 
 				// check right parentheses
-				if (iter->GetType() != TokenType::RIGHT_PAR)
+				if ((iter + 1)->GetType() == TokenType::RIGHT_PAR)
 				{
-					//error, ภมตระด
+					// delete parenteses
+					iter++;	
+				}
+				else
+				{
+					// error
 				}
 			}
 		}
