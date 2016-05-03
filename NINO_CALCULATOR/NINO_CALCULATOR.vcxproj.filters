@@ -48,6 +48,9 @@
     <ClInclude Include="Parser.h">
       <Filter>New</Filter>
     </ClInclude>
+    <ClInclude Include="Expression.h">
+      <Filter>New</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -78,6 +81,9 @@
       <Filter>New</Filter>
     </ClCompile>
     <ClCompile Include="Parser.cpp">
+      <Filter>New</Filter>
+    </ClCompile>
+    <ClCompile Include="Expression.cpp">
       <Filter>New</Filter>
     </ClCompile>
   </ItemGroup>

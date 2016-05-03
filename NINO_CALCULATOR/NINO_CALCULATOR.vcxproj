@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="NChecker.h" />
     <ClInclude Include="NExpression.h" />
     <ClInclude Include="NParser.h" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dictionary.cpp" />
+    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="NChecker.cpp" />
     <ClCompile Include="NExpression.cpp" />
     <ClCompile Include="NINO_CALCULATOR.cpp" />

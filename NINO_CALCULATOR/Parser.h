@@ -27,10 +27,6 @@ namespace calculator
 
 	class Parser
 	{
-	// expression : term { ("+" | "-") term }
-	// term : factor { ("*" | "/") factor }
-	// factor : number | "(" expression ")" 
-
 	public:
 		Parser();
 		Parser(const std::string &expression);
@@ -41,6 +37,8 @@ namespace calculator
 		AST GetNodeTerm(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
 		AST GetNodeFactor(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
 
+	public:
+		float calculate(std::shared_ptr<AST> node);
 
 	private:
 		AST ast_;
