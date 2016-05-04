@@ -1,6 +1,5 @@
 
-#NINO_CALCULATOR<br>   
-#表达式计算器<br>  
+#NINO_CALCULATOR 表达式计算器<br>  
 
 ##简介：<br>        
   编译器学习练习，分析计算表达式。<br>  
@@ -34,9 +33,9 @@
 		OPERATOR	: '+'|'-'|'*'|'/' ;       
 
 	2.语法分析:
-		expression : term { ("+" | "-") term }
-		term : factor { ("*" | "/") factor }
-		factor : number | "(" expression ")" 
+		expression  :	term { ("+" | "-") term }
+		term		:	factor { ("*" | "/") factor }
+		factor		:	number | "(" expression ")" 
 
 
 ----------------------------------------------版本分割线------------------------------------------------
