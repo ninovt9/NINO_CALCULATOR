@@ -66,6 +66,12 @@ namespace NINO_TEST_CALCULATOR
 			// 2 - (6 / 2)
 			expression = Expression("2 - (6 / 2)");
 			Assert::AreEqual(expression.GetResult(), -1.0f);
+
+			// 5 + 1
+			expression = Expression(" 5 + 1 ");
+			Assert::AreEqual(expression.GetResult(), 6.0f);
+
+
 		}
 	};
 }
