@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="NewTest">
-      <UniqueIdentifier>{13002731-686c-4780-97c7-88fd665f7ae9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -29,29 +26,20 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="NTestScanner.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="NTestParser.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="NTestExpression.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="NTestChecker.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="TestDictionary.cpp">
-      <Filter>NewTest</Filter>
+      <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="TestScanner.cpp">
-      <Filter>NewTest</Filter>
+    <ClCompile Include="TestExpression.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TestParser.cpp">
-      <Filter>NewTest</Filter>
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScanner.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TestToken.cpp">
-      <Filter>NewTest</Filter>
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

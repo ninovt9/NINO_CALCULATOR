@@ -8,9 +8,24 @@ namespace calculator
 	class Expression
 	{
 	public:
-		Expression();
+		Expression() = default;
 		Expression(const std::string &expression);
+
+	public:
+		float GetResult();
+
+	public:
+		float Calculate(std::shared_ptr<AST> node);
+
+	private:
+		AST ast_;
+		float result_;
 	};
+
+	inline float Expression::GetResult()
+	{
+		return result_;
+	}
 }
 
 

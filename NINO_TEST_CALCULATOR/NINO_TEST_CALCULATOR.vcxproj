@@ -159,17 +159,14 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NTestChecker.cpp" />
-    <ClCompile Include="NTestExpression.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="NTestScanner.cpp" />
-    <ClCompile Include="NTestParser.cpp" />
     <ClCompile Include="TestDictionary.cpp" />
+    <ClCompile Include="TestExpression.cpp" />
     <ClCompile Include="TestParser.cpp" />
     <ClCompile Include="TestScanner.cpp" />
     <ClCompile Include="TestToken.cpp" />

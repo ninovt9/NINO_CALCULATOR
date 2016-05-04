@@ -32,7 +32,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -144,10 +144,6 @@
   <ItemGroup>
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Expression.h" />
-    <ClInclude Include="NChecker.h" />
-    <ClInclude Include="NExpression.h" />
-    <ClInclude Include="NParser.h" />
-    <ClInclude Include="NScanner.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="stdafx.h" />
@@ -157,11 +153,6 @@
   <ItemGroup>
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Expression.cpp" />
-    <ClCompile Include="NChecker.cpp" />
-    <ClCompile Include="NExpression.cpp" />
-    <ClCompile Include="NINO_CALCULATOR.cpp" />
-    <ClCompile Include="NParser.cpp" />
-    <ClCompile Include="NScanner.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="stdafx.cpp">

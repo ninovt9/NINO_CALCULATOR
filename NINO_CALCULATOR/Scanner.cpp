@@ -10,11 +10,13 @@ namespace calculator
 	Scanner::Scanner() : state_(State::START)
 	{
 		dict_ = Dictionary();
+		stream_ = stringstream("");
 	}
 
 	Scanner::Scanner(const string &expression) :state_(State::START)
 	{
 		dict_ = Dictionary();
+		stream_ = stringstream(expression);
 	}
 
 	char Scanner::GetNextChar(stringstream &expression)
@@ -28,7 +30,7 @@ namespace calculator
 		return result;
 	}
 
-	vector<Token> Scanner::GetTokenList(stringstream &expression)
+	vector<Token> Scanner::GetNextTokenList(stringstream &expression)
 	{
 		vector<Token> result;
 

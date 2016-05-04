@@ -127,7 +127,7 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((token.GetType() == TokenType::INVALID), true);
 		}
 
-		TEST_METHOD(Test_GetTokenList)
+		TEST_METHOD(Test_GetNextTokenList)
 		{
 			Scanner scanner = Scanner();
 
@@ -137,7 +137,7 @@ namespace NINO_TEST_CALCULATOR
 
 
 			stream = stringstream("1/5*6");
-			tokenList = scanner.GetTokenList(stream);
+			tokenList = scanner.GetNextTokenList(stream);
 
 			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 1);
@@ -156,7 +156,7 @@ namespace NINO_TEST_CALCULATOR
 
 			// contain space
 			stream = stringstream(" 1 / 5 * 6 ");
-			tokenList = scanner.GetTokenList(stream);
+			tokenList = scanner.GetNextTokenList(stream);
 
 			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 1);
@@ -176,7 +176,7 @@ namespace NINO_TEST_CALCULATOR
 			// mult line
 			stream = stringstream("1+5\n3");
 				//first line
-			tokenList = scanner.GetTokenList(stream);
+			tokenList = scanner.GetNextTokenList(stream);
 
 			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 1);
@@ -187,11 +187,29 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(tokenList[2].GetIntValue(), 5);
 
 				//second line
-			tokenList = scanner.GetTokenList(stream);
+			tokenList = scanner.GetNextTokenList(stream);
 
 			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 3);
 
+		}
+
+
+		/*-------------------------------Class µœ÷-----------------------------*/
+
+		TEST_METHOD(Test_Class_GetTokenList)
+		{
+			Scanner scanner = Scanner();
+			vector<Token> tokenList;
+
+			// 1-2
+			scanner = Scanner("1-2");
+			tokenList = scanner.GetTokenList();
+
+			Assert::AreEqual((tokenList[0] == Token(TokenType::INT, 1)), true);
+			Assert::AreEqual((tokenList[1] == Token(TokenType::SUB)), true);
+			Assert::AreEqual((tokenList[2] == Token(TokenType::INT, 2)), true);
+			
 		}
 
 	};

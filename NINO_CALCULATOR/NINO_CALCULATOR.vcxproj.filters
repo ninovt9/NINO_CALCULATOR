@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="New">
-      <UniqueIdentifier>{dad2b855-72a4-4402-b6f1-f5823de34207}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -24,67 +21,40 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="NScanner.h">
+    <ClInclude Include="Dictionary.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="NParser.h">
+    <ClInclude Include="Expression.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="NExpression.h">
+    <ClInclude Include="Parser.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="NChecker.h">
+    <ClInclude Include="Scanner.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Token.h">
-      <Filter>New</Filter>
-    </ClInclude>
-    <ClInclude Include="Scanner.h">
-      <Filter>New</Filter>
-    </ClInclude>
-    <ClInclude Include="Dictionary.h">
-      <Filter>New</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser.h">
-      <Filter>New</Filter>
-    </ClInclude>
-    <ClInclude Include="Expression.h">
-      <Filter>New</Filter>
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="NINO_CALCULATOR.cpp">
+    <ClCompile Include="Dictionary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="NScanner.cpp">
+    <ClCompile Include="Expression.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="NParser.cpp">
+    <ClCompile Include="Parser.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="NExpression.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="NChecker.cpp">
+    <ClCompile Include="Scanner.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Token.cpp">
-      <Filter>New</Filter>
-    </ClCompile>
-    <ClCompile Include="Scanner.cpp">
-      <Filter>New</Filter>
-    </ClCompile>
-    <ClCompile Include="Dictionary.cpp">
-      <Filter>New</Filter>
-    </ClCompile>
-    <ClCompile Include="Parser.cpp">
-      <Filter>New</Filter>
-    </ClCompile>
-    <ClCompile Include="Expression.cpp">
-      <Filter>New</Filter>
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
