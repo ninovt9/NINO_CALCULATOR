@@ -20,7 +20,8 @@ int main()
 
 	for (;;)
 	{
-		cin >> input;
+		std::getline(cin, input);
+
 		expression = Expression(input);
 		cout << ">>" << expression.GetResult() << endl;
 		cout << endl;
