@@ -15,10 +15,11 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_AddToken)
 		{
-			SyntaxDict dict;
-			Dictionary::AddToken(dict, "+", Token(TokenType::ADD));
+			Dictionary dict;
+			SyntaxDict map;
+			dict.AddToken(map, "+", Token(TokenType::ADD));
 
-			bool result = (dict.find("+")->second.GetType() == TokenType::ADD);
+			bool result = (map.find("+")->second.GetType() == TokenType::ADD);
 			Assert::AreEqual(result, true);
 		}
 

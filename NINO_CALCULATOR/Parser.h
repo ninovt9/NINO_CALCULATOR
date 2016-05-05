@@ -15,8 +15,12 @@ namespace calculator
 	{
 	public:
 		AST();
-		AST(Token root);
-		AST(AST left, Token root, AST right);
+		AST(const Token &root);
+		AST(const AST &left, const Token &root, const AST &right);
+
+	public:
+		AST(const AST& other);
+		AST& operator=(const AST& other);
 
 	public:
 		std::shared_ptr<AST> left_;

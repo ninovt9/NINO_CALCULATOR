@@ -21,34 +21,30 @@ namespace calculator
 	class Token 
 	{
 	public:
-		Token();
-		Token(TokenType type);
-		Token(TokenType type, int intValue);
+		explicit Token();
+		explicit Token(TokenType type);
+		explicit Token(TokenType type, int intValue);
+		
+	public:
+		Token(const Token& other);
+		Token& operator=(const Token& other);
+		bool operator==(const Token& other);
 
 	public:
-		bool operator==(Token other)
-		{
-			return (
-				(type_ == other.GetType())
-				&& (intValue_ == other.GetIntValue())
-				);
-		}
-
-	public:
-		TokenType GetType();
-		int GetIntValue();
+		TokenType GetType() const;
+		int GetIntValue() const;
 
 	private:
 		TokenType type_;
 		int intValue_;
 	};
 
-	inline TokenType Token::GetType()
+	inline TokenType Token::GetType() const
 	{
 		return type_;
 	}
 
-	inline int Token::GetIntValue()
+	inline int Token::GetIntValue() const
 	{
 		return intValue_;
 	}

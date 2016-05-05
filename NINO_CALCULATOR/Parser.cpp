@@ -11,15 +11,30 @@ namespace calculator
 
 	}
 
-	AST::AST(Token root) :token_(root), left_(nullptr), right_(nullptr)
+	AST::AST(const Token &root) :token_(root), left_(nullptr), right_(nullptr)
 	{
 
 	}
 
-	AST::AST(AST left, Token root, AST right) : token_(root)
+	AST::AST(const AST &left, const Token &root, const AST &right) 
+		: token_(root), left_(std::make_shared<AST>(left)), right_(std::make_shared<AST>(right))
 	{
-		left_ = std::make_shared<AST>(left);
-		right_ = std::make_shared<AST>(right);
+
+	}
+
+	AST::AST(const AST& other)
+	{
+		left_ = other.left_;
+		right_ = other.right_;
+		token_ = other.token_;
+	}
+
+	AST& AST::operator=(const AST& other)
+	{
+		left_ = other.left_;
+		right_ = other.right_;
+		token_ = other.token_;
+		return *this;
 	}
 
 }

@@ -7,16 +7,14 @@ using std::stringstream;
 
 namespace calculator
 {
-	Scanner::Scanner() : state_(State::START)
+	Scanner::Scanner() 
+		: state_(State::START), dict_(), stream_("")
 	{
-		dict_ = Dictionary();
-		stream_ = stringstream("");
 	}
 
-	Scanner::Scanner(const string &expression) :state_(State::START)
+	Scanner::Scanner(const string &expression)
+		: state_(State::START), dict_(), stream_(expression)
 	{
-		dict_ = Dictionary();
-		stream_ = stringstream(expression);
 	}
 
 	char Scanner::GetNextChar(stringstream &expression)

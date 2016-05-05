@@ -16,7 +16,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_Calculate)
 		{
-			Parser parser = Parser();
+			Parser parser;
 			Expression expression = Expression();
 			std::shared_ptr<AST> node;
 			vector<Token> tokenList;

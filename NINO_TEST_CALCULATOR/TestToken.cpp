@@ -13,17 +13,17 @@ namespace NINO_TEST_CALCULATOR
 		TEST_METHOD(Test_OperatorEqual)
 		{
 			// int
-			Token int_1 = Token(TokenType::INT, 1);
-			Token int_2 = Token(TokenType::INT, 1);
-			Token int_3 = Token(TokenType::INT, 2);
+			Token int_1(TokenType::INT, 1);
+			Token int_2(TokenType::INT, 1);
+			Token int_3(TokenType::INT, 2);
 
 			Assert::AreEqual((int_1 == int_2), true);
 			Assert::AreEqual((int_1 == int_3), false);
 
 			// operator
-			Token op_add = Token(TokenType::ADD);
-			Token op_add_2 = Token(TokenType::ADD);
-			Token op_sub = Token(TokenType::SUB);
+			Token op_add(TokenType::ADD);
+			Token op_add_2(TokenType::ADD);
+			Token op_sub(TokenType::SUB);
 
 
 			Assert::AreEqual((op_add == op_sub), false);

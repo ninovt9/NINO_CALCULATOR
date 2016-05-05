@@ -8,7 +8,7 @@ namespace calculator
 
 	Expression::Expression(const string &expression)
 	{
-		Parser parser = Parser(expression);
+		Parser parser(expression);
 		ast_ = parser.GetAST();
 		result_ = Calculate(std::make_shared<AST>(ast_));
 	}

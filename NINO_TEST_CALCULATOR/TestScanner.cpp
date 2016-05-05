@@ -16,7 +16,7 @@ namespace NINO_TEST_CALCULATOR
 	public:
 		TEST_METHOD(Test_GetNextChar)
 		{
-			Scanner scanner = Scanner();
+			Scanner scanner;
 			stringstream stream("1+5");
 
 			Assert::AreEqual(scanner.GetNextChar(stream), '1');
@@ -37,7 +37,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_HandleOperatorState)
 		{
-			Scanner scanner = Scanner();
+			Scanner scanner;
 			stringstream stream;
 			char currectChar;
 			Token token;
@@ -59,7 +59,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_HandleNumberState)
 		{
-			Scanner scanner = Scanner();
+			Scanner scanner;
 
 			stringstream stream;
 			char currectChar;
@@ -86,7 +86,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_GetNextToken)
 		{
-			Scanner scanner = Scanner();
+			Scanner scanner;
 
 			stringstream stream;
 			Token token;
@@ -129,7 +129,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_GetNextTokenList)
 		{
-			Scanner scanner = Scanner();
+			Scanner scanner;
 
 			stringstream stream;
 			vector<Token> tokenList;
@@ -199,7 +199,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_Class_GetTokenList)
 		{
-			Scanner scanner = Scanner();
+			Scanner scanner;
 			vector<Token> tokenList;
 
 			// 1-2

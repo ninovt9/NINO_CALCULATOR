@@ -18,7 +18,7 @@ namespace NINO_TEST_CALCULATOR
 		TEST_METHOD(Test_GetNode_Number)
 		{
 			
-			Parser parser = Parser();
+			Parser parser;
 			AST ast;
 			vector<Token> tokenList = { Token(TokenType::INT, 5) };
 
@@ -37,7 +37,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_GetNode_Expression)
 		{
-			Parser parser = Parser();
+			Parser parser;
 			AST ast;
 			vector<Token> tokenList;
 
@@ -100,7 +100,7 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_calculate)
 		{
-			Parser parser = Parser();
+			Parser parser;
 			std::shared_ptr<AST> node;
 			vector<Token> tokenList;
 			float result;

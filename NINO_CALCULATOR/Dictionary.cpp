@@ -19,9 +19,9 @@ namespace calculator
 		AddToken(dict_, ")", Token(TokenType::RIGHT_PAR));
 	}
 
-	void Dictionary::AddToken(SyntaxDict &dict, const string &name, Token token)
+	void Dictionary::AddToken(SyntaxDict &dict, const string &name, const Token &token)
 	{
-		dict.insert(pair<decltype(name), decltype(token)>(name, token));
+		dict.insert(pair<std::string, Token>(name, token));
 	}
 
 	bool Dictionary::HasToken(const string &name) const
