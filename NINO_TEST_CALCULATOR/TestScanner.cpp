@@ -125,6 +125,17 @@ namespace NINO_TEST_CALCULATOR
 
 			token = scanner.GetNextToken(stream);
 			Assert::AreEqual((token.GetType() == TokenType::INVALID), true);
+
+			// error input
+			stream = stringstream("a");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::INVALID)), true);
+
+			stream = stringstream("ги");
+			
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::INVALID)), true);
 		}
 
 		TEST_METHOD(Test_GetNextTokenList)
@@ -191,6 +202,14 @@ namespace NINO_TEST_CALCULATOR
 
 			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 3);
+
+
+
+			// error input
+			stream = stringstream("ги");
+
+			tokenList = scanner.GetNextTokenList(stream);
+			Assert::AreEqual((tokenList[0] == Token(TokenType::INVALID)), true);
 
 		}
 

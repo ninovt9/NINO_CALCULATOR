@@ -69,16 +69,17 @@ namespace calculator
 			case State::OPERATOR:
 				return HandleOperatorState(expression, currectChar);
 				break;
-
-			default:
-				break;
 			}
 
 			string currectStr;
 			currectStr.push_back(currectChar);
 
 			//state«®“∆
-			if (isdigit(currectChar))
+			//if (isdigit(currectChar))
+			//{
+			//	state_ = State::NUMBER;
+			//}
+			if (iswdigit(currectChar))
 			{
 				state_ = State::NUMBER;
 			}
@@ -88,6 +89,7 @@ namespace calculator
 			}
 			else
 			{
+				ErrorToken("error input");
 				return Token(TokenType::INVALID);
 			}
 		}

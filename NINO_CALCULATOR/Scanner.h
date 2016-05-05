@@ -2,6 +2,7 @@
 
 #include "Token.h"
 #include "Dictionary.h"
+#include "Error.h"
 
 #include <sstream>
 #include <string>
