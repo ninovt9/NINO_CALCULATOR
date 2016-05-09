@@ -74,7 +74,7 @@ namespace NINO_TEST_CALCULATOR
 
 		}
 
-		TEST_METHOD(Test_Class_Operator_Add)
+		TEST_METHOD(Test_Class_Operator)
 		{
 			auto result = Expression("1+5") + Expression("10");
 			Assert::AreEqual(result.GetResult(), 16.0f, L"E(1+5)+E(10)==16.0f failed");
@@ -90,7 +90,17 @@ namespace NINO_TEST_CALCULATOR
 
 			result = Expression("1+5") / Expression("3");
 			Assert::AreEqual(result.GetResult(), 2.0f, L"E(1+5)/E(3)==2.0f failed");
+
+			// ==
+			Assert::AreEqual((Expression("1") == Expression("1")), true, L"E(1) == E(1) failed");
+			Assert::AreEqual((Expression("1+5") == Expression("1+5")), true, L"E(1+5) == E(1+5) failed");
+			Assert::AreEqual((Expression("(1+5)*2") == Expression("(1+5)*2")), true, L"E((1+5)*2) == E((1+5)*2) failed");
+			Assert::AreEqual((Expression("1+7") == Expression("1+5")), false, L"E(1+7) == E(1+5) failed");
+			Assert::AreEqual((Expression("1+5") == Expression("5+1")), false, L"E(1+5) == E(5+1) failed");
+			Assert::AreEqual((Expression("1+5") == Expression("3+3")), false, L"E(1+5) == E(3+3) failed");
+			Assert::AreEqual((Expression("1+5+7") == Expression("3+3")), false, L"E(1+5+7) == E(3+3) failed");
 		}
 			
+
 	};
 }

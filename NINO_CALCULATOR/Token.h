@@ -29,6 +29,7 @@ namespace calculator
 		Token(const Token& other);
 		Token& operator=(const Token& other);
 		bool operator==(const Token& other);
+		bool operator==(const Token& other) const;
 
 	public:
 		TokenType GetType() const;

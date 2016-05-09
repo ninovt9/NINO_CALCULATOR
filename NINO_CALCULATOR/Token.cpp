@@ -38,4 +38,12 @@ namespace calculator
 			&&  intValue_ == other.intValue_
 			);
 	}
+
+	bool Token::operator==(const Token& other) const
+	{
+		return (
+			type_ == other.type_
+			&&  intValue_ == other.intValue_
+			);
+	}
 }

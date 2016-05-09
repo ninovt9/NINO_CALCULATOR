@@ -16,11 +16,13 @@ namespace calculator
 		const Expression& operator-(const Expression& other);
 		const Expression& operator*(const Expression& other);
 		const Expression& operator/(const Expression& other);
+		bool operator==(const Expression& other);
 
 		// this.tree + operator + other.tree
 		AST MergeAST(const Token& root, const AST& left, const AST& right);
 
 		// is equal
+		bool IsAstEqual(std::shared_ptr<AST> base, std::shared_ptr<AST> other);
 
 	public:
 		float GetResult();
@@ -73,6 +75,11 @@ namespace calculator
 		result_ = Calculate(std::make_shared<AST>(ast_));
 
 		return *this;
+	}
+
+	inline bool Expression::operator==(const Expression& other)
+	{
+		return IsAstEqual(std::make_shared<AST>(ast_), std::make_shared<AST>(other.ast_));
 	}
 
 }

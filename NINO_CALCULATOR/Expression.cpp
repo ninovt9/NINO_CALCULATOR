@@ -43,6 +43,30 @@ namespace calculator
 
 	}
 
+	bool Expression::IsAstEqual(std::shared_ptr<AST> base, std::shared_ptr<AST> other)
+	{
+		if (base == nullptr || other == nullptr)
+		{
+			return (base == other);
+		}
+		else if (base->token_ == other->token_)
+		{
+			// left node
+			if (IsAstEqual(base->left_, other->left_) == true && IsAstEqual(base->right_, other->right_) == true)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	
 
 
