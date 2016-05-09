@@ -70,11 +70,39 @@ namespace NINO_TEST_CALCULATOR
 
 			// int
 			stream = stringstream("6+1");
-
 			currectChar = stream.get();
 			token = scanner.HandleNumberState(stream, currectChar);
+
 			Assert::AreEqual((token.GetType() == TokenType::INT), true);
 			Assert::AreEqual(token.GetIntValue(), 6);
+
+			// float
+			stream = stringstream("6.0+1");
+			currectChar = stream.get();
+			token = scanner.HandleNumberState(stream, currectChar);
+			auto test = Token(TokenType::FLOAT, 6.0f);
+
+			Assert::AreEqual((token == Token(TokenType::FLOAT, 6.0f)), true, L"H(6.0+1)->6.0");
+
+			stream = stringstream("6.");
+			currectChar = stream.get();
+			token = scanner.HandleNumberState(stream, currectChar);
+
+			Assert::AreEqual((token == Token(TokenType::FLOAT, 6.0f)), true, L"H(6.)->6.0");
+
+			stream = stringstream("65.0");
+			currectChar = stream.get();
+			token = scanner.HandleNumberState(stream, currectChar);
+
+			Assert::AreEqual((token == Token(TokenType::FLOAT, 65.0f)), true, L"H(65.0)->65.0");
+
+
+			stream = stringstream("65.7");
+			currectChar = stream.get();
+			token = scanner.HandleNumberState(stream, currectChar);
+
+			Assert::AreEqual((token == Token(TokenType::FLOAT, 65.7f)), true, L"H(65.7)->65.7");
+
 
 			// more
 			stream = stringstream("659");
@@ -94,7 +122,6 @@ namespace NINO_TEST_CALCULATOR
 			stringstream stream;
 			Token token;
 
-			
 			// add
 			stream = stringstream("75+9");
 
@@ -128,6 +155,30 @@ namespace NINO_TEST_CALCULATOR
 
 			token = scanner.GetNextToken(stream);
 			Assert::AreEqual((token.GetType() == TokenType::INVALID), true);
+
+			// parentheses
+			stream = stringstream("(75.2+9.5)*5");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::LEFT_PAR)), true, L"(75+9)*5  -> ( ");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::FLOAT, 75.2)), true, L"75.2+9.5)*5 ->  75.2");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::ADD)), true, L"+9.5)*5 ->  +");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::FLOAT, 9.5)), true, L"9.5)*5 ->  9.5");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::RIGHT_PAR)), true, L")*5 ->  )");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::MUL)), true, L"*5 ->  *");
+
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::INT, 5)), true, L"5 ->  5");
 
 			// error input
 			stream = stringstream("a");

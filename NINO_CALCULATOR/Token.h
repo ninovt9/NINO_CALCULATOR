@@ -24,6 +24,10 @@ namespace calculator
 		Token();
 		Token(TokenType type);
 		Token(TokenType type, int intValue);
+		Token(TokenType type, float floatValue);
+		Token(TokenType type, double doubleValue);
+
+		// 先用float，有空改成double
 		
 	public:
 		Token(const Token& other);
@@ -34,10 +38,13 @@ namespace calculator
 	public:
 		TokenType GetType() const;
 		int GetIntValue() const;
+		float GetFloatValue() const;
 
 	private:
 		TokenType type_;
 		int intValue_;
+
+		float floatValue_;
 	};
 
 	inline TokenType Token::GetType() const
@@ -48,6 +55,11 @@ namespace calculator
 	inline int Token::GetIntValue() const
 	{
 		return intValue_;
+	}
+
+	inline float Token::GetFloatValue() const
+	{
+		return floatValue_;
 	}
 }
 

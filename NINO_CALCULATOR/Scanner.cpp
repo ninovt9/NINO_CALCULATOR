@@ -99,24 +99,91 @@ namespace calculator
 
 	Token Scanner::HandleNumberState(stringstream &expression, char currectChar)
 	{
+		// 问题：
+			// 1.判断: 2a~~2.a 之类
+			// 2.051 怎么办？
+
+		Token result;
+
 		// first char
 		string buffer;
 		buffer.push_back(currectChar);
 
+		// int part
 		while (!expression.eof() && isdigit(expression.peek()))
-		{ 
+		{
 			buffer += GetNextChar(expression);
 		}
+		
+		if (expression.peek() != '.')
+		{
+			// string to int
+			int intValue;
+			std::stringstream stream(buffer);
+			stream >> intValue;
+
+			result = Token(TokenType::INT, intValue);
+		}
+		// float part
+		else
+		{
+			// add dot
+			buffer += GetNextChar(expression);
+
+			while (!expression.eof() && isdigit(expression.peek()))
+			{
+				buffer += GetNextChar(expression);
+			}
+
+			// string to float
+			float floatValue;
+			std::stringstream stream(buffer);
+			stream >> floatValue;
+
+			result = Token(TokenType::FLOAT, floatValue);
+		}
+		
+		
+
+		//// int or float 
+		//if (expression.peek() == '.')
+		//{
+		//	// float
+		//	while (!expression.eof() && isdigit(expression.peek()))
+		//	{
+		//		buffer += GetNextChar(expression);
+		//	}
+
+		//	// string to float
+		//	float floatValue;
+		//	std::stringstream stream(buffer);
+		//	stream >> floatValue;
+
+		//	result =  Token(TokenType::FLOAT, floatValue);
+		//	
+		//}
+		//else
+		//{
+		//	// int 
+		//	while (!expression.eof() && isdigit(expression.peek()))
+		//	{
+		//		buffer += GetNextChar(expression);
+		//	}
+
+		//	// string to int
+		//	int intValue;
+		//	std::stringstream stream(buffer);
+		//	stream >> intValue;
+
+		//	result =  Token(TokenType::INT, intValue);
+		//}
 
 		// reset state
 		state_ = State::START;
 
-		// string to int
-		int value;
-		std::stringstream stream(buffer);
-		stream >> value;
+		return result;
 
-		return Token(TokenType::INT, value);
+		
 	}
 
 	Token Scanner::HandleOperatorState(stringstream &expression, char currectChar)
