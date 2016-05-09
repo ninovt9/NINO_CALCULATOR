@@ -40,6 +40,20 @@ namespace NINO_TEST_CALCULATOR
 			result = expression.Calculate(node);
 			Assert::AreEqual(result, 1.8f);
 
+			// 5.1 + 3.1
+			tokenList = { Token(TokenType::FLOAT, 5.1f), Token(TokenType::ADD), Token(TokenType::FLOAT, 3.1f) };
+			node = make_shared<AST>(parser.GetNodeExp(tokenList.begin(), tokenList.end()));
+			result = expression.Calculate(node);
+			Assert::AreEqual(result,8.2f, L"5.1+3.1=8.2");
+
+			// 5.1 + 3
+			tokenList = { Token(TokenType::FLOAT, 5.1f), Token(TokenType::ADD), Token(TokenType::INT, 3) };
+			node = make_shared<AST>(parser.GetNodeExp(tokenList.begin(), tokenList.end()));
+			result = expression.Calculate(node);
+			Assert::AreEqual(result, 8.1f, L"5.1+3=8.1");
+
+
+
 
 		}
 
@@ -70,6 +84,10 @@ namespace NINO_TEST_CALCULATOR
 			// 5 + 1
 			expression = Expression(" 5 + 1 ");
 			Assert::AreEqual(expression.GetResult(), 6.0f);
+
+			// 2.5 + 1.2
+			expression = Expression("2.5 + 1.2");
+			Assert::AreEqual(expression.GetResult(), 3.7f);
 
 
 		}

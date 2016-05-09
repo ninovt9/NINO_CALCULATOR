@@ -139,7 +139,7 @@ namespace calculator
 		AST ast = AST();
 	
 		// number
-		if (iter->GetType() == TokenType::INT)
+		if (iter->GetType() == TokenType::INT || iter->GetType() == TokenType::FLOAT)
 		{
 			ast = AST(*iter);
 		}
@@ -171,34 +171,34 @@ namespace calculator
 		return ast;
 	}
 
-	float Parser::calculate(std::shared_ptr<AST> node)
-	{
-		if (node != nullptr)
-		{
-			switch (node->token_.GetType())
-			{
-			case TokenType::ADD:
-				return calculate(node->left_) + calculate(node->right_);
-				break;
-			case TokenType::SUB:
-				return calculate(node->left_) - calculate(node->right_);
-				break;
-			case TokenType::MUL:
-				return calculate(node->left_) * calculate(node->right_);
-				break;
-			case TokenType::DIV:
-				return calculate(node->left_) / calculate(node->right_);
-				break;
-			case TokenType::INT:
-				return static_cast<float>(node->token_.GetIntValue());
-				break;
-			}
-		}
-		else
-		{
-			// error
-		}
+	//float Parser::calculate(std::shared_ptr<AST> node)
+	//{
+	//	if (node != nullptr)
+	//	{
+	//		switch (node->token_.GetType())
+	//		{
+	//		case TokenType::ADD:
+	//			return calculate(node->left_) + calculate(node->right_);
+	//			break;
+	//		case TokenType::SUB:
+	//			return calculate(node->left_) - calculate(node->right_);
+	//			break;
+	//		case TokenType::MUL:
+	//			return calculate(node->left_) * calculate(node->right_);
+	//			break;
+	//		case TokenType::DIV:
+	//			return calculate(node->left_) / calculate(node->right_);
+	//			break;
+	//		case TokenType::INT:
+	//			return static_cast<float>(node->token_.GetIntValue());
+	//			break;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		// error
+	//	}
 
-
-	}
+/*
+	}*/
 }

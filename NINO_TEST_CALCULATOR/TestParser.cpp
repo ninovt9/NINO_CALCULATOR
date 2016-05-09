@@ -56,6 +56,15 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((ast.token_ == tokenList[1]), true);
 			Assert::AreEqual((ast.right_->token_ == tokenList[2]), true);
 
+			// float
+			tokenList = { Token(TokenType::FLOAT, 5.9), Token(TokenType::ADD), Token(TokenType::INT, 2) };
+
+				// for GetNodeFactor
+			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((ast.left_->token_ == tokenList[0]),	true,	L"float: 5.9 + 2 -> 5.9");
+			Assert::AreEqual((ast.token_ == tokenList[1]),			true,	L"float: 5.9 + 2 -> +");
+			Assert::AreEqual((ast.right_->token_ == tokenList[2]),	true,	L"float: 5.9 + 2 -> 2");
+
 			// mix
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1),
 			Token(TokenType::ADD), Token(TokenType::INT, 2) };											// 5 * 1 + 2
@@ -98,32 +107,32 @@ namespace NINO_TEST_CALCULATOR
 
 		}
 
-		TEST_METHOD(Test_calculate)
-		{
-			Parser parser;
-			std::shared_ptr<AST> node;
-			vector<Token> tokenList;
-			float result;
+		//TEST_METHOD(Test_calculate)
+		//{
+		//	Parser parser;
+		//	std::shared_ptr<AST> node;
+		//	vector<Token> tokenList;
+		//	float result;
 
-			// int
-			node = make_shared<AST>(AST(Token(TokenType::INT, 5)));
-			result = parser.calculate(node);
-			Assert::AreEqual(result, 5.0f);
+		//	// int
+		//	node = make_shared<AST>(AST(Token(TokenType::INT, 5)));
+		//	result = parser.calculate(node);
+		//	Assert::AreEqual(result, 5.0f);
 
-			// 5 * 1
-			tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1) };	// 5 * 1																						// for GetNodeTerm
-			node = make_shared<AST>(parser.GetNodeTerm(tokenList.begin(), tokenList.end()));
-			result = parser.calculate(node);
-			Assert::AreEqual(result, 5.0f);
-			
-			// (7 + 2) / 5
-			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 7), Token(TokenType::ADD), Token(TokenType::INT, 2), Token(TokenType::RIGHT_PAR),
-				Token(TokenType::DIV), Token(TokenType::INT, 5) };
-			node = make_shared<AST>(parser.GetNodeExp(tokenList.begin(), tokenList.end()));
-			result = parser.calculate(node);
-			Assert::AreEqual(result, 1.8f);
+		//	// 5 * 1
+		//	tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1) };	// 5 * 1																						// for GetNodeTerm
+		//	node = make_shared<AST>(parser.GetNodeTerm(tokenList.begin(), tokenList.end()));
+		//	result = parser.calculate(node);
+		//	Assert::AreEqual(result, 5.0f);
+		//	
+		//	// (7 + 2) / 5
+		//	tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 7), Token(TokenType::ADD), Token(TokenType::INT, 2), Token(TokenType::RIGHT_PAR),
+		//		Token(TokenType::DIV), Token(TokenType::INT, 5) };
+		//	node = make_shared<AST>(parser.GetNodeExp(tokenList.begin(), tokenList.end()));
+		//	result = parser.calculate(node);
+		//	Assert::AreEqual(result, 1.8f);
 
-			
-		}
+		//	
+		//}
 	};
 }

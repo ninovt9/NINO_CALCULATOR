@@ -34,6 +34,9 @@ namespace calculator
 			case TokenType::INT:
 				return static_cast<float>(node->token_.GetIntValue());
 				break;
+			case TokenType::FLOAT:
+				return (node->token_.GetFloatValue());
+				break;
 			}
 		}
 		else
