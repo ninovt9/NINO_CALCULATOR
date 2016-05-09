@@ -35,6 +35,9 @@ namespace calculator
 		Parser();
 		Parser(const std::string &expression);
 
+	//public:
+	//	const AST& GetRoot();
+
 	public:
 		AST GetAST();
 		AST GetNodeExp(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
@@ -49,6 +52,11 @@ namespace calculator
 		Scanner scanner_;		
 		std::vector<Token> tokenList_;
 	};
+
+	//const AST& Parser::GetRoot()
+	//{
+	//	return ast_;
+	//}
 }
 
 

@@ -16,6 +16,7 @@ namespace calculator
 		START,
 		NUMBER,
 		OPERATOR,
+		ERROR
 	};
 
 	class Scanner

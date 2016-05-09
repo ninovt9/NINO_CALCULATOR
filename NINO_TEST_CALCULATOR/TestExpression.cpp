@@ -73,5 +73,24 @@ namespace NINO_TEST_CALCULATOR
 
 
 		}
+
+		TEST_METHOD(Test_Class_Operator_Add)
+		{
+			auto result = Expression("1+5") + Expression("10");
+			Assert::AreEqual(result.GetResult(), 16.0f, L"E(1+5)+E(10)==16.0f failed");
+			
+			result = Expression("1*5") + Expression("12*(5+1)");
+			Assert::AreEqual(result.GetResult(), 77.0f, L"E(1*5)+E(12*(5+1))==77.0f failed");
+
+			result = Expression("1+5") - Expression("1");
+			Assert::AreEqual(result.GetResult(), 5.0f, L"E(1+5)-E(1)==5.0f failed");
+
+			result = Expression("1+5") * Expression("2");
+			Assert::AreEqual(result.GetResult(), 12.0f, L"E(1+5)*E(2)==12.0f failed");
+
+			result = Expression("1+5") / Expression("3");
+			Assert::AreEqual(result.GetResult(), 2.0f, L"E(1+5)/E(3)==2.0f failed");
+		}
+			
 	};
 }

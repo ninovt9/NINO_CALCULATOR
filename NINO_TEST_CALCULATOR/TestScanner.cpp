@@ -14,6 +14,9 @@ namespace NINO_TEST_CALCULATOR
 	TEST_CLASS(TestScanner)
 	{
 	public:
+		
+
+
 		TEST_METHOD(Test_GetNextChar)
 		{
 			Scanner scanner;

@@ -21,9 +21,9 @@ namespace calculator
 	class Token 
 	{
 	public:
-		explicit Token();
-		explicit Token(TokenType type);
-		explicit Token(TokenType type, int intValue);
+		Token();
+		Token(TokenType type);
+		Token(TokenType type, int intValue);
 		
 	public:
 		Token(const Token& other);
