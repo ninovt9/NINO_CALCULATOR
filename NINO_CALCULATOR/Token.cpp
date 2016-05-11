@@ -3,27 +3,31 @@
 
 namespace calculator
 {
-	Token::Token() : type_(TokenType::INVALID), intValue_(0), floatValue_(0.0f)
+	Token::Token() : type_(TokenType::INVALID), intValue_(0), floatValue_(0.0f), varName_("")
 	{
 
 	}
 
-	Token::Token(TokenType type) : type_(type), intValue_(0), floatValue_(0.0f)
+	Token::Token(TokenType type) : type_(type), intValue_(0), floatValue_(0.0f), varName_("")
 	{
 
 	}
 
-	Token::Token(TokenType type, int intValue) : type_(type), intValue_(intValue), floatValue_(0.0f)
+	Token::Token(TokenType type, int intValue) : type_(type), intValue_(intValue), floatValue_(0.0f), varName_("")
 	{
 
 	}
 
-	Token::Token(TokenType type, float floatValue) : type_(type), intValue_(0), floatValue_(floatValue)
+	Token::Token(TokenType type, float floatValue) : type_(type), intValue_(0), floatValue_(floatValue), varName_("")
 	{
 
 	}
 
-	Token::Token(TokenType type, double doubleValue) : type_(type), intValue_(0), floatValue_(static_cast<float>(doubleValue))
+	Token::Token(TokenType type, double doubleValue) : type_(type), intValue_(0), floatValue_(static_cast<float>(doubleValue)), varName_("")
+	{
+
+	}
+	Token::Token(TokenType type, std::string varName) : type_(type), intValue_(0), floatValue_(0.0f), varName_(varName)
 	{
 
 	}
@@ -34,6 +38,7 @@ namespace calculator
 		type_ = other.type_;
 		intValue_ = other.intValue_;
 		floatValue_ = other.floatValue_;
+		varName_ = other.varName_;
 	}
 
 	Token& Token::operator=(const Token& other)
@@ -41,6 +46,7 @@ namespace calculator
 		type_ = other.type_;
 		intValue_ = other.intValue_;
 		floatValue_ = other.floatValue_;
+		varName_ = other.varName_;
 		return *this;
 	}
 
@@ -50,6 +56,7 @@ namespace calculator
 			type_ == other.type_
 			&& intValue_ == other.intValue_
 			&& floatValue_ == other.floatValue_
+			&& varName_ == other.varName_
 			);
 	}
 
@@ -59,6 +66,7 @@ namespace calculator
 			type_ == other.type_
 			&& intValue_ == other.intValue_
 			&& floatValue_ == other.floatValue_
+			&& varName_ == other.varName_
 			);
 	}
 }

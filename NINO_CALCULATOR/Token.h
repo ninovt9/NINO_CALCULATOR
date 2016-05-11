@@ -4,7 +4,7 @@
 
 namespace calculator
 {
-	enum class TokenType 
+	enum class TokenType
 	{
 		INT,
 		FLOAT,
@@ -14,6 +14,10 @@ namespace calculator
 		DIV,		// /
 		LEFT_PAR,	// (
 		RIGHT_PAR,	// )
+
+		TYPE_INT,	// var_type : int
+		TYPE_FLOAT,	// var_type : float
+		VAR,		// var_name
 
 		INVALID,	// 无效类型
 	};
@@ -26,6 +30,7 @@ namespace calculator
 		Token(TokenType type, int intValue);
 		Token(TokenType type, float floatValue);
 		Token(TokenType type, double doubleValue);
+		Token(TokenType type, std::string varName);
 
 		// 先用float，有空改成double
 		
@@ -39,12 +44,13 @@ namespace calculator
 		TokenType GetType() const;
 		int GetIntValue() const;
 		float GetFloatValue() const;
+		std::string GetVarName() const;
 
 	private:
 		TokenType type_;
 		int intValue_;
-
 		float floatValue_;
+		std::string varName_;
 	};
 
 	inline TokenType Token::GetType() const
@@ -60,6 +66,11 @@ namespace calculator
 	inline float Token::GetFloatValue() const
 	{
 		return floatValue_;
+	}
+
+	inline std::string Token::GetVarName() const
+	{
+		return varName_;
 	}
 }
 
