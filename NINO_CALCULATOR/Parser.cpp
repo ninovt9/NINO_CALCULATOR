@@ -61,11 +61,34 @@ namespace calculator
 		return GetNodeExp(tokenList_.begin(), tokenList_.end());
 	}
 
+	AST Parser::GetNodeStat(std::vector<Token>::iterator &iter,vector<Token>::iterator &end)
+	{
+		// statement : [ assignment = ] expression
+
+		AST ast;
+
+		if (iter->GetType() == TokenType::VAR && (iter + 1)->GetType() == TokenType::ASSIGNED)
+		{
+			auto left = AST(*iter);
+			auto root = *(++iter);
+			auto right = GetNodeExp(++iter, end);
+			ast = AST(left, root, right);
+		}
+		// only expression
+		else
+		{
+			ast = AST(GetNodeExp(iter, end));
+		}
+
+		return ast;
+		
+	}
+
 	AST Parser::GetNodeExp(vector<Token>::iterator &iter, vector<Token>::iterator &end)
 	{
 		// expression : term { ("+" | "-") term };	
 
-		AST ast = AST();
+		AST ast;
 
 		// only term
 		// descent
@@ -79,7 +102,7 @@ namespace calculator
 				break;
 			}
 
-			// pee
+			// peek
 			if ((iter + 1)->GetType() == TokenType::ADD
 				|| (iter + 1)->GetType() == TokenType::SUB)
 			{
@@ -101,7 +124,7 @@ namespace calculator
 	{
 		// term : factor { ("*" | "/") factor }
 
-		AST ast = AST();
+		AST ast;
 
 		// only factor
 		ast = GetNodeFactor(iter, end);
@@ -134,12 +157,17 @@ namespace calculator
 
 	AST Parser::GetNodeFactor(vector<Token>::iterator &iter, vector<Token>::iterator &end)
 	{
-		// factor: number | "(" expression ")"
+		// assignment | number | "(" expression ")" 
 
-		AST ast = AST();
-	
+		AST ast;
+
+		// assignment
+		if (iter->GetType() == TokenType::VAR)
+		{
+			ast = AST(*iter);
+		}
 		// number
-		if (iter->GetType() == TokenType::INT || iter->GetType() == TokenType::FLOAT)
+		else if (iter->GetType() == TokenType::INT || iter->GetType() == TokenType::FLOAT)
 		{
 			ast = AST(*iter);
 		}
@@ -171,34 +199,4 @@ namespace calculator
 		return ast;
 	}
 
-	//float Parser::calculate(std::shared_ptr<AST> node)
-	//{
-	//	if (node != nullptr)
-	//	{
-	//		switch (node->token_.GetType())
-	//		{
-	//		case TokenType::ADD:
-	//			return calculate(node->left_) + calculate(node->right_);
-	//			break;
-	//		case TokenType::SUB:
-	//			return calculate(node->left_) - calculate(node->right_);
-	//			break;
-	//		case TokenType::MUL:
-	//			return calculate(node->left_) * calculate(node->right_);
-	//			break;
-	//		case TokenType::DIV:
-	//			return calculate(node->left_) / calculate(node->right_);
-	//			break;
-	//		case TokenType::INT:
-	//			return static_cast<float>(node->token_.GetIntValue());
-	//			break;
-	//		}
-	//	}
-	//	else
-	//	{
-	//		// error
-	//	}
-
-/*
-	}*/
 }

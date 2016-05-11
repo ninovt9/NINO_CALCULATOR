@@ -182,18 +182,8 @@ namespace calculator
 			buffer += GetNextChar(expression);
 		}
 
-		Token token;
-
-		// var_type
-		if (dict_.HasToken(buffer))
-		{
-			token = dict_.FindToken(buffer);
-		}
 		// var_name
-		else
-		{
-			token = Token(TokenType::VAR, buffer);
-		}
+		auto token = Token(TokenType::VAR, buffer);
 
 		//reset state
 		state_ = State::START;

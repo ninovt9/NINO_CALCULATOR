@@ -39,11 +39,11 @@
     <ClInclude Include="targetver.h">
       <Filter>资源文件</Filter>
     </ClInclude>
+    <ClInclude Include="Calculator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Dictionary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -60,6 +60,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Error.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

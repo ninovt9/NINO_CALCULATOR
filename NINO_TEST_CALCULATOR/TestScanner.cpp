@@ -131,29 +131,12 @@ namespace NINO_TEST_CALCULATOR
 			char currectChar;
 			Token token;
 
-			// type : int
-			stream = stringstream("int i = 0");
-			currectChar = stream.get();
-			token = scanner.HandleVariableState(stream, currectChar);
-			Assert::AreEqual((token == Token(TokenType::TYPE_INT)), true);
-
-
-			stream = stringstream("in t i = 0");
-			currectChar = stream.get();
-			token = scanner.HandleVariableState(stream, currectChar);
-			Assert::AreEqual((token == Token(TokenType::TYPE_INT)), false);
-
-			// type : float
-			stream = stringstream("float f = 0.5f");
-			currectChar = stream.get();
-			token = scanner.HandleVariableState(stream, currectChar);
-			Assert::AreEqual((token == Token(TokenType::TYPE_FLOAT)), true);
-
 			// var
 			stream = stringstream("i = 0");
 			currectChar = stream.get();
 			token = scanner.HandleVariableState(stream, currectChar);
 			Assert::AreEqual((token == Token(TokenType::VAR, "i")), true);
+
 		}
 
 		TEST_METHOD(Test_GetNextToken)
@@ -220,16 +203,6 @@ namespace NINO_TEST_CALCULATOR
 
 			token = scanner.GetNextToken(stream);
 			Assert::AreEqual((token == Token(TokenType::INT, 5)), true, L"5 ->  5");
-
-			// var_type : int
-			stream = stringstream("int i = 0");
-			token = scanner.GetNextToken(stream);
-			Assert::AreEqual((token == Token(TokenType::TYPE_INT)), true, L"var_type -> int");
-
-			// var_type : float
-			stream = stringstream("float f = 0.5f");
-			token = scanner.GetNextToken(stream);
-			Assert::AreEqual((token == Token(TokenType::TYPE_FLOAT)), true, L"var_type -> float");
 
 			// var
 			stream = stringstream("f = 0.5f");
@@ -309,6 +282,13 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 3);
 
+
+			// assignment statement
+			stream = stringstream("i = 0");
+			tokenList = scanner.GetNextTokenList(stream);
+			Assert::AreEqual((tokenList[0] == Token(TokenType::VAR, "i")), true, L"i = 0 -> i");
+			Assert::AreEqual((tokenList[1] == Token(TokenType::ASSIGNED)), true, L"= 0 -> =");
+			Assert::AreEqual((tokenList[2] == Token(TokenType::INT, 0)), true, L"int 0 -> 0");
 
 
 			// error input

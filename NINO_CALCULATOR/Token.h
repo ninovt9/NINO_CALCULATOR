@@ -16,8 +16,6 @@ namespace calculator
 		RIGHT_PAR,	// )
 		ASSIGNED,	// =
 
-		TYPE_INT,	// var_type : int
-		TYPE_FLOAT,	// var_type : float
 		VAR,		// var_name
 
 		INVALID,	// 无效类型

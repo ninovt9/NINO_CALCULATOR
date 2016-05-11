@@ -18,8 +18,6 @@ namespace calculator
 		AddToken(dict_, "(", Token(TokenType::LEFT_PAR));
 		AddToken(dict_, ")", Token(TokenType::RIGHT_PAR));
 		AddToken(dict_, "=", Token(TokenType::ASSIGNED));
-		AddToken(dict_, "int", Token(TokenType::TYPE_INT));
-		AddToken(dict_, "float", Token(TokenType::TYPE_FLOAT));
 	}
 
 	void Dictionary::AddToken(SyntaxDict &dict, const string &name, const Token &token)

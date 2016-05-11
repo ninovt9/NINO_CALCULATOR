@@ -41,14 +41,6 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((token.GetFloatValue() == 6.0f),			true,		L"6.0f -> floatValue");
 			Assert::AreEqual((token.GetVarName() == ""),				true,		L"6.0f ->  text");
 
-
-			// var_type
-			token = Token(TokenType::TYPE_INT);
-			Assert::AreEqual((token.GetType() == TokenType::TYPE_INT),	true,		L"int ->  type");
-			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"int ->  intValue");
-			Assert::AreEqual((token.GetFloatValue() ==  0.0f),			true,		L"int ->  floatValue");
-			Assert::AreEqual((token.GetVarName() == ""),				true,		L"int ->  text");
-
 			// var
 			token = Token(TokenType::VAR, "each");
 			Assert::AreEqual((token.GetType() == TokenType::VAR),		true,		L"var:each ->  type");
@@ -89,13 +81,6 @@ namespace NINO_TEST_CALCULATOR
 			Token op_sub(TokenType::SUB);
 			Assert::AreEqual((op_add == op_sub), false);
 			Assert::AreEqual((op_add == op_add_2), true);
-
-			// var_type
-			Token type_int(TokenType::TYPE_INT);
-			Token type_int_2(TokenType::TYPE_INT);
-			Token type_float(TokenType::TYPE_FLOAT);
-			Assert::AreEqual((type_int == type_int_2), true);
-			Assert::AreEqual((type_int == type_float), false);
 
 			// var_name
 			Token var(TokenType::VAR, "var");

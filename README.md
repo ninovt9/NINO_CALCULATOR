@@ -7,6 +7,12 @@
 
 ----------------------------------------------版本分割线------------------------------------------------
 
+	语法分析:
+		statement	:	[ assignment = ] expression
+		expression  :	term { ("+" | "-") term }
+		term		:	factor { ("*" | "/") factor }
+		factor		:	number | "(" expression ")" 
+
 变量名->只支持字母，区分大小写
 
 2016.05.09 19:46-->支持小数

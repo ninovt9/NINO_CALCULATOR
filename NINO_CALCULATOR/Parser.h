@@ -37,12 +37,12 @@ namespace calculator
 
 	public:
 		AST GetAST();
+
+		AST GetNodeStat(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
+
 		AST GetNodeExp(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
 		AST GetNodeTerm(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
 		AST GetNodeFactor(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
-
-	public:
-		float calculate(std::shared_ptr<AST> node);
 
 	private:
 		AST ast_;

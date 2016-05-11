@@ -33,8 +33,6 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(dictionary.HasToken("/"), true);
 			Assert::AreEqual(dictionary.HasToken("("), true);
 			Assert::AreEqual(dictionary.HasToken(")"), true);
-			Assert::AreEqual(dictionary.HasToken("int"), true);
-			Assert::AreEqual(dictionary.HasToken("float"), true);
 			Assert::AreEqual(dictionary.HasToken("="), true);
 
 			Assert::AreEqual(dictionary.HasToken("?"), false);
