@@ -58,6 +58,14 @@ namespace NINO_TEST_CALCULATOR
 			token = scanner.HandleOperatorState(stream, currectChar);
 
 			Assert::AreEqual((token.GetType() == TokenType::LEFT_PAR), true);
+
+			// assgined
+			stream = stringstream("=");
+			currectChar = stream.get();
+			token = scanner.HandleOperatorState(stream, currectChar);
+
+			Assert::AreEqual((token.GetType() == TokenType::ASSIGNED), true);
+
 		}
 
 		TEST_METHOD(Test_HandleNumberState)
@@ -113,6 +121,39 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual(token.GetIntValue(), 659);
 
 			//¿Õ¸ñ
+		}
+
+		TEST_METHOD(Test_HandleVariableState)
+		{
+			Scanner scanner;
+
+			stringstream stream;
+			char currectChar;
+			Token token;
+
+			// type : int
+			stream = stringstream("int i = 0");
+			currectChar = stream.get();
+			token = scanner.HandleVariableState(stream, currectChar);
+			Assert::AreEqual((token == Token(TokenType::TYPE_INT)), true);
+
+
+			stream = stringstream("in t i = 0");
+			currectChar = stream.get();
+			token = scanner.HandleVariableState(stream, currectChar);
+			Assert::AreEqual((token == Token(TokenType::TYPE_INT)), false);
+
+			// type : float
+			stream = stringstream("float f = 0.5f");
+			currectChar = stream.get();
+			token = scanner.HandleVariableState(stream, currectChar);
+			Assert::AreEqual((token == Token(TokenType::TYPE_FLOAT)), true);
+
+			// var
+			stream = stringstream("i = 0");
+			currectChar = stream.get();
+			token = scanner.HandleVariableState(stream, currectChar);
+			Assert::AreEqual((token == Token(TokenType::VAR, "i")), true);
 		}
 
 		TEST_METHOD(Test_GetNextToken)
@@ -180,12 +221,23 @@ namespace NINO_TEST_CALCULATOR
 			token = scanner.GetNextToken(stream);
 			Assert::AreEqual((token == Token(TokenType::INT, 5)), true, L"5 ->  5");
 
-			// error input
-			stream = stringstream("a");
-
+			// var_type : int
+			stream = stringstream("int i = 0");
 			token = scanner.GetNextToken(stream);
-			Assert::AreEqual((token == Token(TokenType::INVALID)), true);
+			Assert::AreEqual((token == Token(TokenType::TYPE_INT)), true, L"var_type -> int");
 
+			// var_type : float
+			stream = stringstream("float f = 0.5f");
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::TYPE_FLOAT)), true, L"var_type -> float");
+
+			// var
+			stream = stringstream("f = 0.5f");
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::VAR, "f")), true, L"var -> \"f\"");
+
+
+			// error input
 			stream = stringstream("£¨");
 			
 			token = scanner.GetNextToken(stream);

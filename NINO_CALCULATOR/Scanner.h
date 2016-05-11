@@ -16,6 +16,7 @@ namespace calculator
 		START,
 		NUMBER,
 		OPERATOR,
+		VARIABLE,
 		ERROR
 	};
 
@@ -36,6 +37,8 @@ namespace calculator
 	public:
 		Token HandleNumberState(std::stringstream &expression, char currectChar);
 		Token HandleOperatorState(std::stringstream &expression, char currectChar);
+
+		Token HandleVariableState(std::stringstream &expression, char currectChar);
 		
 	private:
 		std::stringstream stream_;

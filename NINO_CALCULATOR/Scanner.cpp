@@ -70,6 +70,10 @@ namespace calculator
 				return HandleOperatorState(expression, currectChar);
 				break;
 
+			case State::VARIABLE:
+				return HandleVariableState(expression, currectChar);
+				break;
+
 			case State::ERROR:
 				ErrorToken("error input");
 				return Token(TokenType::INVALID);
@@ -87,6 +91,10 @@ namespace calculator
 			else if (dict_.HasToken(currectStr))
 			{
 				state_ = State::OPERATOR;
+			}
+			else if (isalpha(currectChar))
+			{
+				state_ = State::VARIABLE;
 			}
 			else
 			{
@@ -142,43 +150,7 @@ namespace calculator
 
 			result = Token(TokenType::FLOAT, floatValue);
 		}
-		
-		
 
-		//// int or float 
-		//if (expression.peek() == '.')
-		//{
-		//	// float
-		//	while (!expression.eof() && isdigit(expression.peek()))
-		//	{
-		//		buffer += GetNextChar(expression);
-		//	}
-
-		//	// string to float
-		//	float floatValue;
-		//	std::stringstream stream(buffer);
-		//	stream >> floatValue;
-
-		//	result =  Token(TokenType::FLOAT, floatValue);
-		//	
-		//}
-		//else
-		//{
-		//	// int 
-		//	while (!expression.eof() && isdigit(expression.peek()))
-		//	{
-		//		buffer += GetNextChar(expression);
-		//	}
-
-		//	// string to int
-		//	int intValue;
-		//	std::stringstream stream(buffer);
-		//	stream >> intValue;
-
-		//	result =  Token(TokenType::INT, intValue);
-		//}
-
-		// reset state
 		state_ = State::START;
 
 		return result;
@@ -192,6 +164,36 @@ namespace calculator
 		string buffer;
 		buffer.push_back(currectChar);
 		auto token = dict_.FindToken(buffer);
+
+		//reset state
+		state_ = State::START;
+
+		return token;
+	}
+
+	Token Scanner::HandleVariableState(stringstream &expression, char currectChar)
+	{
+		// first char
+		string buffer;
+		buffer.push_back(currectChar);
+		
+		while (!expression.eof() && isalpha(expression.peek()))
+		{
+			buffer += GetNextChar(expression);
+		}
+
+		Token token;
+
+		// var_type
+		if (dict_.HasToken(buffer))
+		{
+			token = dict_.FindToken(buffer);
+		}
+		// var_name
+		else
+		{
+			token = Token(TokenType::VAR, buffer);
+		}
 
 		//reset state
 		state_ = State::START;
