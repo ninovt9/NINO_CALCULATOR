@@ -14,6 +14,7 @@ namespace calculator
 		DIV,		// /
 		LEFT_PAR,	// (
 		RIGHT_PAR,	// )
+		ASSIGNED,	// =
 
 		TYPE_INT,	// var_type : int
 		TYPE_FLOAT,	// var_type : float

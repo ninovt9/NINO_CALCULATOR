@@ -16,38 +16,45 @@ namespace NINO_TEST_CALCULATOR
 
 			// operator
 			token = Token(TokenType::ADD);
-			Assert::AreEqual((token.GetType() == TokenType::ADD), true, L"+ -> type");
-			Assert::AreEqual((token.GetIntValue() == 0), true, L"+ -> intValue");
-			Assert::AreEqual((token.GetFloatValue() == 0.0f), true, L"+ -> floatValue");
-			Assert::AreEqual((token.GetVarName() == ""), true, L"+ -> text");
+			Assert::AreEqual((token.GetType() == TokenType::ADD),		true,		L"+ -> type");
+			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"+ -> intValue");
+			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,		L"+ -> floatValue");
+			Assert::AreEqual((token.GetVarName() == ""),				true,	    L"+ -> text");
+
+			token = Token(TokenType::ASSIGNED);
+			Assert::AreEqual((token.GetType() == TokenType::ASSIGNED),	true,		L"= -> type");
+			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"= -> intValue");
+			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,	    L"= -> floatValue");
+			Assert::AreEqual((token.GetVarName() == ""),				true,		L"= -> text");
 
 			// int
 			token = Token(TokenType::INT, 5);
-			Assert::AreEqual((token.GetType() == TokenType::INT), true, L"5 -> type");
-			Assert::AreEqual((token.GetIntValue() == 5), true, L"5 -> intValue");
-			Assert::AreEqual((token.GetFloatValue() == 0.0f), true, L"5 -> floatValue");
-			Assert::AreEqual((token.GetVarName() == ""), true, L"5 -> text");
+			Assert::AreEqual((token.GetType() == TokenType::INT),		true,		L"5 -> type");
+			Assert::AreEqual((token.GetIntValue() == 5),				true,		L"5 -> intValue");
+			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,		L"5 -> floatValue");
+			Assert::AreEqual((token.GetVarName() == ""),				true,		L"5 -> text");
 
 			// float
 			token = Token(TokenType::FLOAT, 6.0f);
-			Assert::AreEqual((token.GetType() == TokenType::FLOAT), true, L"6.0f -> type");
-			Assert::AreEqual((token.GetIntValue() == 0), true, L"6.0f -> intValue");
-			Assert::AreEqual((token.GetFloatValue() == 6.0f), true, L"6.0f -> floatValue");
-			Assert::AreEqual((token.GetVarName() == ""), true, L"6.0f ->  text");
+			Assert::AreEqual((token.GetType() == TokenType::FLOAT),		true,		L"6.0f -> type");
+			Assert::AreEqual((token.GetIntValue() == 0),				true,	    L"6.0f -> intValue");
+			Assert::AreEqual((token.GetFloatValue() == 6.0f),			true,		L"6.0f -> floatValue");
+			Assert::AreEqual((token.GetVarName() == ""),				true,		L"6.0f ->  text");
+
 
 			// var_type
 			token = Token(TokenType::TYPE_INT);
-			Assert::AreEqual((token.GetType() == TokenType::TYPE_INT), true,  L"int ->  type");
-			Assert::AreEqual((token.GetIntValue() == 0), true, L"int ->  intValue");
-			Assert::AreEqual(token.GetFloatValue(), 0.0f, L"int ->  floatValue");
-			Assert::AreEqual((token.GetVarName() == ""), true, L"int ->  text");
+			Assert::AreEqual((token.GetType() == TokenType::TYPE_INT),	true,		L"int ->  type");
+			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"int ->  intValue");
+			Assert::AreEqual((token.GetFloatValue() ==  0.0f),			true,		L"int ->  floatValue");
+			Assert::AreEqual((token.GetVarName() == ""),				true,		L"int ->  text");
 
 			// var
 			token = Token(TokenType::VAR, "each");
-			Assert::AreEqual((token.GetType() == TokenType::VAR), true, L"var:each ->  type");
-			Assert::AreEqual((token.GetIntValue() == 0), true, L"var:each ->  intValue");
-			Assert::AreEqual((token.GetFloatValue() == 0.0f), true, L"var:each ->  floatValue");
-			Assert::AreEqual((token.GetVarName() == "each"), true, L"var:each ->  varName");
+			Assert::AreEqual((token.GetType() == TokenType::VAR),		true,		L"var:each ->  type");
+			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"var:each ->  intValue");
+			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,		L"var:each ->  floatValue");
+			Assert::AreEqual((token.GetVarName() == "each"),			true,		L"var:each ->  varName");
 
 			
 		}
