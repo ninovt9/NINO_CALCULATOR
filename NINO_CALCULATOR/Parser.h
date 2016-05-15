@@ -37,18 +37,25 @@ namespace calculator
 
 	public:
 		AST GetAST();
-
 		AST GetNodeStat(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
-
 		AST GetNodeExp(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
 		AST GetNodeTerm(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
 		AST GetNodeFactor(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
+
+	public:
+		std::string GetErrorReport();
 
 	private:
 		AST ast_;
 		Scanner scanner_;
 		std::vector<Token> tokenList_;
+		std::string errorReport_;
 	};
+
+	inline std::string Parser::GetErrorReport()
+	{
+		return errorReport_;
+	}
 
 }
 

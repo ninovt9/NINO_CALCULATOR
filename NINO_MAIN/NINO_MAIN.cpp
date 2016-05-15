@@ -14,18 +14,6 @@ using std::endl;
 
 int main()
 {
-	//Expression expression = Expression();
-	//std::string input;
-
-	//for (;;)
-	//{
-	//	std::getline(cin, input);
-
-	//	expression = Expression(input);
-	//	cout << ">>" << expression.GetResult() << endl;
-	//	cout << endl;
-	//}
-	
 	calculator::Calculator cal;
 	cal.Run();
 

@@ -43,17 +43,16 @@ namespace calculator
 
 namespace calculator
 {
-	Parser::Parser()
+	Parser::Parser():scanner_(""), errorReport_("")
 	{
-		scanner_ = Scanner("");
 		ast_ = AST();
 	}
 
-	Parser::Parser(const std::string &expression)
+	Parser::Parser(const std::string &expression): scanner_(expression)
 	{
-		scanner_ = Scanner(expression);
 		tokenList_ = scanner_.GetTokenList();
 		ast_ = GetAST();
+		errorReport_ = scanner_.GetErrorReport() + errorReport_;
 	}
 
 	AST Parser::GetAST()
@@ -108,8 +107,18 @@ namespace calculator
 			{
 				// operator¤Îtoken
 				auto operaToken = ++iter;
-				// term +- term
-				ast = AST(ast, *operaToken, GetNodeTerm(++iter, end));
+
+				// out of range check
+				if (iter + 1 != end)
+				{
+					// term +- term
+					ast = AST(ast, *operaToken, GetNodeTerm(++iter, end));
+				}
+				else
+				{
+					ErrorSyntax("invalid syntax", errorReport_);
+				}
+
 			}
 			else
 			{
@@ -193,7 +202,7 @@ namespace calculator
 		}
 		else
 		{
-			//error£¬ ÔÝÊ±²»Ð´
+			ErrorSyntax("invalid syntax", errorReport_);
 		}
 
 		return ast;

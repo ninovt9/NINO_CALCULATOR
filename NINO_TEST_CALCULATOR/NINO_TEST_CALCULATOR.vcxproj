@@ -167,6 +167,7 @@
     </ClCompile>
     <ClCompile Include="TestCalculator.cpp" />
     <ClCompile Include="TestDictionary.cpp" />
+    <ClCompile Include="TestError.cpp" />
     <ClCompile Include="TestExpression.cpp" />
     <ClCompile Include="TestParser.cpp" />
     <ClCompile Include="TestScanner.cpp" />

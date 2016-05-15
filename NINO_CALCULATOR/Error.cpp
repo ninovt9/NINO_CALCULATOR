@@ -8,13 +8,13 @@ using std::endl;
 
 namespace calculator
 {
-	void ErrorToken(const string& msg)
+	void ErrorToken(const string& msg, string& errorReport)
 	{
-		cerr << "TokenError: " << msg << endl;
+		errorReport += "TokenError: " + msg + "\n";
 	}
 
-	void ErrorSyntax(const string& msg)
+	void ErrorSyntax(const string& msg, string& errorReport)
 	{
-		cerr << "SyntaxError: " << msg << endl;
+		errorReport += "SyntaxError: " + msg + "\n";
 	}
 }

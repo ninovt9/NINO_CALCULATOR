@@ -144,6 +144,31 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((ast.left_->right_->token_ == tokenList[3]), true);
 			Assert::AreEqual((ast.token_ == tokenList[5]), true);
 			Assert::AreEqual((ast.right_->token_ == tokenList[6]), true);
+		}
+
+		TEST_METHOD(Test_Class_Error)
+		{
+			Parser parser;
+			AST ast;
+			vector<Token> tokenList;
+
+			// 5++
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::ADD) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((parser.GetErrorReport() == "SyntaxError: invalid syntax\n"), true, L"error : 5++");
+
+			// 5+
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD)};
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((parser.GetErrorReport() == "SyntaxError: invalid syntax\n"), true, L"error : 5+");
+
+			// 5 5
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::INT, 5) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual((parser.GetErrorReport() == "SyntaxError: invalid syntax\n"), true, L"error : 5 5");
 
 		}
 	};

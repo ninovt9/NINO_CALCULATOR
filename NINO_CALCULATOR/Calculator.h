@@ -27,14 +27,13 @@ namespace calculator
 	public:
 		Calculator();
 	public:
-		void Analyze(const AST& ast);
+		std::string Analyze(const AST& ast);
 		void Assigned(const AST& ast, std::map<std::string, float>& varList_);
 		float Calculate(std::shared_ptr<AST> node);
 		void Run();
 	private:
 		std::map<std::string, float> varList_;
 		std::string input_;
-		std::string buffer_;
 		AST ast_;
 
 	};

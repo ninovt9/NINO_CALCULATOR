@@ -6,7 +6,7 @@ using std::string;
 
 namespace calculator
 {
-	Calculator::Calculator():buffer_("")
+	Calculator::Calculator(): input_("")
 	{
 
 	}
@@ -17,10 +17,8 @@ namespace calculator
 		{
 			std::getline(std::cin, input_);
 			ast_ = Parser(input_).GetAST();
-			Analyze(ast_);
 
-			std::cout << ">>>" << buffer_ << std::endl;
-			buffer_ = "";
+			std::cout << ">>>" << Analyze(ast_) << std::endl;
 		}
 	}
 
@@ -32,8 +30,9 @@ namespace calculator
 		varList.insert(std::pair<string, float>(varName, varValue));
 	}
 
-	void Calculator::Analyze(const AST& ast)
+	std::string Calculator::Analyze(const AST& ast)
 	{
+		std::string print;
 		if (ast.token_ == TokenType::ASSIGNED)
 		{
 			Assigned(ast, varList_);
@@ -41,8 +40,10 @@ namespace calculator
 		else
 		{
 			// µ÷ÓÃCalculator()
-			buffer_ += std::to_string(Calculate(std::make_shared<AST>(ast)));
+			print += std::to_string(Calculate(std::make_shared<AST>(ast)));
 		}
+
+		return print;
 	}
 
 	float Calculator::Calculate(std::shared_ptr<AST> node)
