@@ -14,21 +14,21 @@ namespace NINO_TEST_CALCULATOR
 		TEST_METHOD(Test_ErrorToken)
 		{
 			std::string msg;
-			std::string errorReport;
+			std::vector<std::string> errorReport;
 
 			msg = "scanner error";
 			ErrorToken(msg, errorReport);
-			Assert::AreEqual((errorReport=="TokenError: scanner error\n"), true);
+			Assert::AreEqual((errorReport[0]=="TokenError: scanner error\n"), true);
 		}
 
 		TEST_METHOD(Test_ErrorSyntax)
 		{
 			std::string msg;
-			std::string errorReport;
+			std::vector<std::string> errorReport;
 
 			msg = "scanner error";
 			ErrorSyntax(msg, errorReport);
-			Assert::AreEqual((errorReport=="SyntaxError: scanner error\n"), true);
+			Assert::AreEqual((errorReport[0]=="SyntaxError: scanner error\n"), true);
 		}
 	};
 }

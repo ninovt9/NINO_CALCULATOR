@@ -20,6 +20,7 @@ namespace calculator
 	private:
 		std::map<std::string, float> varList_;
 		std::string input_;
+		std::vector<std::string> errorReport_;
 		AST ast_;
 
 	};

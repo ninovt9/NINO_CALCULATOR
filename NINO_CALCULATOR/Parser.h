@@ -33,7 +33,7 @@ namespace calculator
 	{
 	public:
 		Parser();
-		Parser(const std::string &expression);
+		Parser(const std::vector<Token>& tokenList);
 
 	public:
 		AST GetAST();
@@ -43,16 +43,16 @@ namespace calculator
 		AST GetNodeFactor(std::vector<Token>::iterator &iter, std::vector<Token>::iterator &end);
 
 	public:
-		std::string GetErrorReport();
+		std::vector<std::string> GetErrorReport();
 
 	private:
 		AST ast_;
-		Scanner scanner_;
+		//Scanner scanner_;
 		std::vector<Token> tokenList_;
-		std::string errorReport_;
+		std::vector<std::string> errorReport_;
 	};
 
-	inline std::string Parser::GetErrorReport()
+	inline std::vector<std::string> Parser::GetErrorReport()
 	{
 		return errorReport_;
 	}

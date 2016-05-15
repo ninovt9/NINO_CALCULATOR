@@ -219,7 +219,7 @@ namespace NINO_TEST_CALCULATOR
 			
 			token = scanner.GetNextToken(stream);
 			Assert::AreEqual((token == Token(TokenType::INVALID)), true);
-			Assert::AreEqual((scanner.GetErrorReport()=="TokenError: error input\n"), true);
+			Assert::AreEqual((scanner.GetErrorReport()[0] =="TokenError: error input\n"), true);
 
 			
 		}

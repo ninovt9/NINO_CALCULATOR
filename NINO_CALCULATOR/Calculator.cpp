@@ -17,18 +17,28 @@ namespace calculator
 		{
 			std::getline(std::cin, input_);
 
-			Parser parser(input_);
-			ast_ = Parser(input_).GetAST();
-			auto errorReport = parser.GetErrorReport();
-
-			if (errorReport != "")
+			Scanner scanner(input_);
+			Parser parser(scanner.GetTokenList());
+			errorReport_ = scanner.GetErrorReport();
+			if (errorReport_.size() != 0)
 			{
-				std::cout << errorReport << std::endl;
+				std::cout << errorReport_[0];
 			}
 			else
 			{
-				std::cout << ">>>" << Analyze(ast_) << std::endl;
+				ast_ = parser.GetAST();
+				errorReport_ = parser.GetErrorReport();
+
+				if (errorReport_.size() != 0)
+				{
+					std::cout << errorReport_[0];
+				}
+				else
+				{
+					std::cout << ">>>" << Analyze(ast_) << std::endl;
+				}
 			}
+
 			
 		}
 	}

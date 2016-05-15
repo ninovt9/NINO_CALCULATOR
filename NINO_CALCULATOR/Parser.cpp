@@ -43,16 +43,14 @@ namespace calculator
 
 namespace calculator
 {
-	Parser::Parser():scanner_(""), errorReport_("")
+	Parser::Parser()
 	{
 		ast_ = AST();
 	}
 
-	Parser::Parser(const std::string &expression): scanner_(expression)
+	Parser::Parser(const std::vector<Token>& tokenList) : tokenList_(tokenList)
 	{
-		tokenList_ = scanner_.GetTokenList();
 		ast_ = GetAST();
-		errorReport_ = scanner_.GetErrorReport() + errorReport_;
 	}
 
 	AST Parser::GetAST()

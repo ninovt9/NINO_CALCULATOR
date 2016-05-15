@@ -28,7 +28,7 @@ namespace calculator
 
 	public:
 		std::vector<Token> GetTokenList();
-		std::string GetErrorReport();
+		std::vector<std::string> GetErrorReport();
 
 	public:
 		char GetNextChar(std::stringstream &expression);	
@@ -38,14 +38,13 @@ namespace calculator
 	public:
 		Token HandleNumberState(std::stringstream &expression, char currectChar);
 		Token HandleOperatorState(std::stringstream &expression, char currectChar);
-
 		Token HandleVariableState(std::stringstream &expression, char currectChar);
 		
 	private:
 		std::stringstream stream_;
-		Dictionary dict_;					//	语法字典
-		State state_;						//	当前状态，用于状态机
-		std::string errorReport_;			//	错误报告
+		Dictionary dict_;								//	语法字典
+		State state_;									//	当前状态，用于状态机
+		std::vector<std::string> errorReport_;			//	错误报告
 	};
 
 	inline std::vector<Token> Scanner::GetTokenList()
@@ -53,7 +52,7 @@ namespace calculator
 		return GetNextTokenList(stream_);
 	}
 
-	inline std::string Scanner::GetErrorReport()
+	inline std::vector<std::string> Scanner::GetErrorReport()
 	{
 		return errorReport_;
 	}

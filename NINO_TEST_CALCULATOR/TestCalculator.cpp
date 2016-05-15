@@ -54,18 +54,18 @@ namespace NINO_TEST_CALCULATOR
 
 		}
 
-		TEST_METHOD(Test_Assigned)
-		{
-			Calculator cal;
-			map<string, float> varList;
-			Parser parser("var = 5.0");
+		//TEST_METHOD(Test_Assigned)
+		//{
+		//	Calculator cal;
+		//	map<string, float> varList;
+		//	Parser parser("var = 5.0");
 
 
-			auto test = parser.GetAST();
-			cal.Assigned(parser.GetAST(), varList);
-			Assert::AreEqual(varList.find("var")->first == "var", true, L"var = 5.0  ->  var");
-			Assert::AreEqual(varList.find("var")->second == 5.0f, true, L"var = 5.0  ->  5.0");
-			
-		}
+		//	auto test = parser.GetAST();
+		//	cal.Assigned(parser.GetAST(), varList);
+		//	Assert::AreEqual(varList.find("var")->first == "var", true, L"var = 5.0  ->  var");
+		//	Assert::AreEqual(varList.find("var")->second == 5.0f, true, L"var = 5.0  ->  5.0");
+		//	
+		//}
 	};
 }

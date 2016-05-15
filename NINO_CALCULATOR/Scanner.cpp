@@ -8,12 +8,12 @@ using std::stringstream;
 namespace calculator
 {
 	Scanner::Scanner() 
-		: state_(State::START), dict_(), stream_(""), errorReport_("")
+		: state_(State::START), dict_(), stream_("")
 	{
 	}
 
 	Scanner::Scanner(const string &expression)
-		: state_(State::START), dict_(), stream_(expression), errorReport_("")
+		: state_(State::START), dict_(), stream_(expression)
 	{
 	}
 
