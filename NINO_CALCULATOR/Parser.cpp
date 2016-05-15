@@ -66,12 +66,20 @@ namespace calculator
 
 		AST ast;
 
-		if (iter->GetType() == TokenType::VAR && (iter + 1)->GetType() == TokenType::ASSIGNED)
+		if (iter->GetType() == TokenType::VAR)
 		{
-			auto left = AST(*iter);
-			auto root = *(++iter);
-			auto right = GetNodeExp(++iter, end);
-			ast = AST(left, root, right);
+			if ((iter + 1) != end && (iter + 2) != end && (iter + 1)->GetType() == TokenType::ASSIGNED)
+			{
+				auto left = AST(*iter);
+				auto root = *(++iter);
+				auto right = GetNodeExp(++iter, end);
+				ast = AST(left, root, right);
+			}
+			else
+			{
+				ErrorSyntax("invalid syntax", errorReport_);
+			}
+
 		}
 		// only expression
 		else
@@ -122,6 +130,7 @@ namespace calculator
 			}
 			else
 			{
+				ErrorSyntax("invalid syntax", errorReport_);
 				break;
 			}
 		}
@@ -157,6 +166,7 @@ namespace calculator
 			}
 			else
 			{
+				//ErrorSyntax("invalid syntax", errorReport_);
 				break;
 			}
 		}

@@ -28,22 +28,6 @@ namespace NINO_TEST_CALCULATOR
 		TEST_METHOD(Test_GetNode_Variable)
 		{
 
-			// error”√≤‚ ‘
-
-			//Parser parser;
-			//AST ast;
-			//vector<Token> tokenList = { Token(TokenType::VAR, "var") };
-
-			//ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
-			//Assert::AreEqual((ast.token_ == tokenList[0]), false);
-
-			//Parser parser;
-			//AST ast;
-			//vector<Token> tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNED) };
-
-			//ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
-			//Assert::AreEqual((ast.token_ == tokenList[0]), false);
-
 			Parser parser;
 			AST ast;
 			vector<Token> tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNED), Token(TokenType::INT, 5)};
@@ -152,24 +136,72 @@ namespace NINO_TEST_CALCULATOR
 			AST ast;
 			vector<Token> tokenList;
 
+			// 5 -> correct
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5)};
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, false, L"correct : 5");
+
+			// 5+1 -> correct
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 1) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, false, L"correct : 5+1");
+
+			// 5*1 -> correct
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, false, L"correct : 5*1");
+
+			// a = 5 -> correct
+			parser = Parser();
+			tokenList = { Token(TokenType::VAR, "a"), Token(TokenType::ASSIGNED), Token(TokenType::INT, 5) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, false, L"correct : a=5");
+
+
 			// 5++
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::ADD) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
-			Assert::AreEqual((parser.GetErrorReport() == "SyntaxError: invalid syntax\n"), true, L"error : 5++");
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, true, L"error : 5++");
 
 			// 5+
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD)};
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
-			Assert::AreEqual((parser.GetErrorReport() == "SyntaxError: invalid syntax\n"), true, L"error : 5+");
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, true, L"error : 5+");
 
 			// 5 5
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::INT, 5) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
-			Assert::AreEqual((parser.GetErrorReport() == "SyntaxError: invalid syntax\n"), true, L"error : 5 5");
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, true, L"error : 5 5");
 
+			// 5+5 3
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 5), Token(TokenType::INT, 3) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, true, L"error : 5+5 3");
+
+			// 5+5*3 2
+			parser = Parser();
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 3), Token(TokenType::INT, 2) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, true, L"error : 5+5*3 2");
+
+			// var
+			parser = Parser();
+			tokenList = { Token(TokenType::VAR, "var") };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, true, L"error : var");
+
+			// var = 
+			parser = Parser();
+			tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNED) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::AreEqual(parser.GetErrorReport().find("SyntaxError: invalid syntax\n") != std::string::npos, true, L"error : var =");
 		}
 	};
 }

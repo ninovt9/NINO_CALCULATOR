@@ -16,9 +16,20 @@ namespace calculator
 		for (;;)
 		{
 			std::getline(std::cin, input_);
-			ast_ = Parser(input_).GetAST();
 
-			std::cout << ">>>" << Analyze(ast_) << std::endl;
+			Parser parser(input_);
+			ast_ = Parser(input_).GetAST();
+			auto errorReport = parser.GetErrorReport();
+
+			if (errorReport != "")
+			{
+				std::cout << errorReport << std::endl;
+			}
+			else
+			{
+				std::cout << ">>>" << Analyze(ast_) << std::endl;
+			}
+			
 		}
 	}
 
