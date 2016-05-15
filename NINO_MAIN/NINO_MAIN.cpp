@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "Expression.h"
+#include "Calculator.h"
 
 #include <iostream>
 #include <Windows.h>
@@ -11,22 +11,23 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-using calculator::Expression;
 
 int main()
 {
-	Expression expression = Expression();
-	std::string input;
+	//Expression expression = Expression();
+	//std::string input;
 
-	for (;;)
-	{
-		std::getline(cin, input);
+	//for (;;)
+	//{
+	//	std::getline(cin, input);
 
-		expression = Expression(input);
-		cout << ">>" << expression.GetResult() << endl;
-		cout << endl;
-	}
-
+	//	expression = Expression(input);
+	//	cout << ">>" << expression.GetResult() << endl;
+	//	cout << endl;
+	//}
+	
+	calculator::Calculator cal;
+	cal.Run();
 
 	system("pause");
     return 0;

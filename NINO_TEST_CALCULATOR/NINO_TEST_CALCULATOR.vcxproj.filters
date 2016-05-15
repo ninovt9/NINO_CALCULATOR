@@ -41,5 +41,8 @@
     <ClCompile Include="TestToken.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="TestCalculator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -15,6 +15,16 @@ namespace NINO_TEST_CALCULATOR
 	{
 	public:
 
+		TEST_METHOD(Test_Class_GetAST)
+		{
+			Parser parser("var = 5.0");
+			auto ast = parser.GetAST();
+
+			Assert::AreEqual((ast.token_ == Token(TokenType::ASSIGNED)),			true,		L"var = 5.0  ->  =");
+			Assert::AreEqual((ast.left_->token_ == Token(TokenType::VAR, "var")),			true,		L"var = 5.0  ->  var");
+			Assert::AreEqual((ast.right_->token_ == Token(TokenType::FLOAT, 5.0f)),	true,		L"var = 5.0  ->  50");
+		}
+
 		TEST_METHOD(Test_GetNode_Variable)
 		{
 

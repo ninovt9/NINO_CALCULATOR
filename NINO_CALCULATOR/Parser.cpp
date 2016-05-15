@@ -58,7 +58,7 @@ namespace calculator
 
 	AST Parser::GetAST()
 	{
-		return GetNodeExp(tokenList_.begin(), tokenList_.end());
+		return GetNodeStat(tokenList_.begin(), tokenList_.end());
 	}
 
 	AST Parser::GetNodeStat(std::vector<Token>::iterator &iter,vector<Token>::iterator &end)
