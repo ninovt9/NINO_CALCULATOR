@@ -26,6 +26,14 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((ast.token_ == Token(TokenType::ASSIGNED)),				true,		L"var = 5.0  ->  =");
 			Assert::AreEqual((ast.left_->token_ == Token(TokenType::VAR, "var")),		true,		L"var = 5.0  ->  var");
 			Assert::AreEqual((ast.right_->token_ == Token(TokenType::FLOAT, 5.0f)),		true,		L"var = 5.0  ->  50");
+
+
+			// (5+1)
+			scanner = Scanner("(5+1)");
+			parser = Parser(scanner.GetTokenList());
+			ast = parser.GetAST();
+
+			Assert::AreEqual(parser.GetErrorReport().size(), static_cast<size_t>(0), L"(5+1) --> error=0");
 		}
 
 		TEST_METHOD(Test_GetNode_Variable)
@@ -121,6 +129,7 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((ast.token_ == tokenList[2]), true);
 			Assert::AreEqual((ast.right_->token_ == tokenList[3]), true);
 
+
 			// (7 + 2) / 5
 			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 7), Token(TokenType::ADD), Token(TokenType::INT, 2), Token(TokenType::RIGHT_PAR),
 			Token(TokenType::DIV), Token(TokenType::INT, 5)};
@@ -202,6 +211,14 @@ namespace NINO_TEST_CALCULATOR
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
 			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : 5+5*3 2");
+
+			// (5+2
+			parser = Parser();
+			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 5) };
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			errorReport = parser.GetErrorReport();
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : (5+2");
+
 
 			// var
 			parser = Parser();

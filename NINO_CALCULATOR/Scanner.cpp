@@ -32,7 +32,7 @@ namespace calculator
 	{
 		vector<Token> result;
 
-		while (!expression.eof())
+		while (expression.peek() != -1)
 		{
 			// if the next char is a line break
 			if (expression.peek() == '\n')

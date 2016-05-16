@@ -126,6 +126,10 @@ namespace calculator
 				}
 
 			}
+			else if ((iter + 1)->GetType() == TokenType::RIGHT_PAR)
+			{
+				break;
+			}
 			else
 			{
 				ErrorSyntax("invalid syntax", errorReport_);
@@ -196,16 +200,28 @@ namespace calculator
 			{
 				ast = GetNodeExp(iter, end);
 
-				// check right parentheses
-				if ((iter + 1)->GetType() == TokenType::RIGHT_PAR)
+				
+				// out of range
+				if (iter + 1 != end)
 				{
-					// delete parenteses
-					iter++;	
+					// check right parentheses
+					if ((iter + 1)->GetType() == TokenType::RIGHT_PAR)
+					{
+						// delete parenteses
+						iter++;
+					}
+					else
+					{
+						// error
+						ErrorSyntax("invalid syntax", errorReport_);
+					}
 				}
 				else
 				{
-					// error
+					ErrorSyntax("invalid syntax", errorReport_);
 				}
+				
+
 			}
 		}
 		else

@@ -206,6 +206,21 @@ namespace NINO_TEST_CALCULATOR
 			token = scanner.GetNextToken(stream);
 			Assert::AreEqual((token == Token(TokenType::INT, 5)), true, L"5 ->  5");
 
+			// (5 + 2)
+			stream = stringstream("(5+2)");
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::LEFT_PAR)), true, L"(5+2)  -> ( ");
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::INT, 5)), true, L"(5+2)  -> 5 ");
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::ADD)), true, L"(5+2)  -> + ");
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::INT, 2)), true, L"(5+2)  -> 2 ");
+			token = scanner.GetNextToken(stream);
+			Assert::AreEqual((token == Token(TokenType::RIGHT_PAR)), true, L"(5+2)  -> ) ");
+			token = scanner.GetNextToken(stream);
+
+
 			// var
 			stream = stringstream("f = 0.5f");
 			token = scanner.GetNextToken(stream);
@@ -232,9 +247,17 @@ namespace NINO_TEST_CALCULATOR
 			vector<Token> tokenList;
 
 
+			// (5+2)
+			stream = stringstream("(5+2)");
+			tokenList = scanner.GetNextTokenList(stream);
+			Assert::AreEqual(tokenList.size(), static_cast<size_t>(5), L"(5+2)  ->  size = 5)");
+
+
 
 			stream = stringstream("1/5*6");
 			tokenList = scanner.GetNextTokenList(stream);
+
+			Assert::AreEqual(tokenList.size(), static_cast<size_t>(5), L"1/5*6  ->  size = 5)");
 
 			Assert::AreEqual((tokenList[0].GetType() == TokenType::INT), true);
 			Assert::AreEqual(tokenList[0].GetIntValue(), 1);
