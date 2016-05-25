@@ -66,7 +66,7 @@ namespace calculator
 
 		if (iter->GetType() == TokenType::VAR)
 		{
-			if ((iter + 1) != end && (iter + 2) != end && (iter + 1)->GetType() == TokenType::ASSIGNED)
+			if ((iter + 1) != end && (iter + 2) != end && (iter + 1)->GetType() == TokenType::ASSIGNMENT)
 			{
 				auto left = AST(*iter);
 				auto root = *(++iter);
@@ -75,7 +75,7 @@ namespace calculator
 			}
 			else
 			{
-				ErrorSyntax("invalid syntax", errorReport_);
+				ast = AST(GetNodeExp(iter, end));
 			}
 
 		}

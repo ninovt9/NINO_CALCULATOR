@@ -21,8 +21,8 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,		L"+ -> floatValue");
 			Assert::AreEqual((token.GetVarName() == ""),				true,	    L"+ -> text");
 
-			token = Token(TokenType::ASSIGNED);
-			Assert::AreEqual((token.GetType() == TokenType::ASSIGNED),	true,		L"= -> type");
+			token = Token(TokenType::ASSIGNMENT);
+			Assert::AreEqual((token.GetType() == TokenType::ASSIGNMENT),	true,		L"= -> type");
 			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"= -> intValue");
 			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,	    L"= -> floatValue");
 			Assert::AreEqual((token.GetVarName() == ""),				true,		L"= -> text");

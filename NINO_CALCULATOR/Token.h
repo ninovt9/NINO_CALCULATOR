@@ -14,7 +14,7 @@ namespace calculator
 		DIV,		// /
 		LEFT_PAR,	// (
 		RIGHT_PAR,	// )
-		ASSIGNED,	// =
+		ASSIGNMENT,	// =
 
 		VAR,		// var_name
 

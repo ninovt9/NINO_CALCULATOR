@@ -64,7 +64,7 @@ namespace NINO_TEST_CALCULATOR
 			currectChar = stream.get();
 			token = scanner.HandleOperatorState(stream, currectChar);
 
-			Assert::AreEqual((token.GetType() == TokenType::ASSIGNED), true);
+			Assert::AreEqual((token.GetType() == TokenType::ASSIGNMENT), true);
 
 		}
 
@@ -317,7 +317,7 @@ namespace NINO_TEST_CALCULATOR
 			stream = stringstream("i = 0");
 			tokenList = scanner.GetNextTokenList(stream);
 			Assert::AreEqual((tokenList[0] == Token(TokenType::VAR, "i")), true, L"i = 0 -> i");
-			Assert::AreEqual((tokenList[1] == Token(TokenType::ASSIGNED)), true, L"= 0 -> =");
+			Assert::AreEqual((tokenList[1] == Token(TokenType::ASSIGNMENT)), true, L"= 0 -> =");
 			Assert::AreEqual((tokenList[2] == Token(TokenType::INT, 0)), true, L"int 0 -> 0");
 
 

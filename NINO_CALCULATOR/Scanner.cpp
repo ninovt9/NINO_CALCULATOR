@@ -107,9 +107,6 @@ namespace calculator
 
 	Token Scanner::HandleNumberState(stringstream &expression, char currectChar)
 	{
-		// 问题：
-			// 1.判断: 2a~~2.a 之类
-			// 2.051 怎么办？
 
 		Token result;
 

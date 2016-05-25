@@ -7,6 +7,7 @@
 
 namespace calculator
 {
-	extern void ErrorToken(const std::string& msg, std::vector<std::string>&  errorReport);
-	extern void ErrorSyntax(const std::string& msg, std::vector<std::string>&  errorReport);
+	void ErrorToken(const std::string& msg, std::vector<std::string>&  errorReport);
+	void ErrorSyntax(const std::string& msg, std::vector<std::string>&  errorReport);
+	void ErrorName(const std::string& msg, std::vector<std::string>&  errorReport);
 }

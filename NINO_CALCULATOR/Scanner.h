@@ -27,24 +27,24 @@ namespace calculator
 		Scanner(const std::string &expression);
 
 	public:
-		std::vector<Token> GetTokenList();
-		std::vector<std::string> GetErrorReport();
+		std::vector<Token>			GetTokenList();
+		std::vector<std::string>	GetErrorReport();
 
 	public:
-		char GetNextChar(std::stringstream &expression);	
-		Token GetNextToken(std::stringstream &expression);								
-		std::vector<Token> GetNextTokenList(std::stringstream &expression);		
+		char						GetNextChar(std::stringstream &expression);	
+		Token						GetNextToken(std::stringstream &expression);								
+		std::vector<Token>			GetNextTokenList(std::stringstream &expression);		
 
 	public:
-		Token HandleNumberState(std::stringstream &expression, char currectChar);
-		Token HandleOperatorState(std::stringstream &expression, char currectChar);
-		Token HandleVariableState(std::stringstream &expression, char currectChar);
+		Token						HandleNumberState(std::stringstream &expression, char currectChar);
+		Token						HandleOperatorState(std::stringstream &expression, char currectChar);
+		Token						HandleVariableState(std::stringstream &expression, char currectChar);
 		
 	private:
-		std::stringstream stream_;
-		Dictionary dict_;								//	语法字典
-		State state_;									//	当前状态，用于状态机
-		std::vector<std::string> errorReport_;			//	错误报告
+		std::stringstream			stream_;
+		Dictionary					dict_;								
+		State						state_;									
+		std::vector<std::string>	errorReport_;			
 	};
 
 	inline std::vector<Token> Scanner::GetTokenList()

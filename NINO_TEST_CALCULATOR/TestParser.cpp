@@ -23,7 +23,7 @@ namespace NINO_TEST_CALCULATOR
 			Parser parser(scanner.GetTokenList());
 			auto ast = parser.GetAST();
 
-			Assert::AreEqual((ast.token_ == Token(TokenType::ASSIGNED)),				true,		L"var = 5.0  ->  =");
+			Assert::AreEqual((ast.token_ == Token(TokenType::ASSIGNMENT)),				true,		L"var = 5.0  ->  =");
 			Assert::AreEqual((ast.left_->token_ == Token(TokenType::VAR, "var")),		true,		L"var = 5.0  ->  var");
 			Assert::AreEqual((ast.right_->token_ == Token(TokenType::FLOAT, 5.0f)),		true,		L"var = 5.0  ->  50");
 
@@ -41,7 +41,7 @@ namespace NINO_TEST_CALCULATOR
 
 			Parser parser;
 			AST ast;
-			vector<Token> tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNED), Token(TokenType::INT, 5)};
+			vector<Token> tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5)};
 
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			Assert::AreEqual((ast.left_->token_ == tokenList[0]),		true,		L"var = 5 -> var");
@@ -76,35 +76,31 @@ namespace NINO_TEST_CALCULATOR
 			AST ast;
 			vector<Token> tokenList;
 
-			// only mul
-			tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1) };	// 5 * 1
+			// 5 + 1
+			tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1) };
 
-				// for GetNodeTerm
 			ast = parser.GetNodeTerm(tokenList.begin(), tokenList.end());
 			Assert::AreEqual((ast.left_->token_ == tokenList[0]), true);
 			Assert::AreEqual((ast.token_ == tokenList[1]), true);
 			Assert::AreEqual((ast.right_->token_ == tokenList[2]), true);
 
-				// for GetNodeExp
 			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
 			Assert::AreEqual((ast.left_->token_ == tokenList[0]), true);
 			Assert::AreEqual((ast.token_ == tokenList[1]), true);
 			Assert::AreEqual((ast.right_->token_ == tokenList[2]), true);
 
-			// float
+			// 5.9 + 2
 			tokenList = { Token(TokenType::FLOAT, 5.9), Token(TokenType::ADD), Token(TokenType::INT, 2) };
 
-				// for GetNodeFactor
 			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
 			Assert::AreEqual((ast.left_->token_ == tokenList[0]),	true,	L"float: 5.9 + 2 -> 5.9");
 			Assert::AreEqual((ast.token_ == tokenList[1]),			true,	L"float: 5.9 + 2 -> +");
 			Assert::AreEqual((ast.right_->token_ == tokenList[2]),	true,	L"float: 5.9 + 2 -> 2");
 
-			// mix
+			// 5 * 1 + 2
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1),
-			Token(TokenType::ADD), Token(TokenType::INT, 2) };											// 5 * 1 + 2
+			Token(TokenType::ADD), Token(TokenType::INT, 2) };											
 
-				// for GetNodeExp
 			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
 			Assert::AreEqual((ast.left_->left_->token_ == tokenList[0]), true);
 			Assert::AreEqual((ast.left_->token_ == tokenList[1]), true);
@@ -112,7 +108,6 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((ast.token_ == tokenList[3]), true);
 			Assert::AreEqual((ast.right_->token_ == tokenList[4]), true);
 
-			// contain par
 			// (7 - 1)
 			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 7), Token(TokenType::SUB), Token(TokenType::INT, 1), Token(TokenType::RIGHT_PAR)};											
 			
@@ -140,6 +135,22 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((ast.left_->right_->token_ == tokenList[3]), true);
 			Assert::AreEqual((ast.token_ == tokenList[5]), true);
 			Assert::AreEqual((ast.right_->token_ == tokenList[6]), true);
+
+			// var + 1
+			tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ADD), Token(TokenType::INT, 1) };
+
+			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
+			Assert::IsTrue(ast.left_->token_ == tokenList[0],		L"var + 1 -> var");
+			Assert::IsTrue(ast.token_ == tokenList[1],				L"var + 1 -> +");
+			Assert::IsTrue(ast.right_->token_ == tokenList[2],		L"var + 1 -> 1");
+
+			// varA + varB
+			tokenList = { Token(TokenType::VAR, "varA"), Token(TokenType::ADD), Token(TokenType::VAR, "varB") };
+
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::IsTrue(ast.left_->token_ == tokenList[0],		L"varA + varB -> varA");
+			Assert::IsTrue(ast.token_ == tokenList[1],				L"varA + varB -> +");
+			Assert::IsTrue(ast.right_->token_ == tokenList[2],		L"varA + varB -> varB");
 		}
 
 		TEST_METHOD(Test_Class_Error)
@@ -172,7 +183,7 @@ namespace NINO_TEST_CALCULATOR
 
 			// a = 5 -> correct
 			parser = Parser();
-			tokenList = { Token(TokenType::VAR, "a"), Token(TokenType::ASSIGNED), Token(TokenType::INT, 5) };
+			tokenList = { Token(TokenType::VAR, "a"), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
 			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), false, L"correct : a=5");
@@ -229,7 +240,7 @@ namespace NINO_TEST_CALCULATOR
 
 			// var = 
 			parser = Parser();
-			tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNED) };
+			tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNMENT) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
 			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : var =");

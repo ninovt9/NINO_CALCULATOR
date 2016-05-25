@@ -29,9 +29,6 @@
     <ClCompile Include="TestDictionary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="TestExpression.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="TestParser.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
