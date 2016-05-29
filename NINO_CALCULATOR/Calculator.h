@@ -15,11 +15,20 @@ namespace calculator
 
 	public:
 		std::string							Analyze(const AST& ast);
-		float								Calculate(std::shared_ptr<AST> node, const std::map<std::string, float>& varList);
+		float								Calculate(std::shared_ptr<AST> node, const std::map<std::string, float>& varList)
+		{
+			return 0.0f;
+		}
+		float								Calculate(std::shared_ptr<AST> node);
+		std::string							Equation(std::shared_ptr<AST> node);
 		void								Run();
 
 	public:
-		void								AddVar(const AST& ast, std::map<std::string, float>& varList);
+		void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
+		void								EquationForRight(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
+
+	public:
+		void								AddPar(std::vector<Token>& tokenList);
 		bool								HasVar(const std::string& varName, const std::map<std::string, float>& varList);
 		std::pair<std::string, float>		FindVar(const std::string& varName, const std::map<std::string, float>& varList);
 
@@ -47,6 +56,12 @@ namespace calculator
 	inline std::vector<std::string> Calculator::GetErrorReport()
 	{
 		return errorReport_;
+	}
+
+	inline void Calculator::AddPar(std::vector<Token>& tokenList)
+	{
+		tokenList.insert(tokenList.begin(), Token(TokenType::LEFT_PAR));
+		tokenList.push_back(Token(TokenType::RIGHT_PAR));
 	}
 
 
