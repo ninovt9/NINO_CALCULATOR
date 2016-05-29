@@ -41,8 +41,9 @@ namespace NINO_TEST_CALCULATOR
 
 			Parser parser;
 			AST ast;
-			vector<Token> tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5)};
 
+			// var
+			vector<Token> tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5)};
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			Assert::AreEqual((ast.left_->token_ == tokenList[0]),		true,		L"var = 5 -> var");
 			Assert::AreEqual((ast.token_ == tokenList[1]),				true,		L"var = 5 -> =");
@@ -151,6 +152,18 @@ namespace NINO_TEST_CALCULATOR
 			Assert::IsTrue(ast.left_->token_ == tokenList[0],		L"varA + varB -> varA");
 			Assert::IsTrue(ast.token_ == tokenList[1],				L"varA + varB -> +");
 			Assert::IsTrue(ast.right_->token_ == tokenList[2],		L"varA + varB -> varB");
+
+			// x + 5 = 10
+			tokenList = { Token(TokenType::VAR, "x"), Token(TokenType::ADD), Token(TokenType::INT, 5),
+			Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 10) };
+
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::IsTrue(ast.left_->left_->token_		== tokenList[0],		L"x + 5 = 10 -> x");
+			Assert::IsTrue(ast.left_->token_			== tokenList[1],		L"x + 5 = 10 -> +");
+			Assert::IsTrue(ast.left_->right_->token_	== tokenList[2],		L"x + 5 = 10 -> 5");
+			Assert::IsTrue(ast.token_					== tokenList[3],		L"x + 5 = 10 -> =");
+			Assert::IsTrue(ast.right_->token_			== tokenList[4],		L"x + 5 = 10 -> 10");
+
 		}
 
 		TEST_METHOD(Test_Class_Error)
@@ -165,85 +178,85 @@ namespace NINO_TEST_CALCULATOR
 			tokenList = { Token(TokenType::INT, 5)};
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), false, L"correct : 5");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), false, L"correct : 5");
 
 			// 5+1 -> correct
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 1) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), false, L"correct : 5+1");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), false, L"correct : 5+1");
 
 			// 5*1 -> correct
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 1) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), false, L"correct : 5*1");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), false, L"correct : 5*1");
 
 			// a = 5 -> correct
 			parser = Parser();
 			tokenList = { Token(TokenType::VAR, "a"), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), false, L"correct : a=5");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), false, L"correct : a=5");
+
 
 			// 5++
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::ADD) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : 5++");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : 5++");
 
 			// 5+
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD)};
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : 5+");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : 5+");
 
 			// 5 5
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::INT, 5) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : 5 5");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : 5 5");
 
 			// 5+5 3
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 5), Token(TokenType::INT, 3) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : 5+5 3");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : 5+5 3");
 
 			// 5+5*3 2
 			parser = Parser();
 			tokenList = { Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 5), Token(TokenType::MUL), Token(TokenType::INT, 3), Token(TokenType::INT, 2) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : 5+5*3 2");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : 5+5*3 2");
 
 			// (5+2
 			parser = Parser();
 			tokenList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 5), Token(TokenType::ADD), Token(TokenType::INT, 5) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : (5+2");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : (5+2");
 
-
-			// var
-			parser = Parser();
-			tokenList = { Token(TokenType::VAR, "var") };
-			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
-			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : var");
+			//// var
+			//parser = Parser();
+			//tokenList = { Token(TokenType::VAR, "var") };
+			//ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			//errorReport = parser.GetErrorReport();
+			//Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : var");
 
 			// var = 
 			parser = Parser();
 			tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNMENT) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
-			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax\n") != errorReport.end(), true, L"error : var =");
+			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : var =");
 		}
 	};
 }

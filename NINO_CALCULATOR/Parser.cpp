@@ -60,32 +60,77 @@ namespace calculator
 
 	AST Parser::GetNodeStat(std::vector<Token>::iterator &iter,vector<Token>::iterator &end)
 	{
-		// statement : [ assignment = ] expression
+		// statement : expression { = expression }
 
 		AST ast;
 
-		if (iter->GetType() == TokenType::VAR)
+		ast = GetNodeExp(iter, end);
+
+		for (;;)
 		{
-			if ((iter + 1) != end && (iter + 2) != end && (iter + 1)->GetType() == TokenType::ASSIGNMENT)
+			// out of range check
+			if (iter + 1 == end)
 			{
-				auto left = AST(*iter);
-				auto root = *(++iter);
-				auto right = GetNodeExp(++iter, end);
-				ast = AST(left, root, right);
+				break;
+			}
+
+			// peek
+			if ((iter + 1)->GetType() == TokenType::ASSIGNMENT)
+			{
+				// operatorのtoken
+				auto operaToken = ++iter;
+
+				// out of range check
+				if (iter + 1 != end)
+				{
+					// term +- term
+					ast = AST(ast, *operaToken, GetNodeExp(++iter, end));
+				}
+				else
+				{
+					ErrorSyntax("invalid syntax", errorReport_);
+				}
+
 			}
 			else
 			{
-				ast = AST(GetNodeExp(iter, end));
+				ErrorSyntax("invalid syntax", errorReport_);
+				break;
 			}
-
-		}
-		// only expression
-		else
-		{
-			ast = AST(GetNodeExp(iter, end));
 		}
 
 		return ast;
+
+
+
+
+
+		//// statement : [ assignment = ] expression
+
+		//AST ast;
+
+		//if (iter->GetType() == TokenType::VAR)
+		//{
+		//	if ((iter + 1) != end && (iter + 2) != end && (iter + 1)->GetType() == TokenType::ASSIGNMENT)
+		//	{
+		//		auto left = AST(*iter);
+		//		auto root = *(++iter);
+		//		auto right = GetNodeExp(++iter, end);
+		//		ast = AST(left, root, right);
+		//	}
+		//	else
+		//	{
+		//		ast = AST(GetNodeExp(iter, end));
+		//	}
+
+		//}
+		//// only expression
+		//else
+		//{
+		//	ast = AST(GetNodeExp(iter, end));
+		//}
+
+		//return ast;
 		
 	}
 
@@ -132,7 +177,8 @@ namespace calculator
 			}
 			else
 			{
-				ErrorSyntax("invalid syntax", errorReport_);
+				// 这个error只用用在最顶端的函数
+				// ErrorSyntax("invalid syntax", errorReport_);
 				break;
 			}
 		}

@@ -23,7 +23,7 @@ namespace calculator
 			errorReport_ = scanner.GetErrorReport();
 			if (errorReport_.size() != 0)
 			{
-				std::cout << errorReport_[0];
+				std::cout << errorReport_[0] << std::endl;
 			}
 			else
 			{
@@ -32,7 +32,7 @@ namespace calculator
 
 				if (errorReport_.size() != 0)
 				{
-					std::cout << errorReport_[0];
+					std::cout << errorReport_[0] << std::endl;
 				}
 				else
 				{

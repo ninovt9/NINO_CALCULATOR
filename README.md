@@ -6,9 +6,14 @@
 
 
 ----------------------------------------------版本分割线------------------------------------------------
+	取消变量与赋值，改为方程求解
+	别忘了改TokeType::ASSIGN
+
 
 	2.语法分析:
-		statement	:	[ variable = ] expression
+		// statement	:	[ variable = ] expression
+
+		statement	:	expression { = expression }
 		expression  :	term { ("+" | "-") term }
 		term		:	factor { ("*" | "/") factor }
 		factor		:	variable | number | "(" expression ")" 
