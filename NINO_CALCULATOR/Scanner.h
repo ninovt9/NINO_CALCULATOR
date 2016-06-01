@@ -31,6 +31,7 @@ namespace calculator
 		std::vector<std::string>	GetErrorReport();
 
 	public:
+		char						PeekChar(std::stringstream &expression);
 		char						GetNextChar(std::stringstream &expression);	
 		Token						GetNextToken(std::stringstream &expression);								
 		std::vector<Token>			GetNextTokenList(std::stringstream &expression);		

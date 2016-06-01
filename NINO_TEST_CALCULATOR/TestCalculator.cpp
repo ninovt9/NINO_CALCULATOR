@@ -56,62 +56,89 @@ namespace NINO_TEST_CALCULATOR
 			parser = Parser(Scanner("x*5=11-1").GetTokenList());																					
 			Assert::AreEqual(cal.Equation(std::make_shared<AST>(parser.GetAST())), std::string("x=2.000000"),
 				L"x * 5 = 11 - 1 -> x = 2.000000");
+
+			// 2x + 1 = 3
+			parser = Parser(Scanner("2x+1=3").GetTokenList());
+			Assert::AreEqual(cal.Equation(std::make_shared<AST>(parser.GetAST())), std::string("x=1.000000"),
+				L"2x + 1 = 3 -> x = 1.000000");
+
+			// 1 + x = 10
+			parser = Parser(Scanner("1+x=10").GetTokenList());
+			Assert::AreEqual(cal.Equation(std::make_shared<AST>(parser.GetAST())), std::string("x=9.000000"),
+				L"1 + x = 10 -> x = 9.000000");
 	
 		}
 
-		TEST_METHOD(Test_Equation_LeftAndRight)
+
+
+		TEST_METHOD(Test_EquationForLeft)
 		{
 			Calculator cal;
-			Parser	parser;
-			std::vector<Token> tokenList;
-			std::shared_ptr<AST> node;
-			std::string varName;
+			Parser parser;
+			
 
 			std::vector<Token> resultList;
 			std::vector<Token> correctList;
+			Token var;
 
 			// x + 5 = 10
-			tokenList = { Token(TokenType::VAR, "x"), Token(TokenType::ADD), Token(TokenType::INT, 5),
-				Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 10) };																					// for GetNodeTerm
-			node = make_shared<AST>(parser.GetNodeStat(tokenList.begin(), tokenList.end()));
-			
-			cal.EquationForRight(node->right_, resultList, varName);
-			cal.EquationForLeft(node->left_,  resultList, varName);
-			correctList = { Token(TokenType::INT, 10), Token(TokenType::SUB), Token(TokenType::INT, 5) };
+			parser = Parser(Scanner("x+5=10").GetTokenList());
+			cal.EquationForLeft(std::make_shared<AST>(parser.GetAST())->left_, resultList, var);
+			correctList = Scanner("0.0+5").GetTokenList();
+
 			Assert::IsTrue(std::equal(resultList.begin(), resultList.end(), correctList.begin(), correctList.end()),
-				L"x + 5 = 10 -> x = 10 - 5");
+				L"x + 5 = 10 -> 0.0 + 5");
+			Assert::IsTrue(var == Token(TokenType::VAR, "x", 1.0f),
+				L"x + 5 = 10 -> x");
+
+
+
+			resultList = std::vector<Token>();
 
 			// x * 5 = 10 - 1
-			tokenList = { Token(TokenType::VAR, "x"), Token(TokenType::MUL), Token(TokenType::INT, 5),
-				Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 10), Token(TokenType::SUB), Token(TokenType::INT, 1) };																					// for GetNodeTerm
-			node = make_shared<AST>(parser.GetNodeStat(tokenList.begin(), tokenList.end()));
-			resultList = std::vector<Token>();
-			varName = std::string("");
+			parser = Parser(Scanner("x*5=10-1").GetTokenList());
+			cal.EquationForLeft(std::make_shared<AST>(parser.GetAST())->left_, resultList, var);
+			correctList = Scanner("1.0*5").GetTokenList();
 
-			cal.EquationForRight(node->right_, resultList, varName);
-			cal.EquationForLeft(node->left_, resultList, varName);
-			correctList = { Token(TokenType::LEFT_PAR), Token(TokenType::INT, 10), Token(TokenType::SUB), Token(TokenType::INT, 1), Token(TokenType::RIGHT_PAR),
-			Token(TokenType::DIV), Token(TokenType::INT, 5) };
 			Assert::IsTrue(std::equal(resultList.begin(), resultList.end(), correctList.begin(), correctList.end()),
-				L"x * 5 = 10 - 1 -> x = (10 - 1) / 5");
+				L"x * 5 = 10 - 1 -> 1.0 * 5");
+			Assert::IsTrue(var == Token(TokenType::VAR, "x", 1.0f),
+				L"x * 5 = 10 - 1 -> x");
 
-		
+		}
+
+		TEST_METHOD(Test_EquationForRight)
+		{
+			Calculator cal;
+			Parser parser;
+
+
+			std::vector<Token> resultList;
+			std::vector<Token> correctList;
+			Token var;
+
+			// x + 5 = 10
+			parser = Parser(Scanner("x+5=10").GetTokenList());
+			cal.EquationForRight(std::make_shared<AST>(parser.GetAST())->right_, resultList, var);
+			correctList = Scanner("10").GetTokenList();
+
+			Assert::IsTrue(std::equal(resultList.begin(), resultList.end(), correctList.begin(), correctList.end()),
+				L"x + 5 = 10 -> 10");
+
+
+			resultList = std::vector<Token>();
+
+			// x * 5 = 10 - 1
+			parser = Parser(Scanner("x*5=10-1").GetTokenList());
+			cal.EquationForRight(std::make_shared<AST>(parser.GetAST())->right_, resultList, var);
+			correctList = Scanner("10-1").GetTokenList();
+
+			Assert::IsTrue(std::equal(resultList.begin(), resultList.end(), correctList.begin(), correctList.end()),
+				L"x * 5 = 10 - 1 -> 10-1");
 
 
 		}
 
-		//TEST_METHOD(Test_AddVar)
-		//{
-		//	Calculator cal;
-		//	map<string, float> varList;
-		//	Scanner scanner("var = 5.0");
-		//	Parser parser(scanner.GetTokenList());
 
-		//	auto test = parser.GetAST();
-		//	cal.AddVar(parser.GetAST(), varList);
-		//	Assert::AreEqual(varList.find("var")->first == "var", true, L"var = 5.0  ->  var");
-		//	Assert::AreEqual(varList.find("var")->second == 5.0f, true, L"var = 5.0  ->  5.0");
-		//	
-		//}
 	};
 }

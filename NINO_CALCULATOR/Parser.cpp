@@ -100,37 +100,6 @@ namespace calculator
 		}
 
 		return ast;
-
-
-
-
-
-		//// statement : [ assignment = ] expression
-
-		//AST ast;
-
-		//if (iter->GetType() == TokenType::VAR)
-		//{
-		//	if ((iter + 1) != end && (iter + 2) != end && (iter + 1)->GetType() == TokenType::ASSIGNMENT)
-		//	{
-		//		auto left = AST(*iter);
-		//		auto root = *(++iter);
-		//		auto right = GetNodeExp(++iter, end);
-		//		ast = AST(left, root, right);
-		//	}
-		//	else
-		//	{
-		//		ast = AST(GetNodeExp(iter, end));
-		//	}
-
-		//}
-		//// only expression
-		//else
-		//{
-		//	ast = AST(GetNodeExp(iter, end));
-		//}
-
-		//return ast;
 		
 	}
 
@@ -241,9 +210,10 @@ namespace calculator
 		// parentheses
 		else if (iter->GetType() == TokenType::LEFT_PAR)
 		{
-			iter++;	//get expression
-			if (iter->GetType() == TokenType::INT)
+			//iter++;	//get expression
+			if (IsNumber(*(iter+1)) || (iter+1)->GetType() == TokenType::LEFT_PAR)				// IsNumber(*iter))    
 			{
+				iter++;
 				ast = GetNodeExp(iter, end);
 
 				
@@ -268,6 +238,10 @@ namespace calculator
 				}
 				
 
+			}
+			else
+			{
+				ErrorSyntax("invalid syntax", errorReport_);
 			}
 		}
 		else

@@ -42,11 +42,19 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((token.GetVarName() == ""),				true,		L"6.0f ->  text");
 
 			// var
-			token = Token(TokenType::VAR, "each");
+			token = Token(TokenType::VAR, "each", 1.0f);
 			Assert::AreEqual((token.GetType() == TokenType::VAR),		true,		L"var:each ->  type");
 			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"var:each ->  intValue");
 			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,		L"var:each ->  floatValue");
 			Assert::AreEqual((token.GetVarName() == "each"),			true,		L"var:each ->  varName");
+
+			// 3x
+			token = Token(TokenType::VAR, "x", 3.0f);
+			Assert::AreEqual((token.GetType() == TokenType::VAR),		true,		L"var:3x ->  type");
+			Assert::AreEqual((token.GetIntValue() == 0),				true,		L"var:3x ->  intValue");
+			Assert::AreEqual((token.GetFloatValue() == 0.0f),			true,		L"var:3x ->  floatValue");
+			Assert::AreEqual((token.GetVarName() == "x"),				true,		L"var:3x ->  varName");
+			Assert::AreEqual((token.GetCoefficient() == 3.0f),			true,		L"var:3x ->  coefficient");
 
 			
 		}
@@ -83,11 +91,46 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((op_add == op_add_2), true);
 
 			// var_name
-			Token var(TokenType::VAR, "var");
-			Token var_2(TokenType::VAR, "var");
-			Token num(TokenType::VAR, "num");
+			Token var(TokenType::VAR, "var", 1.0f);
+			Token var_2(TokenType::VAR, "var", 1.0f);
+			Token num(TokenType::VAR, "num", 1.0f);
 			Assert::AreEqual((var == var_2), true);
 			Assert::AreEqual((var == num), false);
+
+		}
+
+		TEST_METHOD(Test_IsNumber)
+		{
+			Token token;
+
+			Assert::IsTrue(IsNumber(Token(TokenType::INT, 1)),
+				L"1 is number");
+			Assert::IsTrue(IsNumber(Token(TokenType::FLOAT, 1.0f)),
+				L"1.0f is number");
+			Assert::IsTrue(IsNumber(Token(TokenType::FLOAT, 2.5f)),
+				L"2.5f is number");
+			Assert::IsFalse(IsNumber(Token(TokenType::VAR, "var", 1.0f)),
+				L"var is not number");
+			Assert::IsFalse(IsNumber(Token(TokenType::ADD)),
+				L"+ is not number");
+		}
+
+		TEST_METHOD(Test_IsOperator)
+		{
+			Token token;
+
+			Assert::IsTrue(IsOperator(Token(TokenType::ADD)),
+				L"+ is operator");
+			Assert::IsTrue(IsOperator(Token(TokenType::SUB)),
+				L"- is operator");
+			Assert::IsTrue(IsOperator(Token(TokenType::MUL)),
+				L"* is operator");
+			Assert::IsTrue(IsOperator(Token(TokenType::DIV)),
+				L"/ is operator");
+			Assert::IsFalse(IsOperator(Token(TokenType::INT, 1)),
+				L"1 is not operator");
+			Assert::IsFalse(IsOperator(Token(TokenType::FLOAT, 2.5f)),
+				L"2.5 is not operator");
 
 		}
 	};

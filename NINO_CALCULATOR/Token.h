@@ -29,7 +29,7 @@ namespace calculator
 		Token(TokenType type, int intValue);
 		Token(TokenType type, float floatValue);
 		Token(TokenType type, double doubleValue);
-		Token(TokenType type, std::string varName);
+		Token(TokenType type, std::string varName, float coefficient);
 
 		// 先用float，有空改成double
 		
@@ -40,16 +40,24 @@ namespace calculator
 		bool operator==(const Token& other) const;
 
 	public:
-		TokenType GetType() const;
-		int GetIntValue() const;
-		float GetFloatValue() const;
-		std::string GetVarName() const;
+		TokenType			GetType() const;
+		int					GetIntValue() const;
+		float				GetFloatValue() const;
+		std::string			GetVarName() const;
+		float				GetCoefficient() const;
+
+	public:
+		//bool			IsNumber(Token token) const;
+		//bool			IsOperator(Token token) const;
 
 	private:
-		TokenType type_;
-		int intValue_;
-		float floatValue_;
-		std::string varName_;
+		TokenType			type_;
+		int					intValue_;
+		float				floatValue_;
+		std::string			varName_;
+		float				coefficient_;
+
+	
 	};
 
 	inline TokenType Token::GetType() const
@@ -70,6 +78,27 @@ namespace calculator
 	inline std::string Token::GetVarName() const
 	{
 		return varName_;
+	}
+
+	inline float Token::GetCoefficient() const
+	{
+		return coefficient_;
+	}
+
+
+
+	inline bool IsNumber(Token token)
+	{
+		return (token.GetType() == TokenType::INT ||
+				token.GetType() == TokenType::FLOAT);
+	}
+
+	inline bool IsOperator(Token token)
+	{
+		return (token.GetType() == TokenType::ADD ||
+				token.GetType() == TokenType::SUB ||
+				token.GetType() == TokenType::MUL ||
+				token.GetType() == TokenType::DIV);
 	}
 }
 

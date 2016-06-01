@@ -14,14 +14,15 @@
 
 
 	2.语法分析:
-		// statement	:	[ variable = ] expression
 
-		statement	:	expression { = expression }
-		expression  :	term { ("+" | "-") term }
+
+		statement	:	factor op expression = expression
+					|	expression
+					;
+		expression	:	term { ("+" | "-") term }
 		term		:	factor { ("*" | "/") factor }
 		factor		:	variable | number | "(" expression ")" 
 
-		别忘了把assignment 改成 variable
 ----------------------------------------------版本分割线------------------------------------------------
 ###version:2.1 <br>
 

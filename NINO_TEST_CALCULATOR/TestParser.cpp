@@ -19,35 +19,29 @@ namespace NINO_TEST_CALCULATOR
 
 		TEST_METHOD(Test_Class_GetAST)
 		{
-			Scanner scanner("var = 5.0");
-			Parser parser(scanner.GetTokenList());
-			auto ast = parser.GetAST();
+			// var = 5.0
+			auto ast = Parser(Scanner("var = 5.0").GetTokenList()).GetAST();
 
 			Assert::AreEqual((ast.token_ == Token(TokenType::ASSIGNMENT)),				true,		L"var = 5.0  ->  =");
-			Assert::AreEqual((ast.left_->token_ == Token(TokenType::VAR, "var")),		true,		L"var = 5.0  ->  var");
+			Assert::AreEqual((ast.left_->token_ == Token(TokenType::VAR, "var", 1.0f)),		true,		L"var = 5.0  ->  var");
 			Assert::AreEqual((ast.right_->token_ == Token(TokenType::FLOAT, 5.0f)),		true,		L"var = 5.0  ->  50");
 
 
 			// (5+1)
-			scanner = Scanner("(5+1)");
-			parser = Parser(scanner.GetTokenList());
-			ast = parser.GetAST();
+			Parser parser(Scanner("(5+1)").GetTokenList());
+			parser.GetAST();
 
 			Assert::AreEqual(parser.GetErrorReport().size(), static_cast<size_t>(0), L"(5+1) --> error=0");
 		}
 
 		TEST_METHOD(Test_GetNode_Variable)
 		{
+			// var = 5
+			auto ast = Parser(Scanner("var = 5").GetTokenList()).GetAST();
 
-			Parser parser;
-			AST ast;
-
-			// var
-			vector<Token> tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5)};
-			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
-			Assert::AreEqual((ast.left_->token_ == tokenList[0]),		true,		L"var = 5 -> var");
-			Assert::AreEqual((ast.token_ == tokenList[1]),				true,		L"var = 5 -> =");
-			Assert::AreEqual((ast.right_->token_ == tokenList[2]),		true,		L"var = 5 -> 5");
+			Assert::IsTrue(ast.left_->token_	==	Token(TokenType::VAR, "var", 1.0f),		L"var = 5 -> var");
+			Assert::IsTrue(ast.token_ 			==	Token(TokenType::ASSIGNMENT),		L"var = 5 -> =");
+			Assert::IsTrue(ast.right_->token_	==	Token(TokenType::INT, 5),			L"var = 5 -> 5");
 
 		}
 
@@ -138,7 +132,7 @@ namespace NINO_TEST_CALCULATOR
 			Assert::AreEqual((ast.right_->token_ == tokenList[6]), true);
 
 			// var + 1
-			tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ADD), Token(TokenType::INT, 1) };
+			tokenList = { Token(TokenType::VAR, "var", 1.0f), Token(TokenType::ADD), Token(TokenType::INT, 1) };
 
 			ast = parser.GetNodeExp(tokenList.begin(), tokenList.end());
 			Assert::IsTrue(ast.left_->token_ == tokenList[0],		L"var + 1 -> var");
@@ -146,7 +140,7 @@ namespace NINO_TEST_CALCULATOR
 			Assert::IsTrue(ast.right_->token_ == tokenList[2],		L"var + 1 -> 1");
 
 			// varA + varB
-			tokenList = { Token(TokenType::VAR, "varA"), Token(TokenType::ADD), Token(TokenType::VAR, "varB") };
+			tokenList = { Token(TokenType::VAR, "varA", 1.0f), Token(TokenType::ADD), Token(TokenType::VAR, "varB", 1.0f) };
 
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			Assert::IsTrue(ast.left_->token_ == tokenList[0],		L"varA + varB -> varA");
@@ -154,7 +148,7 @@ namespace NINO_TEST_CALCULATOR
 			Assert::IsTrue(ast.right_->token_ == tokenList[2],		L"varA + varB -> varB");
 
 			// x + 5 = 10
-			tokenList = { Token(TokenType::VAR, "x"), Token(TokenType::ADD), Token(TokenType::INT, 5),
+			tokenList = { Token(TokenType::VAR, "x", 1.0f), Token(TokenType::ADD), Token(TokenType::INT, 5),
 			Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 10) };
 
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
@@ -163,6 +157,42 @@ namespace NINO_TEST_CALCULATOR
 			Assert::IsTrue(ast.left_->right_->token_	== tokenList[2],		L"x + 5 = 10 -> 5");
 			Assert::IsTrue(ast.token_					== tokenList[3],		L"x + 5 = 10 -> =");
 			Assert::IsTrue(ast.right_->token_			== tokenList[4],		L"x + 5 = 10 -> 10");
+
+
+			// (0.0 + 5) for GetNodeFactor
+			tokenList = Scanner("(0.0 + 5)").GetTokenList();
+			ast = parser.GetNodeFactor(tokenList.begin(), tokenList.end());
+			Assert::IsTrue(ast.token_			== Token(TokenType::ADD),			L"GetNodeFactor(0.0 + 5) -> +");
+			Assert::IsTrue(ast.left_->token_	== Token(TokenType::FLOAT, 0.0f),	L"GetNodeFactor(0.0 + 5) -> 0.0");
+			Assert::IsTrue(ast.right_->token_	== Token(TokenType::INT, 5),		L"GetNodeFactor(0.0 + 5) -> 5");
+
+
+			// (0.0 + 5) for GetNodeTerm
+			tokenList = Scanner("(0.0 + 5)").GetTokenList();
+			ast = parser.GetNodeTerm(tokenList.begin(), tokenList.end());
+			Assert::IsTrue(ast.token_			==	Token(TokenType::ADD),				L"GetNodeTerm(0.0 + 5) -> +");
+			Assert::IsTrue(ast.left_->token_	==	Token(TokenType::FLOAT, 0.0f),		L"GetNodeTerm(0.0 + 5) -> 0.0");
+			Assert::IsTrue(ast.right_->token_	==	Token(TokenType::INT, 5),			L"GetNodeTerm(0.0 + 5) -> 5");
+
+
+			// ((0.0 + 5) * 3) for GetNodeFactor
+			tokenList = Scanner("((0.0 + 5) * 3)").GetTokenList();
+			ast = parser.GetNodeTerm(tokenList.begin(), tokenList.end());
+			Assert::IsTrue(ast.token_					== Token(TokenType::MUL),				L"GetNodeFactor((0.0 + 5) * 3) -> *");
+			Assert::IsTrue(ast.left_->token_			== Token(TokenType::ADD),				L"GetNodeFactor((0.0 + 5) * 3) -> +");
+			Assert::IsTrue(ast.left_->left_->token_		== Token(TokenType::FLOAT, 0.0f),		L"GetNodeFactor((0.0 + 5) * 3) -> 0.0");
+			Assert::IsTrue(ast.left_->right_->token_	== Token(TokenType::INT, 5),			L"GetNodeFactor((0.0 + 5) * 3) -> 5");
+			Assert::IsTrue(ast.right_->token_			== Token(TokenType::INT, 3),			L"GetNodeFactor((0.0 + 5) * 3) -> 3");
+			Assert::AreEqual(parser.GetErrorReport().size(),	static_cast<size_t>(0),					L"GetNodeFactor((0.0 + 5) * 3) -> errorReport");
+
+			// 10 - (0.0 + 5)
+			tokenList = Scanner("10-(0.0+5)").GetTokenList();
+			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
+			Assert::IsTrue(ast.token_					== Token(TokenType::SUB),			L"10 - (0.0 + 5) - > -");
+			Assert::IsTrue(ast.left_->token_			== Token(TokenType::INT, 10),		L"10 - (0.0 + 5) - > 10");
+			Assert::IsTrue(ast.right_->token_			== Token(TokenType::ADD),			L"10 - (0.0 + 5) - > +");
+			Assert::IsTrue(ast.right_->left_->token_	== Token(TokenType::FLOAT, 0.0f),	L"10 - (0.0 + 5) - > 0.0");
+			Assert::IsTrue(ast.right_->right_->token_	== Token(TokenType::INT, 5),		L"10 - (0.0 + 5) - > 5");
 
 		}
 
@@ -196,7 +226,7 @@ namespace NINO_TEST_CALCULATOR
 
 			// a = 5 -> correct
 			parser = Parser();
-			tokenList = { Token(TokenType::VAR, "a"), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5) };
+			tokenList = { Token(TokenType::VAR, "a", 1.0f), Token(TokenType::ASSIGNMENT), Token(TokenType::INT, 5) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
 			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), false, L"correct : a=5");
@@ -253,7 +283,7 @@ namespace NINO_TEST_CALCULATOR
 
 			// var = 
 			parser = Parser();
-			tokenList = { Token(TokenType::VAR, "var"), Token(TokenType::ASSIGNMENT) };
+			tokenList = { Token(TokenType::VAR, "var", 1.0f), Token(TokenType::ASSIGNMENT) };
 			ast = parser.GetNodeStat(tokenList.begin(), tokenList.end());
 			errorReport = parser.GetErrorReport();
 			Assert::AreEqual(std::find(errorReport.begin(), errorReport.end(), "SyntaxError: invalid syntax") != errorReport.end(), true, L"error : var =");

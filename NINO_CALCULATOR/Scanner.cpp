@@ -17,6 +17,11 @@ namespace calculator
 	{
 	}
 
+	char Scanner::PeekChar(stringstream &expression)
+	{
+		return expression.peek();
+	}
+
 	char Scanner::GetNextChar(stringstream &expression)
 	{
 		char result;
@@ -112,6 +117,8 @@ namespace calculator
 
 		// first char
 		string buffer;
+		float coefficient;
+
 		buffer.push_back(currectChar);
 
 		// int part
@@ -119,18 +126,9 @@ namespace calculator
 		{
 			buffer += GetNextChar(expression);
 		}
-		
-		if (expression.peek() != '.')
-		{
-			// string to int
-			int intValue;
-			std::stringstream stream(buffer);
-			stream >> intValue;
 
-			result = Token(TokenType::INT, intValue);
-		}
 		// float part
-		else
+		if (expression.peek() == '.')
 		{
 			// add dot
 			buffer += GetNextChar(expression);
@@ -139,21 +137,86 @@ namespace calculator
 			{
 				buffer += GetNextChar(expression);
 			}
-
 			// string to float
 			float floatValue;
 			std::stringstream stream(buffer);
 			stream >> floatValue;
 
 			result = Token(TokenType::FLOAT, floatValue);
+			coefficient = floatValue;
+		}
+		else
+		{
+			// string to int
+			int intValue;
+			std::stringstream stream(buffer);
+			stream >> intValue;
+
+			result = Token(TokenType::INT, intValue);
+			coefficient = static_cast<float>(intValue);
+		}
+
+		// if token is var
+		if (isalpha(expression.peek()))
+		{
+			buffer = std::string();
+
+			while (!expression.eof() && isalpha(expression.peek()))
+			{
+				buffer += GetNextChar(expression);
+			}
+
+			result = Token(TokenType::VAR, buffer, coefficient);
 		}
 
 		state_ = State::START;
 
 		return result;
 
-		
+
 	}
+		
+		//// float
+		//if(expression.peek() == '.')
+		//{
+		//	// add dot
+		//	buffer += GetNextChar(expression);
+
+		//	while (!expression.eof() && isdigit(expression.peek()))
+		//	{
+		//		buffer += GetNextChar(expression);
+		//	}
+
+		//	// string to float
+		//	float floatValue;
+		//	std::stringstream stream(buffer);
+		//	stream >> floatValue;
+
+		//	result = Token(TokenType::FLOAT, floatValue);
+		//}
+		//else if (isalpha(expression.peek()))
+		//{
+		//	string buffer;
+
+		//	while (!expression.eof() && isalpha(expression.peek()))
+		//	{
+		//		buffer += GetNextChar(expression);
+		//	}
+
+		//	
+		//}
+		//else
+		//{
+		//	// string to int
+		//	int intValue;
+		//	std::stringstream stream(buffer);
+		//	stream >> intValue;
+
+		//	result = Token(TokenType::INT, intValue);
+		//}
+
+
+
 
 	Token Scanner::HandleOperatorState(stringstream &expression, char currectChar)
 	{
@@ -180,7 +243,7 @@ namespace calculator
 		}
 
 		// var_name
-		auto token = Token(TokenType::VAR, buffer);
+		auto token = Token(TokenType::VAR, buffer, 1.0f);
 
 		//reset state
 		state_ = State::START;

@@ -47,7 +47,6 @@ namespace calculator
 
 	private:
 		AST ast_;
-		//Scanner scanner_;
 		std::vector<Token> tokenList_;
 		std::vector<std::string> errorReport_;
 	};

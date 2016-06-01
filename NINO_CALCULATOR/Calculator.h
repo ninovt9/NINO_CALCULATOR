@@ -15,17 +15,21 @@ namespace calculator
 
 	public:
 		std::string							Analyze(const AST& ast);
-		float								Calculate(std::shared_ptr<AST> node, const std::map<std::string, float>& varList)
-		{
-			return 0.0f;
-		}
+		//float								Calculate(std::shared_ptr<AST> node, const std::map<std::string, float>& varList)
+		//{
+		//	return 0.0f;
+		//}
 		float								Calculate(std::shared_ptr<AST> node);
 		std::string							Equation(std::shared_ptr<AST> node);
 		void								Run();
 
 	public:
-		void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
-		void								EquationForRight(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
+		//void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
+		//void								EquationForRight(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
+
+		void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, Token &var);
+		void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, Token &var, Token type);
+		void								EquationForRight(std::shared_ptr<AST> node, std::vector<Token>& tokenList, Token &var);
 
 	public:
 		void								AddPar(std::vector<Token>& tokenList);
