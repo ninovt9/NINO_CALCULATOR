@@ -133,5 +133,13 @@ namespace NINO_TEST_CALCULATOR
 				L"2.5 is not operator");
 
 		}
+
+		TEST_METHOD(Test_Class_AddCoefficient)
+		{
+			Token token(TokenType::VAR, "x", 1.0f);
+
+			Assert::AreEqual(token.AddCoefficient(1.0f), 2.0f, L"1.0x -> 2.0x");
+			Assert::AreEqual(token.AddCoefficient(1.0f), 3.0f, L"2.0x -> 3.0x");
+		}
 	};
 }

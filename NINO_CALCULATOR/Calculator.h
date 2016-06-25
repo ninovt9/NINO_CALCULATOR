@@ -15,23 +15,18 @@ namespace calculator
 
 	public:
 		std::string							Analyze(const AST& ast);
-		//float								Calculate(std::shared_ptr<AST> node, const std::map<std::string, float>& varList)
-		//{
-		//	return 0.0f;
-		//}
 		float								Calculate(std::shared_ptr<AST> node);
 		std::string							Equation(std::shared_ptr<AST> node);
 		void								Run();
 
 	public:
-		//void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
-		//void								EquationForRight(std::shared_ptr<AST> node, std::vector<Token>& tokenList, std::string &varName);
-
 		void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, Token &var);
 		void								EquationForLeft(std::shared_ptr<AST> node, std::vector<Token>& tokenList, Token &var, Token type);
 		void								EquationForRight(std::shared_ptr<AST> node, std::vector<Token>& tokenList, Token &var);
 
 	public:
+		std::map<std::string, Token> 		MergeVarList(const std::vector<Token>& varList);
+		std::string							VarListToString(const std::map<std::string, Token>& varList);
 		void								AddPar(std::vector<Token>& tokenList);
 		bool								HasVar(const std::string& varName, const std::map<std::string, float>& varList);
 		std::pair<std::string, float>		FindVar(const std::string& varName, const std::map<std::string, float>& varList);

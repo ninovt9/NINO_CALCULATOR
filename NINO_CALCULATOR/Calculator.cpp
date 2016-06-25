@@ -107,7 +107,6 @@ namespace calculator
 
 	}
 
-
 	std::string Calculator::Equation(std::shared_ptr<AST> node)
 	{
 		std::vector<Token> tokenList;
@@ -169,108 +168,41 @@ namespace calculator
 		}
 	}
 
+	std::map<std::string, Token> Calculator::Merg          eVarList(const std::vector<Token>& varList)
+	{
+		std::map<std::string, Token> resultList;
+		
+		for (auto each : varList)
+		{
+			auto iter = resultList.find(each.GetVarName());
+			if (iter != resultList.end())
+			{
+				iter->second.AddCoefficient(each.GetCoefficient());
+			}
+			else
+			{
+				resultList.insert({ each.GetVarName(), each });
+			}
 
-		//// iterating through the AST
-		//if (node != nullptr)
-		//{
-		//	EquationForLeft(node->left_, tokenList, var);
-		//	if (node->token_.GetType() == TokenType::VAR)
-		//	{
-		//		var = node->token_;
-		//	}
-		//	else if (node->token_.GetType() != TokenType::ASSIGNMENT)
-		//	{
-		//		if (node->token_.GetType() == TokenType::ADD)
-		//		{
-		//			tokenList.push_back(TokenType::SUB);
-		//		}
-		//		else if (node->token_.GetType() == TokenType::SUB)
-		//		{
-		//			tokenList.push_back(TokenType::ADD);
-		//		}
-		//		else if (node->token_.GetType() == TokenType::MUL)
-		//		{
-		//			AddPar(tokenList);
-		//			tokenList.push_back(TokenType::DIV);
-		//		}
-		//		else if (node->token_.GetType() == TokenType::DIV)
-		//		{
-		//			AddPar(tokenList);
-		//			tokenList.push_back(TokenType::MUL);
-		//		}
-		//		else
-		//		{
-		//			tokenList.push_back(node->token_);
-		//		}
-		//	}
-		//	EquationForLeft(node->right_, tokenList, var);
-			
-		//}
-	
+		}
 
-		//if (node != nullptr)
-		//{
-		//	// AddNode(node, newAst);
-		//	Equation(node->right_, newAst);
-		//	Equation(node->left_, newAst);
+		return resultList;
+	}
 
+	std::string Calculator::VarListToString(const std::map<std::string, Token>& varList)
+	{
+		std::string result;
 
+		for (auto each : varList)
+		{
+			result.append(std::string(each.first + "+"));
+		}
 
-		//	//if (node->token_ == TokenType::ASSIGNMENT)
-		//	//{
-		//	//	// AddNode(node, newAst);
-		//	//	Equation(node->right_, newAst);
-		//	//	Equation(node->left_, newAst);
-		//	//}
-		//	//else if (node->token_.GetType() == TokenType::INT || 
-		//	//	node->token_.GetType() == TokenType::FLOAT)
-		//	//{
-		//	//	
-		//	//}
-		//	//else if (node->token_.GetType() == TokenType::ADD ||
-		//	//	node->token_.GetType() == TokenType::SUB ||
-		//	//	node->token_.GetType() == TokenType::MUL ||
-		//	//	node->token_.GetType() == TokenType::DIV)
-		//	//{
-		//	//	
-		//	//}
-		//}
-	
+		// 最后一个+删掉
+		result.pop_back();
 
-
-	//void Calculator::AddNode(std::shared_ptr<AST> root, std::shared_ptr<AST> node)
-	//{
-	//	if (root == nullptr)
-	//	{
-	//		root = node;
-	//	}
-	//	else if (node->token_.GetType() == TokenType::VAR)
-	//	{
-
-	//	}
-	//	else if (node->token_.GetType() == TokenType::ADD ||
-	//		node->token_.GetType() == TokenType::SUB ||
-	//		node->token_.GetType() == TokenType::MUL ||
-	//		node->token_.GetType() == TokenType::DIV)
-	//	{
-	//		if (root->token_.GetType() == TokenType::INT ||
-	//			root->token_.GetType() == TokenType::FLOAT)
-	//		{
-	//			auto temp = root;
-	//			node->left_ = temp;
-	//			root = node;
-	//		}
-	//	}
-	//	else if (node->token_.GetType() == TokenType::INT ||
-	//		root->token_.GetType() == TokenType::FLOAT)
-	//	{
-	//		
-	//	}
-	//	else 
-	//	{
-	//		AddNode(root->right_, node);	
-	//	}
-	//}
+		return result;
+	}
 
 }
 

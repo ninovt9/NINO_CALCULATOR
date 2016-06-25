@@ -139,6 +139,32 @@ namespace NINO_TEST_CALCULATOR
 
 		}
 
+		TEST_METHOD(Test_MergeVarList)
+		{
+			Calculator cal;
+
+			// 3x + 2x
+			auto varList = Scanner("3x 2x").GetTokenList();
+			auto resultList = cal.MergeVarList(varList);
+
+			Assert::IsTrue(resultList.find("x")->second == Token(TokenType::VAR, "x", 5.0f),
+				L"3x + 2x -> 5x");
+			Assert::AreEqual(resultList.size(), static_cast<size_t>(1),
+				L"3x + 2x .size -> 1");
+		}
+
+		TEST_METHOD(Test_VarListToString)
+		{
+			Calculator cal;
+
+			// 5x
+			auto varList = cal.MergeVarList(Scanner("5x").GetTokenList());
+
+			auto test = cal.VarListToString(varList);
+			Assert::IsTrue(cal.VarListToString(varList) == std::string("5x"),
+				L"5x -> 5x");
+		}
+
 
 	};
 }

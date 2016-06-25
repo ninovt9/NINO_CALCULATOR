@@ -31,8 +31,6 @@ namespace calculator
 		Token(TokenType type, double doubleValue);
 		Token(TokenType type, std::string varName, float coefficient);
 
-		// 先用float，有空改成double
-		
 	public:
 		Token(const Token& other);
 		Token& operator=(const Token& other);
@@ -45,10 +43,7 @@ namespace calculator
 		float				GetFloatValue() const;
 		std::string			GetVarName() const;
 		float				GetCoefficient() const;
-
-	public:
-		//bool			IsNumber(Token token) const;
-		//bool			IsOperator(Token token) const;
+		float				AddCoefficient(float value);
 
 	private:
 		TokenType			type_;
@@ -85,7 +80,11 @@ namespace calculator
 		return coefficient_;
 	}
 
-
+	inline float Token::AddCoefficient(float value)
+	{
+		coefficient_ += value;
+		return coefficient_;
+	}
 
 	inline bool IsNumber(Token token)
 	{
